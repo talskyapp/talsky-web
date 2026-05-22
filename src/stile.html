@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .lesson-intro {
+            max-width: 480px;
+            margin: auto;
+            padding: 32px 20px;
+            font-family: Inter, sans-serif;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #eee;
+            border-radius: 4px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+
+        .lesson-label {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .lesson-title {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .lesson-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .lesson-description {
+            font-size: 16px;
+            color: #444;
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+
+        .continue-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lesson-intro">
+
+        <div class="top-bar">
+            <button class="back-btn">< Back</button>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 14%;"></div>
+            </div>
+        </div>
+
+        <p class="lesson-label">Lesson · Hello & Goodbye</p>
+
+        <h1 class="lesson-title">Start speaking</h1>
+
+        <p class="lesson-subtitle">In less than 5 minutes…</p>
+
+        <p class="lesson-description">
+            You’ll learn the essential greetings and farewells used in real conversations,
+            so you can start speaking confidently from day one.
+        </p>
+
+        <button class="continue-btn">Continue</button>
+    </div>
+
+
+</body>
+
+</html>

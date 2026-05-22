@@ -1,0 +1,57 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+
+/* Glow */
+body::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: #ffffff20;
+    border-radius: 50%;
+    filter: blur(120px);
+    top: -150px;
+    left: -150px;
+    pointer-events: none;
+}
+
+/* ============================
+   DASHBOARD LAYOUT FIX
+============================ */
+
+.dashboard-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-content {
+    flex: 1;
+    min-height: 0;
+}
+
+/* SOLO para chat */
+.chat-layout {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.chat-page-content {
+    overflow: hidden;
+}
+
+/* ============================
+   CHAT FULLSCREEN (MOBILE UX)
+============================ */
+
+@media (max-width: 768px) {
+    .chat-layout {
+        height: 100vh;
+    }
+}

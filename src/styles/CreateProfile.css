@@ -1,0 +1,342 @@
+.cp-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(109, 76, 255, 0.12), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.10), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+}
+
+.cp-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 32px 28px;
+    border-radius: 28px;
+    background: #ffffff;
+    border: 1px solid #e7ebf3;
+    box-shadow: 0 28px 70px rgba(15, 23, 42, 0.10);
+    animation: cpFadeUp 0.35s ease;
+}
+
+.cp-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.cp-step {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6d4cff;
+    background: rgba(109, 76, 255, 0.08);
+    padding: 6px 12px;
+    border-radius: 999px;
+}
+
+.cp-header h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+}
+
+.cp-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.cp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cp-field label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.cp-help {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #64748b;
+}
+
+.cp-optional {
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.cp-field input,
+.cp-field textarea,
+.cp-field select {
+    width: 100%;
+    padding: 14px 15px;
+    border-radius: 16px;
+    border: 1px solid #d7dbe7;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 14px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cp-field input::placeholder,
+.cp-field textarea::placeholder {
+    color: #94a3b8;
+}
+
+.cp-field input:focus,
+.cp-field textarea:focus,
+.cp-field select:focus {
+    background: #ffffff;
+    border-color: #8b7bff;
+    box-shadow: 0 0 0 4px rgba(109, 76, 255, 0.10);
+}
+
+.cp-field textarea {
+    min-height: 104px;
+    resize: none;
+    line-height: 1.5;
+}
+
+.cp-photo-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px 18px;
+    border-radius: 26px;
+    border: 1px solid #e7ebf3;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    text-align: center;
+}
+
+.cp-photo-hero:hover {
+    border-color: #8b7bff;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(109, 76, 255, 0.1);
+}
+
+.cp-avatar-ring {
+    width: 118px;
+    height: 118px;
+    border-radius: 999px;
+    padding: 5px;
+    border: 3px solid rgba(109, 76, 255, 0.16);
+    background: #ffffff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cp-avatar-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+.cp-camera-badge {
+    position: absolute;
+    right: 2px;
+    bottom: 4px;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #6d4cff;
+    color: #ffffff;
+    border: 3px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cp-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: rgba(109, 76, 255, 0.1);
+    color: #6d4cff;
+    font-size: 26px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cp-photo-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #0f172a;
+}
+
+.cp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.cp-remove-btn {
+    margin-top: 10px;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cp-remove-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.cp-field-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 20px;
+}
+
+.cp-counter {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+.cp-field-error {
+    font-size: 13px;
+    font-weight: 600;
+    color: #dc2626;
+}
+
+.cp-error {
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.cp-btn {
+    width: 100%;
+    margin-top: 6px;
+    padding: 15px 18px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #6d4cff, #7c5cff);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    box-shadow: 0 16px 28px rgba(109, 76, 255, 0.24);
+}
+
+.cp-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 34px rgba(109, 76, 255, 0.28);
+}
+
+.cp-btn:disabled {
+    opacity: 0.72;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+@keyframes cpFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .cp-wrapper {
+        padding: 16px;
+        align-items: flex-start;
+    }
+
+    .cp-card {
+        max-width: 100%;
+        padding: 24px 18px;
+        border-radius: 24px;
+        margin-top: 14px;
+        margin-bottom: 14px;
+    }
+
+    .cp-header {
+        margin-bottom: 22px;
+    }
+
+    .cp-header h1 {
+        font-size: 28px;
+    }
+
+    .cp-header p {
+        font-size: 14px;
+    }
+
+    .cp-form {
+        gap: 18px;
+    }
+
+    .cp-remove-btn,
+    .cp-btn {
+        min-height: 48px;
+    }
+
+    .cp-field-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .cp-counter {
+        align-self: flex-end;
+    }
+}

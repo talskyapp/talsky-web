@@ -1,0 +1,122 @@
+.onb-goal-container {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.onb-goal-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.onb-goal-badge {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(109, 76, 255, 0.10);
+    color: #6d4cff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.onb-goal-title {
+    margin: 0 0 10px;
+    font-size: 52px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+}
+
+.onb-goal-subtitle {
+    margin: 0;
+    font-size: 17px;
+    color: #64748b;
+}
+
+/* GRID */
+.onb-goal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+/* CARD */
+.onb-goal-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 20px;
+    border-radius: 22px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+
+    cursor: pointer;
+    transition: all 0.18s ease;
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+
+    text-align: left;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.onb-goal-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.onb-goal-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    border-color: #c7bfff;
+    box-shadow: 0 20px 40px rgba(109, 76, 255, 0.12);
+}
+
+.onb-goal-card:active {
+    transform: scale(0.97);
+}
+
+/* ICON */
+.onb-goal-icon {
+    font-size: 34px;
+    flex-shrink: 0;
+}
+
+/* TEXT */
+.onb-goal-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.onb-goal-desc {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+/* MOBILE */
+@media (max-width: 560px) {
+    .onb-goal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .onb-goal-title {
+        font-size: 32px;
+    }
+}

@@ -1,0 +1,130 @@
+.onboarding-shell {
+    position: relative;
+    min-height: 100vh;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(109, 76, 255, 0.12), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.10), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+    overflow: hidden;
+}
+
+.onboarding-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.onboarding-frame {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 48px);
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+}
+
+.onboarding-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.onboarding-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.onboarding-logo-mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #6d4cff, #7c5cff);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 12px 24px rgba(109, 76, 255, 0.22);
+}
+
+.onboarding-brand-text h2 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.onboarding-brand-text p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.onboarding-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onboarding-content-card {
+    width: 100%;
+    max-width: 980px;
+    padding: 40px 36px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #e7ebf3;
+    box-shadow: 0 28px 70px rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(10px);
+}
+
+.onboarding-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4px;
+}
+
+.onboarding-footer span {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.onboarding-logo-image {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 18px;
+    box-shadow:
+        0 10px 30px rgba(109, 76, 255, 0.18);
+}
+
+@media (max-width: 768px) {
+    .onboarding-shell {
+        padding: 16px;
+    }
+
+    .onboarding-frame {
+        min-height: calc(100vh - 32px);
+        gap: 16px;
+    }
+
+    .onboarding-content-card {
+        padding: 28px 18px;
+        border-radius: 24px;
+    }
+
+    .onboarding-brand-text h2 {
+        font-size: 20px;
+    }
+
+    .onboarding-brand-text p {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,41 @@
+.location-container {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.illustration {
+    font-size: 80px;
+    margin: 30px 0;
+}
+
+.allow-btn {
+    width: 100%;
+    padding: 14px;
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.skip-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.error-text {
+    color: #d9534f;
+    margin-bottom: 20px;
+}

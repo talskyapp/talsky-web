@@ -1,0 +1,219 @@
+.admin-logs-page {
+    min-height: 100vh;
+    padding: 32px;
+    background: #f6f7fb;
+    color: #111827;
+}
+
+.admin-logs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.admin-logs-header h1 {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: -0.04em;
+}
+
+.admin-logs-header p {
+    margin: 10px 0 0;
+    color: #6b7280;
+    max-width: 720px;
+}
+
+.admin-logs-summary {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.admin-logs-summary div {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    font-weight: 900;
+}
+
+.admin-logs-list {
+    display: grid;
+    gap: 14px;
+}
+
+.admin-log-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    padding: 18px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.admin-log-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: #ede9fe;
+    color: #7c3aed;
+}
+
+.admin-log-main {
+    min-width: 0;
+}
+
+.admin-log-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.admin-log-top h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.admin-log-top span {
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.admin-log-people {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.admin-log-person {
+    padding: 14px;
+    border-radius: 18px;
+    background: #f9fafb;
+    border: 1px solid #eef2f7;
+}
+
+.admin-log-person>span {
+    display: block;
+    margin-bottom: 10px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.admin-log-person div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-log-person img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #e5e7eb;
+}
+
+.admin-log-person p {
+    margin: 0;
+    min-width: 0;
+}
+
+.admin-log-person strong {
+    display: block;
+    font-size: 14px;
+}
+
+.admin-log-person small {
+    display: block;
+    margin-top: 2px;
+    color: #7c3aed;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.admin-log-reason {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 18px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+}
+
+.admin-log-reason strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #9a3412;
+    font-size: 12px;
+}
+
+.admin-log-reason p {
+    margin: 0;
+    color: #7c2d12;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.admin-empty-log {
+    min-height: 260px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 32px;
+    color: #6b7280;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.admin-empty-log h3 {
+    margin: 12px 0 4px;
+    color: #111827;
+}
+
+.admin-empty-log p {
+    margin: 0;
+}
+
+@media (max-width: 850px) {
+    .admin-log-people {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-log-top {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 760px) {
+    .admin-logs-page {
+        padding: 20px;
+    }
+
+    .admin-logs-header,
+    .admin-logs-summary {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-log-card {
+        grid-template-columns: 1fr;
+    }
+}

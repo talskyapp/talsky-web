@@ -1,0 +1,111 @@
+OnboardingLeve.onb-level-container {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.onb-level-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.onb-level-badge {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(109, 76, 255, 0.10);
+    color: #6d4cff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.onb-level-title {
+    margin: 0 0 10px;
+    font-size: 48px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+}
+
+.onb-level-subtitle {
+    margin: 0;
+    font-size: 16px;
+    color: #64748b;
+}
+
+/* LISTA */
+.onb-level-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* CARD */
+.onb-level-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    gap: 8px;
+
+    min-height: 100px;
+    padding: 18px;
+
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+
+    cursor: pointer;
+    transition: all 0.18s ease;
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.onb-level-card:hover {
+    transform: translateY(-2px);
+    border-color: #d7ccff;
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+}
+
+.onb-level-card:active {
+    transform: scale(0.97);
+}
+
+/* ICON */
+.onb-level-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+/* TEXT */
+.onb-level-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.onb-level-name {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.onb-level-desc {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .onb-level-title {
+        font-size: 32px;
+    }
+
+    .onb-level-card {
+        padding: 18px;
+    }
+}

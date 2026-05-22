@@ -1,0 +1,357 @@
+/* =========================
+   PAGE / LAYOUT
+========================= */
+
+.leaderboard-page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f6f8fc 0%, #eef2f9 100%);
+    padding: 24px;
+}
+
+.leaderboard-shell {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    gap: 18px;
+}
+
+.leaderboard-header-card,
+.leaderboard-card,
+.leaderboard-user-card {
+    background: #fff;
+    border-radius: 24px;
+    border: 1px solid #e8edf6;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.leaderboard-header-card {
+    padding: 26px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.leaderboard-kicker {
+    color: #64748b;
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+
+.leaderboard-header-card h1 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 2rem;
+}
+
+.leaderboard-subtext {
+    margin: 10px 0 0;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.leaderboard-range-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 12px 16px;
+    font-weight: 700;
+    color: #334155;
+}
+
+/* =========================
+   USER RANK CARD
+========================= */
+
+.leaderboard-user-card {
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.leaderboard-user-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.leaderboard-user-rank-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leaderboard-user-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+}
+
+.leaderboard-user-title {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.leaderboard-user-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.leaderboard-user-stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.leaderboard-stat-box {
+    min-width: 92px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.leaderboard-stat-label {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+/* =========================
+   MAIN CARD / HEADER
+========================= */
+
+.leaderboard-card {
+    padding: 22px;
+}
+
+.leaderboard-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.leaderboard-list-header h2 {
+    margin: 0;
+    color: #0f172a;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.leaderboard-secondary-btn {
+    border: 1px solid #d8e0ef;
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #0f172a;
+    transition: all 0.2s ease;
+}
+
+.leaderboard-secondary-btn:hover {
+    background: #f8fbff;
+    border-color: #cfd9ee;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.leaderboard-empty {
+    padding: 18px;
+    border: 1px dashed #d6deee;
+    border-radius: 18px;
+    color: #64748b;
+    background: #fafcff;
+}
+
+/* =========================
+   LIST
+========================= */
+
+.leaderboard-list {
+    display: grid;
+    gap: 12px;
+}
+
+.leaderboard-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid #e7edf7;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.leaderboard-row:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.leaderboard-row.is-me {
+    background: linear-gradient(180deg, #f8fbff 0%, #f5f3ff 100%);
+    border-color: #d8ccff;
+}
+
+.leaderboard-row-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.leaderboard-row-right {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.leaderboard-xp {
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.leaderboard-lessons {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* =========================
+   RANK / AVATAR / META
+========================= */
+
+.leaderboard-rank {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.leaderboard-rank.medal-1 {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.leaderboard-rank.medal-2 {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.leaderboard-rank.medal-3 {
+    background: #fed7aa;
+    color: #9a3412;
+}
+
+.leaderboard-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+    flex-shrink: 0;
+}
+
+.leaderboard-user-meta {
+    min-width: 0;
+}
+
+.leaderboard-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.leaderboard-me-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #7c3aed;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.leaderboard-username {
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 760px) {
+    .leaderboard-page {
+        padding: 14px;
+    }
+
+    .leaderboard-header-card,
+    .leaderboard-user-card,
+    .leaderboard-card {
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+    .leaderboard-header-card,
+    .leaderboard-user-card,
+    .leaderboard-row,
+    .leaderboard-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .leaderboard-row-right {
+        text-align: left;
+    }
+
+    .leaderboard-user-stats {
+        width: 100%;
+    }
+
+    .leaderboard-stat-box {
+        flex: 1;
+    }
+}

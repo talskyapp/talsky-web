@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language App</title>
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .search {
+            background: #fff;
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.97);
+        }
+
+        .avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .info {
+            flex: 1;
+        }
+
+        .name {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .country {
+            font-size: 13px;
+            color: gray;
+        }
+
+        .tags {
+            margin-top: 6px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 999px;
+        }
+
+        .native {
+            background: #e6f0ff;
+            color: #3b82f6;
+        }
+
+        .learning {
+            background: #ffe9e9;
+            color: #ef4444;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn {
+            background: #f1f3f7;
+            border: none;
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+
+        .nav div {
+            font-size: 12px;
+            color: gray;
+        }
+
+        .active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">Descubre personas</div>
+
+    <div class="search">🔍 Buscar usuarios</div>
+
+    <div class="card">
+        <img src="https://i.pravatar.cc/100?img=1" class="avatar">
+        <div class="info">
+            <div class="name">Haruto, 27</div>
+            <div class="country">🇯🇵 Japón</div>
+            <div class="tags">
+                <div class="tag native">Nativo Japonés</div>
+                <div class="tag learning">Aprendiendo Español</div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="btn">💬</button>
+            <button class="btn">⭐</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://i.pravatar.cc/100?img=5" class="avatar">
+        <div class="info">
+            <div class="name">Hina, 24</div>
+            <div class="country">🇯🇵 Japón</div>
+            <div class="tags">
+                <div class="tag native">Nativo Japonés</div>
+                <div class="tag learning">Aprendiendo Español</div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="btn">💬</button>
+            <button class="btn">⭐</button>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="active">🏠 Feed</div>
+        <div>💬 Chat</div>
+        <div>📍 Cerca</div>
+        <div>👤 Perfil</div>
+    </div>
+
+</body>
+
+</html>
