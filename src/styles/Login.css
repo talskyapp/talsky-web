@@ -40,11 +40,10 @@
 .login-card {
     position: relative;
     z-index: 1;
-    width: 100%;
+    width: min(100%, 520px);
     max-width: 1140px;
     min-height: 700px;
-    display: grid;
-    grid-template-columns: 1.02fr 0.98fr;
+    margin: 0 auto;
     background: rgba(255, 255, 255, 0.88);
     border: 1px solid rgba(231, 235, 243, 0.9);
     border-radius: 34px;

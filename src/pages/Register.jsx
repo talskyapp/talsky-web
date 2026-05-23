@@ -62,7 +62,7 @@ export default function Register() {
             } else if (!data.user.profileCompleted) {
                 navigate("/dashboard/create-profile");
             } else {
-                navigate("/dashboard/ai-tutor");
+                navigate("/");
             }
         }, 700);
     };
@@ -309,32 +309,6 @@ export default function Register() {
                             {t("register.signIn")}
                         </Link>
                     </p>
-                </div>
-
-                <div className="login-right">
-                    <div className="login-right-content">
-                        <div className="login-badge">TalSky Social</div>
-
-                        <h2>{t("register.rightTitle")}</h2>
-                        <p>{t("register.rightSubtitle")}</p>
-
-                        <div className="login-feature-list">
-                            <div className="login-feature-item">
-                                <strong>{t("register.feature1Title")}</strong>
-                                <span>{t("register.feature1Text")}</span>
-                            </div>
-
-                            <div className="login-feature-item">
-                                <strong>{t("register.feature2Title")}</strong>
-                                <span>{t("register.feature2Text")}</span>
-                            </div>
-
-                            <div className="login-feature-item">
-                                <strong>{t("register.feature3Title")}</strong>
-                                <span>{t("register.feature3Text")}</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

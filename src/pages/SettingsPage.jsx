@@ -69,22 +69,16 @@ export default function SettingsPage({ user: userProp }) {
                     description: t("settings.appLanguage.description"),
                     onClick: () => navigate("/dashboard/settings/language"),
                 },
-                {
-                    icon: <Bell size={18} />,
-                    label: t("settings.notifications.label"),
-                    description: t("settings.notifications.description"),
-                    onClick: () => navigate("/dashboard/settings/notifications"),
-                },
             ],
         },
         {
-            title: t("settings.sections.privacy"),
+            title: t("settings.sections.account"),
             items: [
                 {
                     icon: <Shield size={18} />,
-                    label: t("settings.privacySafety.label"),
-                    description: t("settings.privacySafety.description"),
-                    onClick: () => navigate("/dashboard/settings/privacy"),
+                    label: t("settings.accountSettings.label"),
+                    description: t("settings.accountSettings.description"),
+                    onClick: () => navigate("/dashboard/settings/account"),
                 },
             ],
         },

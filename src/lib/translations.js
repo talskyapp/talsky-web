@@ -35,9 +35,10 @@ export const translations = {
                 description: "Control alerts, messages, and activity notifications.",
             },
 
-            privacySafety: {
-                label: "Privacy & safety",
-                description: "Manage visibility, blocked users, and account security.",
+            accountSettings: {
+                label: "Account settings",
+                description:
+                    "Manage password, and account actions.",
             },
 
             subscriptionItem: {
@@ -300,7 +301,7 @@ export const translations = {
             saveButton: "Save language",
         },
         navbar: {
-            social: "Social",
+            social: "Home",
             learn: "Learn",
             aiTutor: "AI Tutor",
             myProfile: "My Profile",
@@ -313,81 +314,6 @@ export const translations = {
             home: "Home",
             messages: "Messages",
             profile: "Profile",
-        },
-        nearby: {
-            mapFailedTitle: "Map failed to load",
-            mapFailedText: "Please check your Google Maps API key.",
-            loadingTitle: "Loading nearby people...",
-            loadingText: "Please wait a moment while we prepare your map.",
-            title: "People near you",
-            tabs: {
-                all: "All",
-                nearby: "Nearby",
-            },
-            recenter: "Recenter map",
-            sidebarTitle: "Nearby learners",
-            sidebarSubtitle: "Discover people around your area and start practicing together.",
-            loadingUsers: "Loading nearby users...",
-            noUsersTitle: "No users nearby yet",
-            noUsersText: "Try again later when more learners are available.",
-            native: "Native:",
-            learning: "Learning",
-            youAreHere: "You are here",
-            kmAway: "km away",
-            viewProfile: "View profile",
-            proTitle: "Nearby is a Pro feature",
-            proSubtitle: "Unlock Nearby to discover people around you, explore local learners, and build real connections faster.",
-            freeTitle: "Free",
-            free1: "Limited chats",
-            free2: "No Nearby",
-            free3: "No advanced filters",
-            proPlanTitle: "Pro · $14.99/month",
-            pro1: "Nearby access",
-            pro2: "Unlimited chats",
-            pro3: "Advanced filters",
-            pro4: "Boost profile",
-            upgradeNow: "Upgrade now",
-            notNow: "Not now",
-        },
-        nearbyPermission: {
-            badge: "Nearby",
-            kicker: "Connect locally",
-            title: "Discover people near you",
-            description:
-                "Turn on Nearby to find language partners in your area and make practice feel more natural, consistent, and real.",
-            pill1: "Learners around you",
-            pill2: "Approximate location only",
-            privacyNote:
-                "TalSky never shares your exact location with other users. Only an approximate area is used to improve nearby matches.",
-            benefit1: "Meet people learning your language nearby",
-            benefit2: "Practice more naturally in real life",
-            benefit3: "Discover local learners and communities",
-            enable: "Enable Nearby",
-            enabling: "Enabling...",
-            notNow: "Not now",
-            footer: "You can change this anytime in Settings.",
-            enableError: "Could not enable Nearby right now.",
-            genericError: "Something went wrong. Please try again.",
-        },
-        updateLocation: {
-            badge: "Nearby",
-            title: "Enable location to find people nearby",
-            subtitle:
-                "TalSky uses your approximate location to show language partners near you and improve nearby recommendations.",
-            privacyNote:
-                "TalSky never shares your exact location with other users. Your privacy stays protected.",
-            useLocation: "Use my location",
-            loadingButton: "Getting your location...",
-            notNow: "Not now",
-            footer: "You can change this later in your settings.",
-            browserUnsupported: "Your browser does not support location access.",
-            updateError: "We couldn’t update your location.",
-            genericError: "Could not update your location. Please try again.",
-            permissionBlocked:
-                "Location access was blocked. Please enable it in your browser settings.",
-            unavailable: "Your location is unavailable right now.",
-            timeout: "Location request timed out. Please try again.",
-            unknownError: "Unable to get your location.",
         },
         aiTutor: {
             hero: {
@@ -924,308 +850,40 @@ export const translations = {
                 cooking: "Cooking"
             }
         },
-        chatList: {
-            title: "Chats",
-            searchPlaceholder: "Search chats...",
-            clearSearch: "Clear search",
-            typing: "Typing...",
-            startConversation: "Start a conversation",
-            youUnsentMessage: "You unsent a message",
-            messageRemoved: "Message removed",
-            youPrefix: "You:",
-            unknownUser: "Unknown user",
-            userFallback: "User",
-            noChatsFound: "No chats found",
-            noChatsYet: "No chats yet",
-            seen: "Seen",
+        account: {
+            kicker: "ACCOUNT",
+            title: "Account settings",
+            subtitle:
+                "Manage access, password changes, and sensitive actions.",
 
-            moreOptions: "More options",
-            deleteChat: "Delete chat",
-            deleteChatTitle: "Delete chat?",
-            deleteChatDescription:
-                "This will remove the conversation from your chat list, but it may still be visible to the other person.",
-            cancel: "Cancel",
-            confirmDelete: "Delete chat",
-            deletingChat: "Deleting...",
-            deleteChatFailed: "Could not delete chat",
-        },
-        chatWindow: {
-            selectChat: "Select a chat",
-            user: "User",
-            thisUser: "this user",
-            messagingUnavailable: "Messaging unavailable",
-            cantSendInChat: "You can’t send messages in this chat",
-            conversationPaused: "Conversation paused",
-            blockedUserMessage: "You blocked {name}. Messaging is unavailable.",
-            today: "Today",
-            yesterday: "Yesterday",
-            reply: "Reply",
-            copy: "Copy",
-            edit: "Edit",
-            unsend: "Unsend",
-            deleteJustForMe: "Delete just for me",
-            scrollToBottom: "Scroll to bottom",
-            replyingTo: "Replying to {name}",
-            editingMessage: "Editing message",
-            photo: "Photo",
-            photos: "photos",
-            video: "Video",
-            videos: "videos",
-            preview: "Preview",
-            edited: "edited",
-            read: "Read",
-            delivered: "Delivered",
-            youUnsentMessage: "You unsent a message",
-            messageRemoved: "Message removed",
-            uploadingImages: "Uploading {count} image(s)...",
-            imagesSelected: "{count} image(s) selected",
-            removeAllImages: "Remove all images",
-            sendImages: "Send images",
-            uploadingVideos: "Uploading {count} video(s)...",
-            videosSelected: "{count} video(s) selected",
-            removeAllVideos: "Remove all videos",
-            sendVideos: "Send videos",
-            hide: "Hide",
-            show: "Show",
-            unfollowQuestion: "Unfollow {name}?",
-            unfollowDescription: "Their posts will no longer appear in your experience.",
-            unfollowing: "Unfollowing...",
-            unfollow: "Unfollow",
-            cancel: "Cancel",
-            reportUser: "Report {name}",
-            reportDescription: "Tell us what happened. Your report will be reviewed.",
-            additionalDetails: "Additional details (optional)",
-            sending: "Sending...",
-            submitReport: "Submit Report",
-            reportSubmitted: "Report submitted successfully",
-            blockQuestion: "Block {name}?",
-            blockDescription: "They will no longer be able to interact with you normally, and any follow connection will be removed.",
-            blocking: "Blocking...",
-            block: "Block",
-            unblockQuestion: "Unblock {name}?",
-            unblockDescription: "They may be able to interact with you again if your other settings allow it.",
-            unblocking: "Unblocking...",
-            unblock: "Unblock",
-            userBlocked: "{name} has been blocked",
-            userUnblocked: "{name} has been unblocked",
-            reportReasons: {
-                spam: "Spam",
-                abuse: "Abusive behavior",
-                harassment: "Harassment",
-                fake: "Fake profile",
-                other: "Other"
-            },
-            errors: {
-                selectImagesOrVideoOnly: "Please select either images or one video, not both together",
-                onlyVideosUnder50MB: "Only videos under 50MB are allowed",
-                maxVideos: "You can upload up to 3 videos at a time",
-                onlyImagesUnder8MB: "Only images under 8MB are allowed",
-                onlyImagesAllowed: "Only images are allowed",
-                photoUnder8MB: "Photo must be under 8MB",
-                failedSendImages: "Failed to send images",
-                failedSendVideos: "Failed to send videos",
-                failedFollowStatus: "Failed to get follow status",
-                failedBlockStatus: "Failed to get block status",
-                failedSendReport: "Failed to send report",
-                failedBlockUser: "Failed to block user",
-                failedUnblockUser: "Failed to unblock user",
-                failedUpdateFollow: "Failed to update follow",
-                failedUnfollowUser: "Failed to unfollow user",
-                somethingWentWrong: "Something went wrong"
-            },
+            back: "Back",
 
-        },
-        chat: {
-            activeNow: "Active now",
-            activeStatus: "Active {time}",
-            deletedUser: "User not available"
-        },
-        chatHeader: {
-            call: "Call",
-            more: "More",
-            viewProfile: "View profile",
-            loading: "Loading...",
-            follow: "Follow",
-            unfollow: "Unfollow",
-            audio: "Audio",
-            reportUser: "Report {name}",
-            blockUser: "Block {name}",
-            unblockUser: "Unblock {name}"
-        },
-        chatInput: {
-            openCamera: "Open camera",
-            messagingUnavailable: "Messaging unavailable",
-            editMessage: "Edit message...",
-            typeMessage: "Type a message...",
-            blocked: "Blocked",
-            cancelEditing: "Cancel editing",
-            saveMessage: "Save message",
-            emoji: "Emoji",
-            chooseMedia: "Choose media",
-            sendMessage: "Send message"
-        },
-        notificationsSettings: {
-            kicker: "Preferences",
-            title: "Notifications",
-            subtitle: "Choose which updates you want to receive inside TalSky.",
-            back: "Back",
-            save: "Save changes",
-            saving: "Saving...",
-            saved: "Notification settings updated.",
-            loading: "Loading notification settings...",
-            noteTitle: "About notifications",
-            noteText: "These settings control the notifications you receive inside the app.",
-            table: {
-                type: "Type",
-                enabled: "Enabled"
-            },
-            items: {
-                messages: {
-                    title: "New messages",
-                    description: "Get notified when someone sends you a new message."
-                },
-                activity: {
-                    title: "Profile activity",
-                    description: "See updates related to your profile and community activity."
-                },
-                follows: {
-                    title: "Follows",
-                    description: "Know when someone follows you or interacts with your profile."
-                },
-                aiTutor: {
-                    title: "AI Tutor reminders",
-                    description: "Receive reminders to come back and continue practicing."
-                },
-                marketing: {
-                    title: "News and offers",
-                    description: "Get product updates, launches, and special promotions."
-                },
-                security: {
-                    title: "Security alerts",
-                    description: "Important account and security-related notifications."
-                }
-            },
-            errors: {
-                load: "Could not load notification settings.",
-                save: "Could not save notification settings."
-            }
-        },
-        privacy: {
-            kicker: "PRIVACY & SAFETY",
-            title: "Privacy & safety",
-            subtitle: "Manage visibility, blocked users, and account safety.",
-            back: "Back",
-            save: "Save",
-            saving: "Saving...",
-            saved: "Saved successfully",
-            loading: "Loading privacy settings...",
-            errors: {
-                load: "Failed to load privacy settings",
-                save: "Failed to save privacy settings",
-            },
-            sections: {
-                visibility: {
-                    title: "Profile visibility",
-                    description: "Control how your profile appears across TalSky.",
-                },
-                messaging: {
-                    title: "Messaging safety",
-                    description: "Decide how new people can contact you.",
-                },
-                safety: {
-                    title: "Account safety",
-                    description: "Stay informed about security-related activity.",
-                },
-                actions: {
-                    title: "Blocked users & account actions",
-                    description: "Manage access, password changes, and sensitive actions.",
-                },
-            },
-            items: {
-                privateProfile: {
-                    title: "Private profile",
-                    description: "Make your profile less visible to people you have not connected with.",
-                },
-                showOnlineStatus: {
-                    title: "Show online status",
-                    description: "Let others see when you are currently active on TalSky.",
-                },
-                showLastSeen: {
-                    title: "Show last seen",
-                    description: "Display the last time you were active in the app.",
-                },
-                showLocation: {
-                    title: "Show location in profile",
-                    description: "Display your city and country on your public profile.",
-                },
-                showInDiscovery: {
-                    title: "Appear in discovery",
-                    description: "Allow your profile to appear in feed, search, and suggestions.",
-                },
-                allowMessagesFromEveryone: {
-                    title: "Allow messages from everyone",
-                    description: "Let anyone start a conversation with you.",
-                },
-                filterMessageRequests: {
-                    title: "Filter message requests",
-                    description: "Move chats from unknown people into a safer requests flow.",
-                },
-                muteMessagePreviews: {
-                    title: "Mute message previews",
-                    description: "Hide message preview text in notifications and alerts.",
-                },
-                blockUnknownChatRequests: {
-                    title: "Block unknown chat requests",
-                    description: "Prevent people you do not know from starting a conversation.",
-                },
-                loginAlerts: {
-                    title: "Login alerts",
-                    description: "Get notified when your account is accessed from a new device.",
-                },
-                securityAlerts: {
-                    title: "Security alerts",
-                    description: "Receive important updates about account safety and unusual activity.",
-                },
-            },
+            sectionTitle: "Account actions",
+
+            sectionSubtitle:
+                "Manage password changes, deactivation, and deletion.",
+
             actions: {
-                blockedUsers: {
-                    title: "Blocked users",
-                    description: "Review the people you have blocked and manage access.",
-                    action: "Manage",
-                },
                 changePassword: {
                     title: "Change password",
-                    description: "Update your password to keep your account secure.",
+                    description:
+                        "Update your password to keep your account secure.",
                     action: "Open",
                 },
+
                 deactivate: {
                     title: "Deactivate account",
-                    description: "Temporarily disable your profile and hide your activity.",
+                    description:
+                        "Temporarily disable your account and hide your activity.",
                     action: "Review",
                 },
+
                 delete: {
                     title: "Delete account",
-                    description: "Permanently remove your account and your data from TalSky.",
+                    description:
+                        "Permanently remove your account and your data from TalSky.",
                     action: "Delete",
                 },
-            },
-        },
-        blockedUsers: {
-            kicker: "SECURITY",
-            title: "Blocked Users",
-            subtitle: "People you block won’t be able to message you or see your full profile.",
-            back: "Back",
-            loading: "Loading blocked users...",
-            unblocked: "User successfully unblocked",
-            unblock: "Unblock",
-            unblocking: "Unblocking...",
-            unknownName: "Unknown user",
-            noUsername: "No username",
-            emptyTitle: "You have no blocked users",
-            emptyText: "You haven’t blocked anyone yet. When you block someone, they will appear here.",
-            errors: {
-                load: "Could not load blocked users",
-                unblock: "Could not unblock the user",
             },
         },
         changePassword: {
@@ -1400,89 +1058,7 @@ export const translations = {
 
             contactText: "Questions? Contact:",
         },
-        idealPartner: {
-            badge: "Recommended for you",
-            title: "We found a great match for you",
-            viewProfile: "View profile",
-            startChat: "Start chat",
-            close: "Close",
-        },
-        match: {
-            speaksTargetLanguage: "Speaks your target language",
-            learnsYourLanguage: "Wants to learn your language",
-            sameCity: "Lives near you",
-            sharedInterests: "Shares your interests",
-        },
         //need ja
-        notifications: {
-            openPanel: "Open notifications",
-            title: "Notifications",
-            subtitle: "Stay up to date with your recent activity.",
-            markAllRead: "Mark all as read",
-            loading: "Loading notifications...",
-            empty: "You don’t have any notifications yet",
-            viewAll: "View all",
-            someone: "Someone",
-
-            page: {
-                kicker: "Your activity",
-                title: "Notifications",
-                subtitle: "Review your latest updates, match suggestions, follows, and system messages.",
-                filters: {
-                    all: "All",
-                    unread: "Unread",
-                },
-                summary: {
-                    total: "Total notifications",
-                    unread: "Unread notifications",
-                },
-                emptyTitle: "You’re all caught up",
-                emptyUnread: "You don’t have any unread notifications right now.",
-                actions: {
-                    markRead: "Mark as read",
-                    delete: "Delete notification",
-                },
-            },
-
-            items: {
-                follow: {
-                    title: "New follower",
-                    body: (name) => `${name} started following you.`,
-                },
-
-                idealMatch: {
-                    titles: {
-                        greatMatch: "We found a great match for you",
-                        recommendedConnection: "A new recommended connection",
-                        promisingMatch: "This match looks promising",
-                        specialSuggestion: "A special suggestion for you",
-                    },
-                    bodies: {
-                        default: (name) => `${name} could be a great fit for you.`,
-                        sharedInterestsTwo: ({ interest1, interest2 }) =>
-                            `Shared interests: ${interest1} and ${interest2}`,
-                        sharedInterestOne: ({ interest1 }) =>
-                            `You both like ${interest1}`,
-                        sameCity: () => "Lives near you",
-                        speaksTargetLanguage: () => "Speaks your target language",
-                        learnsYourLanguage: () => "Wants to learn your native language",
-                        sharedInterests: () => "Shares your interests",
-                        sameGoal: () => "Has similar learning goals",
-                        highScore: () => "This looks like a very strong match",
-                    },
-                },
-
-                appUpdate: {
-                    title: "New update available",
-                },
-                policyUpdate: {
-                    title: "Terms updated",
-                },
-                privacyUpdate: {
-                    title: "Privacy Policy updated",
-                },
-            },
-        },
         forgotPassword: {
             title: "Forgot password?",
             subtitle:
@@ -1711,7 +1287,7 @@ export const translations = {
         },
 
         navbar: {
-            social: "Social",
+            social: "Home",
             learn: "Aprender",
             aiTutor: "Tutor IA",
             myProfile: "Mi perfil",

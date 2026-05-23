@@ -1,11 +1,8 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { House, MessageCircle, BookOpen, Settings, QrCode } from "lucide-react";
-import { getSocket } from "../socket";
+import { House, BookOpen, } from "lucide-react";
 import { API_URL } from "../lib/config";
 import { useTranslation } from "../hooks/useTranslation";
-import ProfileQRModal from "../components/ProfileQRModal";
-import NotificationBell from "../components/NotificationBell";
 import "../styles/UserNavbar.css";
 
 export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
@@ -15,26 +12,19 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
 
     // 🔒 feature flags temporales
     const showLearnNav = false;
-    const showStreakNav = false;
-    const showLeaderboardNav = false;
-    const showNotificationsNav = true;
     const showAITutorNav = true;
 
     const hideNavbarRoutes = ["/dashboard/create-profile"];
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
     const [openProfileMenu, setOpenProfileMenu] = useState(false);
-    const [unreadCount, setUnreadCount] = useState(0);
-    const [streak, setStreak] = useState(0);
     const [isStreakPulsing, setIsStreakPulsing] = useState(false);
-    const [showQRModal, setShowQRModal] = useState(false);
 
     const token = localStorage.getItem("token");
     const myId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
 
     const isActive = (path) => location.pathname.startsWith(path);
-    const isMessages =
-        location.pathname.includes("/chat") || location.pathname.includes("/messages");
+    const isAITutor = location.pathname.includes("/dashboard/ai-tutor");
     const isOwnProfilePage =
         location.pathname === "/dashboard/profile" ||
         location.pathname === "/dashboard/profile/";
@@ -108,7 +98,6 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
     useEffect(() => {
         if (!myId || !token) return;
 
-        const socket = getSocket();
 
         const syncUnreadCount = () => {
             fetch(`${API_URL}/api/chats`, {
@@ -146,51 +135,6 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
         };
     }, [myId, token]);
 
-    useEffect(() => {
-        if (!showStreakNav) return;
-        if (!token) return;
-
-        fetch(`${API_URL}/api/users/me/streak`, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setStreak(data.streakCount || 0);
-            })
-            .catch(() => { });
-    }, [token, showStreakNav]);
-
-    useEffect(() => {
-        if (!showStreakNav) return;
-
-        if (typeof user?.streak === "number") {
-            setStreak(user.streak);
-        }
-    }, [user?.streak, showStreakNav]);
-
-    useEffect(() => {
-        if (!showStreakNav) return;
-
-        const handleStreakEarned = (event) => {
-            const nextStreak = event.detail?.nextStreak;
-
-            if (typeof nextStreak === "number") {
-                setStreak(nextStreak);
-                setIsStreakPulsing(true);
-
-                setTimeout(() => {
-                    setIsStreakPulsing(false);
-                }, 700);
-            }
-        };
-
-        window.addEventListener("lesson-streak-earned", handleStreakEarned);
-
-        return () => {
-            window.removeEventListener("lesson-streak-earned", handleStreakEarned);
-        };
-    }, [showStreakNav]);
-
     const mobileHandle =
         user?.username
             ? `@${user.username}`
@@ -212,12 +156,12 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                     <div className="app-navbar-inner">
                         <button
                             className="nav-brand"
-                            onClick={() => navigate("/dashboard/feed")}
+                            onClick={() => navigate("/dashboard/home")}
                             type="button"
                         >
                             <div className="nav-brand-logo-wrap">
                                 <img
-                                    src="https://th.bing.com/th/id/OIP.tGQ3WqH8FJpz6bH7SdgwmgHaHa?w=189&h=189&c=7&r=0&o=7&pid=1.7&rm=3"
+                                    src="/TalSky.png"
                                     alt="TalSky"
                                     className="nav-brand-logo"
                                 />
@@ -230,8 +174,8 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
 
                         <nav className="nav-links nav-links-desktop">
                             <Link
-                                to="/dashboard/feed"
-                                className={isActive("/dashboard/feed") ? "active" : ""}
+                                to="/dashboard/home"
+                                className={isActive("/dashboard/home") ? "active" : ""}
                             >
                                 {t("navbar.social")}
                             </Link>
@@ -256,45 +200,6 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                         </nav>
 
                         <div className="nav-actions">
-                            {showStreakNav && (
-                                <div
-                                    className={`nav-streak ${isStreakPulsing ? "pulse" : ""}`}
-                                    data-streak-target
-                                    id="navbar-streak-target"
-                                >
-                                    <span className="navbar-streak-flame">🔥</span>
-                                    <span className="navbar-streak-count">{streak}</span>
-                                </div>
-                            )}
-
-                            {showLeaderboardNav && (
-                                <button
-                                    className="nav-icon-btn"
-                                    type="button"
-                                    onClick={() => navigate("/dashboard/leaderboard")}
-                                    aria-label={t("navbar.leaderboard")}
-                                    title={t("navbar.leaderboard")}
-                                >
-                                    🏆
-                                </button>
-                            )}
-
-                            {showNotificationsNav && <NotificationBell />}
-
-                            <button
-                                className="nav-icon-btn chat-btn"
-                                type="button"
-                                onClick={() => navigate("/dashboard/chat-v2")}
-                                aria-label={t("navbar.chat")}
-                                title={t("navbar.chat")}
-                            >
-                                💬
-                                {unreadCount > 0 && (
-                                    <span className="chat-nav-badge">
-                                        {unreadCount > 99 ? "99+" : unreadCount}
-                                    </span>
-                                )}
-                            </button>
 
                             <div className="navbar-profile-wrap">
                                 <button
@@ -311,9 +216,6 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
 
                                 {openProfileMenu && (
                                     <div className="navbar-profile-menu">
-                                        <button onClick={() => goTo("/dashboard/profile")}>
-                                            {t("navbar.myProfile")}
-                                        </button>
                                         <button onClick={() => goTo("/dashboard/settings")}>
                                             {t("navbar.settings")}
                                         </button>
@@ -336,40 +238,17 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                     <div className="app-navbar-inner mobile-top-navbar-inner">
                         <button
                             className="nav-brand mobile-brand-only"
-                            onClick={() => navigate("/dashboard/feed")}
+                            onClick={() => navigate("/dashboard/home")}
                             type="button"
                         >
                             <div className="nav-brand-logo-wrap">
                                 <img
-                                    src="https://th.bing.com/th/id/OIP.tGQ3WqH8FJpz6bH7SdgwmgHaHa?w=189&h=189&c=7&r=0&o=7&pid=1.7&rm=3"
+                                    src="/TalSky.png"
                                     alt="TalSky"
                                     className="nav-brand-logo"
                                 />
                             </div>
                         </button>
-
-                        <div className="nav-actions mobile-only-actions">
-                            {showStreakNav && (
-                                <div className={`nav-streak ${isStreakPulsing ? "pulse" : ""}`}>
-                                    <span className="navbar-streak-flame">🔥</span>
-                                    <span className="navbar-streak-count">{streak}</span>
-                                </div>
-                            )}
-
-                            {showLeaderboardNav && (
-                                <button
-                                    className="nav-icon-btn"
-                                    type="button"
-                                    onClick={() => navigate("/dashboard/leaderboard")}
-                                    aria-label={t("navbar.leaderboard")}
-                                    title={t("navbar.leaderboard")}
-                                >
-                                    🏆
-                                </button>
-                            )}
-
-                            {showNotificationsNav && <NotificationBell />}
-                        </div>
                     </div>
                 </header>
             )}
@@ -377,22 +256,12 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
             {showTopNavbar && isMobile && isOwnProfilePage && (
                 <header className="app-navbar mobile-top-navbar mobile-profile-navbar">
                     <div className="app-navbar-inner mobile-profile-navbar-inner">
-                        <button
-                            className="mobile-profile-qr-btn"
-                            onClick={() => setShowQRModal(true)}
-                        >
-                            <div className="mobile-profile-qr-box">
-                                <QrCode size={18} />
-                            </div>
-                        </button>
 
                         <div className="mobile-profile-handle">
                             {mobileHandle}
                         </div>
 
                         <div className="mobile-profile-right-actions">
-                            {showNotificationsNav && <NotificationBell />}
-
                             <button
                                 className="nav-icon-btn"
                                 type="button"
@@ -411,8 +280,8 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                 <nav className="mobile-bottom-nav">
                     <button
                         type="button"
-                        className={isActive("/dashboard/feed") ? "active" : ""}
-                        onClick={() => navigate("/dashboard/feed")}
+                        className={isActive("/dashboard/home") ? "active" : ""}
+                        onClick={() => navigate("/dashboard/home")}
                         aria-label={t("navbar.home")}
                     >
                         <House size={22} />
@@ -420,18 +289,11 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
 
                     <button
                         type="button"
-                        className={isMessages ? "active" : ""}
-                        onClick={() => navigate("/dashboard/chat-v2")}
-                        aria-label={t("navbar.messages")}
+                        className={isAITutor ? "active" : ""}
+                        onClick={() => navigate("/dashboard/ai-tutor")}
+                        aria-label={t("navbar.aiTutor")}
                     >
-                        <div className="mobile-bottom-icon-wrap">
-                            <MessageCircle size={22} />
-                            {unreadCount > 0 && (
-                                <span className="mobile-bottom-badge">
-                                    {unreadCount > 99 ? "99+" : unreadCount}
-                                </span>
-                            )}
-                        </div>
+                        <BookOpen size={22} />
                     </button>
 
                     {showLearnNav && (
@@ -448,7 +310,7 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                     <button
                         type="button"
                         className={isOwnProfilePage ? "active profile-tab-btn" : "profile-tab-btn"}
-                        onClick={() => navigate("/dashboard/profile")}
+                        onClick={() => navigate("/dashboard/settings")}
                         aria-label={t("navbar.profile")}
                     >
                         <img
@@ -457,15 +319,9 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                             className="mobile-profile-avatar"
                         />
                     </button>
-                </nav>
-            )}
-
-            {showQRModal && (
-                <ProfileQRModal
-                    user={user}
-                    onClose={() => setShowQRModal(false)}
-                />
-            )}
+                </nav >
+            )
+            }
         </>
     );
 }

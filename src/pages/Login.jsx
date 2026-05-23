@@ -42,7 +42,7 @@ export default function Login() {
             } else if (!data.user.profileCompleted) {
                 navigate("/dashboard/create-profile");
             } else {
-                navigate("/dashboard/ai-tutor");
+                navigate("/");
             }
         }, 700);
     };
@@ -226,33 +226,6 @@ export default function Login() {
                             {t("login.createOne")}
                         </Link>
                     </p>
-                </div>
-
-                <div className="login-right">
-                    <div className="login-right-content">
-                        <div className="login-badge">TalSky Social</div>
-
-                        <h2>{t("login.rightTitle")}</h2>
-
-                        <p>{t("login.rightSubtitle")}</p>
-
-                        <div className="login-feature-list">
-                            <div className="login-feature-item">
-                                <strong>{t("login.feature1Title")}</strong>
-                                <span>{t("login.feature1Text")}</span>
-                            </div>
-
-                            <div className="login-feature-item">
-                                <strong>{t("login.feature2Title")}</strong>
-                                <span>{t("login.feature2Text")}</span>
-                            </div>
-
-                            <div className="login-feature-item">
-                                <strong>{t("login.feature3Title")}</strong>
-                                <span>{t("login.feature3Text")}</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

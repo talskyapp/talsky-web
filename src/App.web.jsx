@@ -21,7 +21,7 @@ import MyCardsPage from "./pages/MyCardsPage";
 import CardsReviewPage from "./pages/CardsReviewPage";
 import CreateProfile from "./pages/CreateProfile";
 import SettingsPage from "./pages/SettingsPage";
-import PrivacySafetyPage from "./pages/PrivacySafetyPage";
+import AccountSettings from "./pages/AccountSettings";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import DeactivateAccountPage from "./pages/DeactivateAccountPage";
 import DeleteAccountPage from "./pages/DeleteAccountPage";
@@ -39,6 +39,8 @@ import AdminReportsPage from "./pages/admin/AdminReportsPage";
 import AdminModerationLogsPage from "./pages/admin/AdminModerationLogsPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import Landing from "./pages/Landing";
+import DashboardHome from "./pages/DashboardHome";
 
 /* COMPONENTS */
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -120,7 +122,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="/" element={<Landing />} />
 
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
@@ -194,6 +196,7 @@ function App() {
                     }
                 >
                     <Route path="pricing" element={<Pricing />} />
+                    <Route path="home" element={<DashboardHome />} />
                     <Route path="pricing/success" element={<PricingSuccess />} />
                     <Route path="ai-tutor" element={<AITutorPage />} />
                     <Route path="ai-chat" element={<AIChatPage />} />
@@ -202,7 +205,7 @@ function App() {
                     <Route path="create-profile" element={<CreateProfile />} />
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="settings/language" element={<AppLanguagePage />} />
-                    <Route path="settings/privacy" element={<PrivacySafetyPage />} />
+                    <Route path="settings/account" element={<AccountSettings />} />
                     <Route path="settings/change-password" element={<ChangePasswordPage />} />
                     <Route path="settings/deactivate-account" element={<DeactivateAccountPage />} />
                     <Route path="settings/delete-account" element={<DeleteAccountPage />} />

@@ -178,7 +178,7 @@ export default function CreateProfile() {
             }
 
             localStorage.setItem("user", JSON.stringify(data));
-            navigate("/dashboard/ai-tutor");
+            navigate("/");
         } catch (err) {
             console.error("PROFILE SETUP ERROR:", err);
             setError("Error updating profile.");
