@@ -27,17 +27,13 @@ export default function StepLocationPermissionAnimated({ onContinue }) {
                 try {
                     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-                    const geoRes = await axios.get(
-                        "https://maps.googleapis.com/maps/api/geocode/json",
-                        {
-                            params: {
-                                latlng: `${lat},${lng}`,
-                                key: apiKey,
-                            },
-                        }
+                    const geoResponse = await fetch(
+                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
                     );
 
-                    const results = geoRes.data.results || [];
+                    const geoData = await geoResponse.json();
+
+                    const results = geoData.results || [];
                     const address = results[0]?.address_components || [];
 
                     const city =
@@ -54,18 +50,15 @@ export default function StepLocationPermissionAnimated({ onContinue }) {
                         address.find((a) => a.types.includes("country"))?.long_name ||
                         "Unknown";
 
-                    const timezoneRes = await axios.get(
-                        "https://maps.googleapis.com/maps/api/timezone/json",
-                        {
-                            params: {
-                                location: `${lat},${lng}`,
-                                timestamp: Math.floor(Date.now() / 1000),
-                                key: apiKey,
-                            },
-                        }
+                    const timezoneResponse = await fetch(
+                        `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${Math.floor(
+                            Date.now() / 1000
+                        )}&key=${apiKey}`
                     );
 
-                    const timezone = timezoneRes.data.timeZoneId || "UTC";
+                    const timezoneData = await timezoneResponse.json();
+
+                    const timezone = timezoneData.timeZoneId || "UTC";
 
                     await axios.put(
                         `${API_URL}/api/users/update-location`,
