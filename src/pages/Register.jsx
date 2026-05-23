@@ -62,7 +62,7 @@ export default function Register() {
             } else if (!data.user.profileCompleted) {
                 navigate("/dashboard/create-profile");
             } else {
-                navigate("/dashboard/feed");
+                navigate("/dashboard/ai-tutor");
             }
         }, 700);
     };
