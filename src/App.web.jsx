@@ -193,7 +193,6 @@ function App() {
                         </ProtectedRoute>
                     }
                 >
-                    <Route path="feed" element={<Feed />} />
                     <Route path="pricing" element={<Pricing />} />
                     <Route path="pricing/success" element={<PricingSuccess />} />
                     <Route path="ai-tutor" element={<AITutorPage />} />
@@ -204,7 +203,6 @@ function App() {
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="settings/language" element={<AppLanguagePage />} />
                     <Route path="settings/privacy" element={<PrivacySafetyPage />} />
-                    <Route path="settings/blocked-users" element={<BlockedUsersPage />} />
                     <Route path="settings/change-password" element={<ChangePasswordPage />} />
                     <Route path="settings/deactivate-account" element={<DeactivateAccountPage />} />
                     <Route path="settings/delete-account" element={<DeleteAccountPage />} />
