@@ -42,7 +42,7 @@ export default function Login() {
             } else if (!data.user.profileCompleted) {
                 navigate("/dashboard/create-profile");
             } else {
-                navigate("/");
+                navigate("/dashboard/home");
             }
         }, 700);
     };
