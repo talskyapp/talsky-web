@@ -1199,7 +1199,6 @@ export const translations = {
                 button: "Mejorar ahora",
             },
         },
-
         login: {
             kicker: "Bienvenido de nuevo",
             title: "Inicia sesión en TalSky",
@@ -1236,7 +1235,6 @@ export const translations = {
             accountDeleted:
                 "Esta cuenta ya no está disponible.",
         },
-
         register: {
             kicker: "Comienza ahora",
             title: "Crea tu cuenta",
@@ -1271,7 +1269,6 @@ export const translations = {
             welcomeTitle: "Bienvenido a TalSky",
             welcomeText: "Configurando tu cuenta...",
         },
-
         appLanguage: {
             kicker: "Preferencias",
             title: "Idioma de la app",
@@ -1285,7 +1282,6 @@ export const translations = {
             saving: "Guardando...",
             saveButton: "Guardar idioma",
         },
-
         navbar: {
             social: "Home",
             learn: "Aprender",
@@ -1301,7 +1297,6 @@ export const translations = {
             messages: "Mensajes",
             profile: "Perfil",
         },
-
         nearby: {
             mapFailedTitle: "No se pudo cargar el mapa",
             mapFailedText: "Por favor revisa tu clave de Google Maps API.",
@@ -1337,7 +1332,6 @@ export const translations = {
             upgradeNow: "Mejorar ahora",
             notNow: "Ahora no",
         },
-
         nearbyPermission: {
             badge: "Nearby",
             kicker: "Conecta localmente",
@@ -1358,7 +1352,6 @@ export const translations = {
             enableError: "No se pudo activar Nearby en este momento.",
             genericError: "Algo salió mal. Inténtalo de nuevo.",
         },
-
         updateLocation: {
             badge: "Nearby",
             title: "Activa la ubicación para encontrar personas cerca",
@@ -1379,7 +1372,6 @@ export const translations = {
             timeout: "La solicitud de ubicación tardó demasiado. Inténtalo de nuevo.",
             unknownError: "No fue posible obtener tu ubicación.",
         },
-
         aiTutor: {
             hero: {
                 kicker: "Aprendizaje inmersivo con IA",
@@ -3932,7 +3924,6 @@ export const translations = {
                 },
             },
         },
-
 
     },
 
