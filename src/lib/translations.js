@@ -1267,6 +1267,22 @@ export const translations = {
             sendError:
                 "We couldn’t send the reset email. Please try again later.",
         },
+        resetPassword: {
+            title: "Reset password",
+            subtitle: "Create a new secure password for your TalSky account.",
+            password: "New password",
+            confirmPassword: "Confirm password",
+            passwordPlaceholder: "Enter new password",
+            confirmPlaceholder: "Confirm your password",
+            mismatch: "Passwords do not match",
+            button: "Reset password",
+            loading: "Updating...",
+            back: "Back to login",
+            error: "We couldn't reset your password. Please try again.",
+            invalidLink: "This reset link is invalid or has expired.",
+            successTitle: "Password updated",
+            successText: "Your password has been successfully updated."
+        }
     },
 
     es: {
@@ -2477,25 +2493,21 @@ export const translations = {
                 "No pudimos enviar el correo de recuperación. Inténtalo nuevamente.",
         },
         resetPassword: {
-            title: "Reset password",
-            subtitle:
-                "Create a new secure password for your TalSky account.",
-            password: "New password",
-            confirmPassword: "Confirm password",
-            passwordPlaceholder: "Enter new password",
-            confirmPlaceholder: "Confirm your password",
-            mismatch: "Passwords do not match",
-            button: "Reset password",
-            loading: "Updating...",
-            back: "Back to login",
-            error:
-                "We couldn't reset your password. Please try again.",
-            invalidLink:
-                "This reset link is invalid or has expired.",
-            successTitle: "Password updated",
-            successText:
-                "Your password has been successfully updated.",
-        },
+            title: "Restablecer contraseña",
+            subtitle: "Crea una nueva contraseña segura para tu cuenta de TalSky.",
+            password: "Nueva contraseña",
+            confirmPassword: "Confirmar contraseña",
+            passwordPlaceholder: "Ingresa tu nueva contraseña",
+            confirmPlaceholder: "Confirma tu contraseña",
+            mismatch: "Las contraseñas no coinciden",
+            button: "Restablecer contraseña",
+            loading: "Actualizando...",
+            back: "Volver al inicio de sesión",
+            error: "No pudimos restablecer tu contraseña. Inténtalo nuevamente.",
+            invalidLink: "Este enlace es inválido o ha expirado.",
+            successTitle: "Contraseña actualizada",
+            successText: "Tu contraseña ha sido actualizada correctamente."
+        }
     },
 
     zh: {
@@ -3756,7 +3768,22 @@ export const translations = {
             sendError:
                 "无法发送重置邮件，请稍后再试。",
         },
-
+        resetPassword: {
+            title: "重置密码",
+            subtitle: "为您的 TalSky 账户创建一个新的安全密码。",
+            password: "新密码",
+            confirmPassword: "确认密码",
+            passwordPlaceholder: "输入新密码",
+            confirmPlaceholder: "再次输入密码",
+            mismatch: "密码不匹配",
+            button: "重置密码",
+            loading: "更新中...",
+            back: "返回登录",
+            error: "无法重置密码，请重试。",
+            invalidLink: "此重置链接无效或已过期。",
+            successTitle: "密码已更新",
+            successText: "您的密码已成功更新。"
+        }
     },
 
     ja: {
@@ -5016,6 +5043,22 @@ export const translations = {
                 "そのメールアドレスにアカウントがある場合、まもなくパスワードリセットリンクが届きます。",
             sendError:
                 "リセットメールを送信できませんでした。後でもう一度お試しください。",
+        },
+        resetPassword: {
+            title: "パスワードをリセット",
+            subtitle: "TalSkyアカウント用の新しい安全なパスワードを作成してください。",
+            password: "新しいパスワード",
+            confirmPassword: "パスワードを確認",
+            passwordPlaceholder: "新しいパスワードを入力",
+            confirmPlaceholder: "パスワードを再入力",
+            mismatch: "パスワードが一致しません",
+            button: "パスワードをリセット",
+            loading: "更新中...",
+            back: "ログインに戻る",
+            error: "パスワードをリセットできませんでした。もう一度お試しください。",
+            invalidLink: "このリンクは無効か期限切れです。",
+            successTitle: "パスワードが更新されました",
+            successText: "パスワードが正常に更新されました。"
         }
     },
 
@@ -6276,6 +6319,22 @@ export const translations = {
                 "해당 이메일로 등록된 계정이 있다면 곧 비밀번호 재설정 링크가 전송됩니다.",
             sendError:
                 "재설정 이메일을 보낼 수 없습니다. 잠시 후 다시 시도해주세요.",
+        },
+        resetPassword: {
+            title: "비밀번호 재설정",
+            subtitle: "TalSky 계정을 위한 새로운 안전한 비밀번호를 만들어 주세요.",
+            password: "새 비밀번호",
+            confirmPassword: "비밀번호 확인",
+            passwordPlaceholder: "새 비밀번호 입력",
+            confirmPlaceholder: "비밀번호 다시 입력",
+            mismatch: "비밀번호가 일치하지 않습니다",
+            button: "비밀번호 재설정",
+            loading: "업데이트 중...",
+            back: "로그인으로 돌아가기",
+            error: "비밀번호를 재설정할 수 없습니다. 다시 시도해 주세요.",
+            invalidLink: "이 링크는 유효하지 않거나 만료되었습니다.",
+            successTitle: "비밀번호가 업데이트되었습니다",
+            successText: "비밀번호가 성공적으로 변경되었습니다."
         }
     },
 };
