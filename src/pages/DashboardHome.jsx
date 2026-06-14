@@ -1,4 +1,5 @@
 import { Link, useOutletContext } from "react-router-dom";
+import { FaApple, FaGooglePlay } from "react-icons/fa";
 import {
     Sparkles,
     BookOpen,
@@ -10,31 +11,32 @@ import {
     Globe2,
 } from "lucide-react";
 import "../styles/DashboardHome.css";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function DashboardHome() {
     const { user } = useOutletContext();
+    const { t } = useTranslation();
 
-    const name = user?.name?.split(" ")?.[0] || "there";
-    const learning = user?.languageToLearn?.[0] || "your target language";
-
+    const name = user?.name?.split(" ")?.[0] || t("dashboardHome.fallbackName");
+    const learning = user?.languageToLearn?.[0] || t("dashboardHome.fallbackLanguage");
     const steps = [
         {
             number: "01",
             icon: <MessageCircle size={22} />,
-            title: "Practice naturally",
-            text: "Start conversations with AI and practice real phrases for daily situations.",
+            title: t("dashboardHome.steps.practiceTitle"),
+            text: t("dashboardHome.steps.practiceText"),
         },
         {
             number: "02",
             icon: <Layers3 size={22} />,
-            title: "Save useful words",
-            text: "Keep important vocabulary and expressions from your learning sessions.",
+            title: t("dashboardHome.steps.saveTitle"),
+            text: t("dashboardHome.steps.saveText"),
         },
         {
             number: "03",
             icon: <Brain size={22} />,
-            title: "Review with focus",
-            text: "Come back to your saved cards and strengthen what you already learned.",
+            title: t("dashboardHome.steps.reviewTitle"),
+            text: t("dashboardHome.steps.reviewText"),
         },
     ];
 
@@ -44,24 +46,23 @@ export default function DashboardHome() {
                 <div className="dash-hero-copy">
                     <span className="dash-home-pill">
                         <Sparkles size={15} />
-                        AI Language Workspace
+                        {t("dashboardHome.pill")}
                     </span>
 
-                    <h1>Welcome back, {name}.</h1>
+                    <h1>{t("dashboardHome.welcome", { name })}</h1>
 
                     <p>
-                        Continue improving {learning} with guided AI practice,
-                        saved vocabulary, and focused review tools.
+                        {t("dashboardHome.subtitle", { learning })}
                     </p>
 
                     <div className="dash-home-actions">
                         <Link to="/dashboard/ai-tutor" className="dash-home-primary">
-                            Start AI Tutor
+                            {t("dashboardHome.startTutor")}
                             <ArrowRight size={18} />
                         </Link>
 
                         <Link to="/dashboard/cards/review" className="dash-home-secondary">
-                            Review cards
+                            {t("dashboardHome.reviewCards")}
                         </Link>
                     </div>
                 </div>
@@ -70,33 +71,31 @@ export default function DashboardHome() {
                     <div className="dash-preview-glow" />
 
                     <div className="dash-preview-card top">
-                        <span>Today’s focus</span>
-                        <strong>Practice useful conversations</strong>
+                        <span>{t("dashboardHome.todaysFocus")}</span>
+                        <strong>{t("dashboardHome.focusTitle")}</strong>
                     </div>
 
                     <div className="dash-preview-card middle">
                         <div className="dash-ai-icon">
                             <Sparkles size={24} />
                         </div>
-                        <h3>AI Tutor</h3>
-                        <p>Ask, practice, translate, and improve naturally.</p>
+
+                        <h3>{t("dashboardHome.aiTutorTitle")}</h3>
+                        <p>{t("dashboardHome.aiTutorPreview")}</p>
                     </div>
 
                     <div className="dash-preview-card bottom">
-                        <span>Saved words</span>
-                        <strong>12 ready for review</strong>
+                        <span>{t("dashboardHome.savedWords")}</span>
+                        <strong>{t("dashboardHome.savedWordsReady")}</strong>
                     </div>
                 </div>
             </section>
 
             <section className="dash-flow-section">
                 <div className="dash-section-head">
-                    <span>How it works</span>
-                    <h2>Learn in a simple flow.</h2>
-                    <p>
-                        TalSky helps you move from practice to review without feeling
-                        overwhelmed.
-                    </p>
+                    <span>{t("dashboardHome.howItWorks")}</span>
+                    <h2>{t("dashboardHome.flowTitle")}</h2>
+                    <p>{t("dashboardHome.flowText")}</p>
                 </div>
 
                 <div className="dash-flow-grid">
@@ -125,63 +124,68 @@ export default function DashboardHome() {
                     <div className="dash-card-icon">
                         <Sparkles size={24} />
                     </div>
-                    <span>AI PRACTICE</span>
-                    <h3>AI Tutor</h3>
-                    <p>Practice conversations, grammar, vocabulary, and explanations.</p>
+
+                    <span>{t("dashboardHome.cards.aiLabel")}</span>
+                    <h3>{t("dashboardHome.cards.aiTitle")}</h3>
+                    <p>{t("dashboardHome.cards.aiText")}</p>
                 </Link>
 
                 <Link to="/dashboard/cards" className="dash-home-card">
                     <div className="dash-card-icon">
                         <BookOpen size={24} />
                     </div>
-                    <span>VOCABULARY</span>
-                    <h3>Saved vocabulary</h3>
-                    <p>Keep track of useful words and phrases from your practice.</p>
+
+                    <span>{t("dashboardHome.cards.vocabLabel")}</span>
+                    <h3>{t("dashboardHome.cards.vocabTitle")}</h3>
+                    <p>{t("dashboardHome.cards.vocabText")}</p>
                 </Link>
 
                 <Link to="/dashboard/cards/review" className="dash-home-card">
                     <div className="dash-card-icon">
                         <Brain size={24} />
                     </div>
-                    <span>REVIEW</span>
-                    <h3>Review cards</h3>
-                    <p>Review saved words with a clean and focused study flow.</p>
+
+                    <span>{t("dashboardHome.cards.reviewLabel")}</span>
+                    <h3>{t("dashboardHome.cards.reviewTitle")}</h3>
+                    <p>{t("dashboardHome.cards.reviewText")}</p>
                 </Link>
 
                 <div className="dash-home-card disabled">
                     <div className="dash-card-icon">
                         <Globe2 size={24} />
                     </div>
-                    <span>COMING SOON</span>
-                    <h3>Mobile community</h3>
-                    <p>Meet language partners worldwide when the mobile app launches.</p>
+
+                    <span>{t("dashboardHome.cards.mobileLabel")}</span>
+                    <h3>{t("dashboardHome.cards.mobileTitle")}</h3>
+                    <p>{t("dashboardHome.cards.mobileText")}</p>
                 </div>
             </section>
 
             <section className="dash-home-mobile">
                 <div className="dash-mobile-copy">
-                    <span>TalSky Mobile</span>
-                    <h2>Continue the full social experience on mobile.</h2>
-                    <p>
-                        Meet people around the world, chat naturally, discover cultures,
-                        and practice languages through real connections on iOS and Android.
-                    </p>
+                    <span>{t("dashboardHome.mobile.label")}</span>
+
+                    <h2>{t("dashboardHome.mobile.title")}</h2>
+
+                    <p>{t("dashboardHome.mobile.text")}</p>
                 </div>
 
                 <div className="dash-store-buttons">
                     <a href="#" className="dash-store-btn">
-                        <span className="dash-store-icon"></span>
+                        <FaApple className="dash-store-real-icon" />
+
                         <div>
-                            <small>Download on the</small>
-                            <strong>App Store</strong>
+                            <small>{t("dashboardHome.mobile.appStoreSmall")}</small>
+                            <strong>{t("dashboardHome.mobile.appStore")}</strong>
                         </div>
                     </a>
 
                     <a href="#" className="dash-store-btn">
-                        <span className="dash-store-icon">▶</span>
+                        <FaGooglePlay className="dash-store-real-icon" />
+
                         <div>
-                            <small>Get it on</small>
-                            <strong>Google Play</strong>
+                            <small>{t("dashboardHome.mobile.googleSmall")}</small>
+                            <strong>{t("dashboardHome.mobile.googlePlay")}</strong>
                         </div>
                     </a>
                 </div>

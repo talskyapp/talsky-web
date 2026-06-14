@@ -6,7 +6,7 @@ export default function Landing() {
         <main className="landing-page">
             <nav className="landing-nav">
                 <div className="landing-brand">
-                    <img src="/TalSky.png" alt="TalSky" />
+                    <img src="/TalSky.jpeg" alt="TalSky" />
                     <span>TalSky</span>
                 </div>
 

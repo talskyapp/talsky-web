@@ -618,6 +618,127 @@
     text-decoration: underline;
 }
 
+.navbar-learning-flag-img {
+    width: 32px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.navbar-learning-language {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #ececf5;
+}
+
+.navbar-learning-flag {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.navbar-learning-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-learning-label {
+    font-size: 13px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.1;
+}
+
+.navbar-learning-subtitle {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.1;
+}
+
+.mobile-brand-full {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-brand-title {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+}
+
+.mobile-top-navbar-inner {
+    justify-content: space-between;
+}
+
+.navbar-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.34);
+    backdrop-filter: blur(6px);
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.navbar-modal {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border: 1px solid #e8ecf4;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.2);
+}
+
+.navbar-modal h3 {
+    margin: 0 0 8px;
+    color: #0f172a;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+.navbar-modal p {
+    margin: 0;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.navbar-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.navbar-modal-actions button {
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.navbar-modal-cancel {
+    background: #ffffff;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.navbar-modal-confirm {
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+}
+
 @media (max-width: 900px) {
     .app-navbar {
         padding: 12px 12px;
@@ -708,6 +829,20 @@
     .notification-panel {
         right: -10px;
         width: min(94vw, 360px);
+    }
+
+    .mobile-top-navbar {
+        height: 64px;
+    }
+
+    .mobile-top-navbar-inner {
+        width: 100%;
+        padding: 0 14px;
+    }
+
+    .navbar-learning-language {
+        width: 48px;
+        height: 38px;
     }
 }
 

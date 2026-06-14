@@ -20,6 +20,7 @@ import AIChatPage from "./pages/AIChatPage";
 import MyCardsPage from "./pages/MyCardsPage";
 import CardsReviewPage from "./pages/CardsReviewPage";
 import CreateProfile from "./pages/CreateProfile";
+import EditProfile from "./pages/EditProfile";
 import SettingsPage from "./pages/SettingsPage";
 import AccountSettings from "./pages/AccountSettings";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
@@ -203,6 +204,7 @@ function App() {
                     <Route path="cards" element={<MyCardsPage />} />
                     <Route path="cards/review" element={<CardsReviewPage />} />
                     <Route path="create-profile" element={<CreateProfile />} />
+                    <Route path="profile/edit" element={<EditProfile />} />
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="settings/language" element={<AppLanguagePage />} />
                     <Route path="settings/account" element={<AccountSettings />} />

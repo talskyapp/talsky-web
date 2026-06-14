@@ -31,7 +31,7 @@ export default function HelpPage() {
                     </div>
 
                     <a
-                        href="mailto:support@talsky.com"
+                        href="mailto:alsky@gmail.com"
                         className="help-btn"
                     >
                         {t("help.contactButton")}

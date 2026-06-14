@@ -9,7 +9,7 @@ const OnboardingLayout = ({ children }) => {
                 <header className="onboarding-header">
                     <div className="onboarding-brand">
                         <img
-                            src="/TalSky.png"
+                            src="/TalSky.jpeg"
                             alt="TalSky"
                             className="onboarding-logo-image"
                         />

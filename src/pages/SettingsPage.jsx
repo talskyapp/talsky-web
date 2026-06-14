@@ -15,10 +15,12 @@ import {
 import { API_URL } from "../lib/config";
 import { useTranslation } from "../hooks/useTranslation";
 import "../styles/SettingsPage.css";
+import { useState } from "react";
 
 export default function SettingsPage({ user: userProp }) {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     const storedUser = JSON.parse(localStorage.getItem("user") || "null");
     const user = userProp || storedUser;
@@ -42,6 +44,7 @@ export default function SettingsPage({ user: userProp }) {
 
     const settingsSections = [
         {
+            id: "account",
             title: t("settings.sections.account"),
             items: [
                 {
@@ -61,6 +64,7 @@ export default function SettingsPage({ user: userProp }) {
             ],
         },
         {
+            id: "preferences",
             title: t("settings.sections.preferences"),
             items: [
                 {
@@ -72,7 +76,8 @@ export default function SettingsPage({ user: userProp }) {
             ],
         },
         {
-            title: t("settings.sections.account"),
+            id: "account-settings",
+            title: t("settings.sections.accountSettings"),
             items: [
                 {
                     icon: <Shield size={18} />,
@@ -83,12 +88,16 @@ export default function SettingsPage({ user: userProp }) {
             ],
         },
         {
+            id: "subscription",
             title: t("settings.sections.subscription"),
             items: [
                 {
-                    icon: user?.subscription?.plan === "pro"
-                        ? <Crown size={18} />
-                        : <CreditCard size={18} />,
+                    icon:
+                        user?.subscription?.plan === "pro" ? (
+                            <Crown size={18} />
+                        ) : (
+                            <CreditCard size={18} />
+                        ),
                     label: t("settings.subscriptionItem.label"),
                     description: t("settings.subscriptionItem.description", {
                         plan: currentPlan,
@@ -99,6 +108,7 @@ export default function SettingsPage({ user: userProp }) {
             ],
         },
         {
+            id: "support",
             title: t("settings.sections.support"),
             items: [
                 {
@@ -153,7 +163,7 @@ export default function SettingsPage({ user: userProp }) {
 
             <div className="settings-sections">
                 {settingsSections.map((section) => (
-                    <section key={section.title} className="settings-section-card">
+                    <section key={section.id} className="settings-section-card">
                         <div className="settings-section-top">
                             <h2>{section.title}</h2>
                         </div>
@@ -210,13 +220,39 @@ export default function SettingsPage({ user: userProp }) {
                     <button
                         type="button"
                         className="settings-session-btn logout"
-                        onClick={handleLogout}
+                        onClick={() => setShowLogoutModal(true)}
                     >
                         <LogOut size={18} />
                         {t("settings.logout")}
                     </button>
                 </div>
             </section>
+            {showLogoutModal && (
+                <div className="settings-modal-backdrop">
+                    <div className="settings-modal">
+                        <h3>{t("settings.logoutModal.title")}</h3>
+                        <p>{t("settings.logoutModal.description")}</p>
+
+                        <div className="settings-modal-actions">
+                            <button
+                                type="button"
+                                className="settings-modal-cancel"
+                                onClick={() => setShowLogoutModal(false)}
+                            >
+                                {t("common.cancel")}
+                            </button>
+
+                            <button
+                                type="button"
+                                className="settings-modal-confirm"
+                                onClick={handleLogout}
+                            >
+                                {t("settings.logoutModal.confirm")}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

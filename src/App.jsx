@@ -60,6 +60,7 @@ import AdminReportsPage from "./pages/admin/AdminReportsPage";
 import AdminModerationLogsPage from "./pages/admin/AdminModerationLogsPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import AlphabetReviewPage from "./pages/AlphabetReviewPage";
 
 /* COMPONENTS */
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -251,6 +252,10 @@ function App() {
                     <Route
                         path="chat-v2"
                         element={<ChatPage socketReady={socketReady} />}
+                    />
+                    <Route
+                        path="cards/alphabet-review"
+                        element={<AlphabetReviewPage />}
                     />
                 </Route>
             </Routes>

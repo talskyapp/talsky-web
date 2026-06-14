@@ -61,7 +61,7 @@ export default function TermsPage() {
                     <p>
                         {t("terms.contactText")}
                         <br />
-                        <strong>support@talsky.com</strong>
+                        <strong>talsky@gmail.com</strong>
                     </p>
                 </section>
             </div>

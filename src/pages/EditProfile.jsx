@@ -68,6 +68,19 @@ const customSelectStyles = {
         padding: 12,
         cursor: "pointer",
     }),
+    menuPortal: (base) => ({
+        ...base,
+        zIndex: 9999,
+    }),
+
+    menu: (base) => ({
+        ...base,
+        zIndex: 9999,
+        borderRadius: 16,
+        overflow: "hidden",
+        boxShadow: "0 20px 40px rgba(15, 23, 42, 0.12)",
+        border: "1px solid #e8edf5",
+    }),
 };
 
 export default function Settings() {
@@ -599,6 +612,8 @@ export default function Settings() {
                                             onChange={setNativeLanguage}
                                             isSearchable
                                             styles={customSelectStyles}
+                                            menuPortalTarget={document.body}
+                                            menuPosition="fixed"
                                             placeholder={t(
                                                 "profileSettings.placeholders.selectLanguage"
                                             )}
@@ -616,6 +631,8 @@ export default function Settings() {
                                             isMulti
                                             isSearchable
                                             styles={customSelectStyles}
+                                            menuPortalTarget={document.body}
+                                            menuPosition="fixed"
                                             placeholder={t(
                                                 "profileSettings.placeholders.selectLanguages"
                                             )}
@@ -633,6 +650,8 @@ export default function Settings() {
                                             isMulti
                                             isSearchable
                                             styles={customSelectStyles}
+                                            menuPortalTarget={document.body}
+                                            menuPosition="fixed"
                                             placeholder={t(
                                                 "profileSettings.placeholders.selectLanguages"
                                             )}

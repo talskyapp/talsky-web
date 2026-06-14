@@ -4,6 +4,13 @@ import { House, BookOpen, } from "lucide-react";
 import { API_URL } from "../lib/config";
 import { useTranslation } from "../hooks/useTranslation";
 import "../styles/UserNavbar.css";
+import { LANGUAGES } from "../constants/languages";
+
+function getLanguageFlagUrl(language) {
+    if (!language?.countryCode) return "";
+
+    return `https://flagcdn.com/w40/${language.countryCode}.png`;
+}
 
 export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
     const navigate = useNavigate();
@@ -18,6 +25,7 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
     const [openProfileMenu, setOpenProfileMenu] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [isStreakPulsing, setIsStreakPulsing] = useState(false);
 
     const token = localStorage.getItem("token");
@@ -149,6 +157,31 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
         return photo.startsWith("http") ? photo : `${API_URL}${photo}`;
     };
 
+    function getLearningLanguageMeta(user) {
+        const value =
+            user?.activeLearningLanguage ||
+            user?.languageToLearn?.[0] ||
+            "";
+
+        const normalized = String(value).toLowerCase();
+
+        const language = LANGUAGES.find(
+            (lang) =>
+                lang.code.toLowerCase() === normalized ||
+                lang.name.toLowerCase() === normalized
+        );
+
+        return (
+            language || {
+                code: "unknown",
+                name: value || "Language",
+                flag: "🌍",
+            }
+        );
+    }
+
+    const learningMeta = getLearningLanguageMeta(user);
+
     return (
         <>
             {showTopNavbar && !isMobile && (
@@ -161,7 +194,7 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                         >
                             <div className="nav-brand-logo-wrap">
                                 <img
-                                    src="/TalSky.png"
+                                    src="/TalSky.jpeg"
                                     alt="TalSky"
                                     className="nav-brand-logo"
                                 />
@@ -201,6 +234,14 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
 
                         <div className="nav-actions">
 
+                            <div className="navbar-learning-language">
+                                <img
+                                    src={getLanguageFlagUrl(learningMeta)}
+                                    alt={learningMeta.name}
+                                    className="navbar-learning-flag-img"
+                                />
+                            </div>
+
                             <div className="navbar-profile-wrap">
                                 <button
                                     className="navbar-profile-trigger"
@@ -222,7 +263,12 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                                         <button onClick={() => goTo("/dashboard/settings/help")}>
                                             {t("navbar.help")}
                                         </button>
-                                        <button onClick={handleLogout}>
+                                        <button
+                                            onClick={() => {
+                                                setOpenProfileMenu(false);
+                                                setShowLogoutModal(true);
+                                            }}
+                                        >
                                             {t("navbar.logout")}
                                         </button>
                                     </div>
@@ -237,18 +283,28 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                 <header className="app-navbar mobile-top-navbar">
                     <div className="app-navbar-inner mobile-top-navbar-inner">
                         <button
-                            className="nav-brand mobile-brand-only"
+                            className="nav-brand mobile-brand-full"
                             onClick={() => navigate("/dashboard/home")}
                             type="button"
                         >
                             <div className="nav-brand-logo-wrap">
                                 <img
-                                    src="/TalSky.png"
+                                    src="/TalSky.jpeg"
                                     alt="TalSky"
                                     className="nav-brand-logo"
                                 />
                             </div>
+
+                            <span className="mobile-brand-title">TalSky</span>
                         </button>
+
+                        <div className="navbar-learning-language">
+                            <img
+                                src={getLanguageFlagUrl(learningMeta)}
+                                alt={learningMeta.name}
+                                className="navbar-learning-flag-img"
+                            />
+                        </div>
                     </div>
                 </header>
             )}
@@ -322,6 +378,33 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
                 </nav >
             )
             }
+
+            {showLogoutModal && (
+                <div className="navbar-modal-backdrop">
+                    <div className="navbar-modal">
+                        <h3>{t("navbar.logoutModal.title")}</h3>
+                        <p>{t("navbar.logoutModal.description")}</p>
+
+                        <div className="navbar-modal-actions">
+                            <button
+                                type="button"
+                                className="navbar-modal-cancel"
+                                onClick={() => setShowLogoutModal(false)}
+                            >
+                                {t("common.cancel")}
+                            </button>
+
+                            <button
+                                type="button"
+                                className="navbar-modal-confirm"
+                                onClick={handleLogout}
+                            >
+                                {t("navbar.logoutModal.confirm")}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

@@ -4,173 +4,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language App</title>
-
+    <title>Animación del Hiragana あ (A) - Paso a Paso</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f4f6fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             margin: 0;
             padding: 20px;
         }
 
-        .header {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 15px;
+        .container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
         }
 
-        .search {
-            background: #fff;
-            padding: 12px 16px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 24px;
         }
 
-        .card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.2s;
+        p {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            font-size: 15px;
         }
 
-        .card:active {
-            transform: scale(0.97);
+        .canvas-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 25px auto;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+            background-color: #fafbfc;
         }
 
-        .avatar {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            object-fit: cover;
+        /* Cuadrícula de guía */
+        .grid-line {
+            position: absolute;
+            background-color: #e2e8f0;
         }
 
-        .info {
-            flex: 1;
-        }
-
-        .name {
-            font-weight: 700;
-            font-size: 18px;
-        }
-
-        .country {
-            font-size: 13px;
-            color: gray;
-        }
-
-        .tags {
-            margin-top: 6px;
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            font-size: 12px;
-            padding: 5px 10px;
-            border-radius: 999px;
-        }
-
-        .native {
-            background: #e6f0ff;
-            color: #3b82f6;
-        }
-
-        .learning {
-            background: #ffe9e9;
-            color: #ef4444;
-        }
-
-        .actions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .btn {
-            background: #f1f3f7;
-            border: none;
-            padding: 8px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .nav {
-            position: fixed;
-            bottom: 0;
+        .grid-h {
+            top: 50%;
             left: 0;
-            right: 0;
-            height: 65px;
-            background: #fff;
+            width: 100%;
+            height: 1px;
+        }
+
+        .grid-v {
+            left: 50%;
+            top: 0;
+            width: 1px;
+            height: 100%;
+        }
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .stroke {
+            fill: none;
+            stroke: #2c3e50;
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Guía en gris claro de fondo */
+        .stroke-bg {
+            fill: none;
+            stroke: #eaeded;
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Números indicadores de pasos */
+        .step-number {
+            font-size: 16px;
+            font-weight: bold;
+            fill: #e74c3c;
+            opacity: 0;
+            animation: fadeInNumber 0.5s forwards;
+        }
+
+        #step1-num {
+            animation-delay: 0s;
+        }
+
+        #step2-num {
+            animation-delay: 1.5s;
+        }
+
+        #step3-num {
+            animation-delay: 3.0s;
+        }
+
+        /* Animación de los trazos usando stroke-dashoffset */
+        .stroke1 {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: drawStroke1 1.2s ease-in-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        .stroke2 {
+            stroke-dasharray: 250;
+            stroke-dashoffset: 250;
+            animation: drawStroke2 1.2s ease-in-out forwards;
+            animation-delay: 1.6s;
+        }
+
+        .stroke3 {
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: drawStroke3 2.2s ease-in-out forwards;
+            animation-delay: 3.0s;
+        }
+
+        @keyframes drawStroke1 {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes drawStroke2 {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes drawStroke3 {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes fadeInNumber {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Controles y explicaciones del paso a paso */
+        .steps-guide {
+            text-align: left;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .step-item {
+            margin: 8px 0;
+            font-size: 14px;
             display: flex;
-            justify-content: space-around;
             align-items: center;
-            border-top: 1px solid #eee;
         }
 
-        .nav div {
+        .badge {
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
             font-size: 12px;
-            color: gray;
+            font-weight: bold;
         }
 
-        .active {
-            color: #3b82f6;
+        .btn-restart {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
             font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn-restart:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-restart:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 
 <body>
 
-    <div class="header">Descubre personas</div>
+    <div class="container">
+        <h1>Hiragana: あ (a)</h1>
+        <p>Aprende el orden de trazos correcto paso a paso</p>
 
-    <div class="search">🔍 Buscar usuarios</div>
+        <div class="canvas-container" id="canvasBox">
+            <!-- Líneas guía -->
+            <div class="grid-line grid-h"></div>
+            <div class="grid-line grid-v"></div>
 
-    <div class="card">
-        <img src="https://i.pravatar.cc/100?img=1" class="avatar">
-        <div class="info">
-            <div class="name">Haruto, 27</div>
-            <div class="country">🇯🇵 Japón</div>
-            <div class="tags">
-                <div class="tag native">Nativo Japonés</div>
-                <div class="tag learning">Aprendiendo Español</div>
-            </div>
+            <!-- SVG para los trazos animados -->
+            <svg viewBox="0 0 200 200" id="hiraganaSvg">
+                <!-- Fondo guía estático -->
+                <path class="stroke-bg" d="M 45,75 C 90,70 110,68 155,65" />
+                <path class="stroke-bg" d="M 100,35 C 98,85 92,130 82,175" />
+                <path class="stroke-bg"
+                    d="M 135,85 C 105,115 70,140 70,158 C 70,182 102,185 125,172 C 152,155 162,118 142,98 C 122,78 95,85 82,105" />
+
+                <!-- Trazos animados -->
+                <!-- Trazo 1: Línea horizontal -->
+                <path class="stroke stroke1" d="M 45,75 C 90,70 110,68 155,65" />
+
+                <!-- Trazo 2: Línea vertical curva -->
+                <path class="stroke stroke2" d="M 100,35 C 98,85 92,130 82,175" />
+
+                <!-- Trazo 3: El lazo/bucle complejo -->
+                <path class="stroke stroke3"
+                    d="M 135,85 C 105,115 70,140 70,158 C 70,182 102,185 125,172 C 152,155 162,118 142,98 C 122,78 95,85 82,105" />
+
+                <!-- Indicadores de inicio de trazo -->
+                <text x="35" y="70" class="step-number" id="step1-num">1</text>
+                <text x="100" y="28" class="step-number" id="step2-num">2</text>
+                <text x="145" y="85" class="step-number" id="step3-num">3</text>
+            </svg>
         </div>
-        <div class="actions">
-            <button class="btn">💬</button>
-            <button class="btn">⭐</button>
+
+        <div class="steps-guide">
+            <div class="step-item"><span class="badge">1</span> Trazo corto de izquierda a derecha, ligeramente
+                inclinado hacia arriba.</div>
+            <div class="step-item"><span class="badge">2</span> Trazo de arriba a abajo que cruza el primero de forma
+                curvada hacia la izquierda.</div>
+            <div class="step-item"><span class="badge">3</span> Empieza arriba a la derecha, baja en diagonal, sube
+                formando un lazo ancho y cierra en óvalo abierto.</div>
         </div>
+
+        <button class="btn-restart" onclick="restartAnimation()">Reiniciar Animación</button>
     </div>
 
-    <div class="card">
-        <img src="https://i.pravatar.cc/100?img=5" class="avatar">
-        <div class="info">
-            <div class="name">Hina, 24</div>
-            <div class="country">🇯🇵 Japón</div>
-            <div class="tags">
-                <div class="tag native">Nativo Japonés</div>
-                <div class="tag learning">Aprendiendo Español</div>
-            </div>
-        </div>
-        <div class="actions">
-            <button class="btn">💬</button>
-            <button class="btn">⭐</button>
-        </div>
-    </div>
+    <script>
+        function restartAnimation() {
+            const box = document.getElementById('canvasBox');
+            const svg = document.getElementById('hiraganaSvg');
 
-    <div class="nav">
-        <div class="active">🏠 Feed</div>
-        <div>💬 Chat</div>
-        <div>📍 Cerca</div>
-        <div>👤 Perfil</div>
-    </div>
+            // Clonar el SVG para reiniciar todas las animaciones de CSS de forma limpia
+            const newSvg = svg.cloneNode(true);
+            svg.parentNode.replaceChild(newSvg, svg);
+        }
+    </script>
 
 </body>
 

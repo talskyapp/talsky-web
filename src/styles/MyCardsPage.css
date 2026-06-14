@@ -543,9 +543,749 @@
     background: #ede9fe;
 }
 
+.my-cards-category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.my-cards-category-section {
+    padding: 18px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid #e8edf5;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.04);
+}
+
+.my-cards-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.my-cards-category-header>div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.my-cards-category-icon {
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: #f4f1ff;
+    font-size: 24px;
+}
+
+.my-cards-category-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #0f172a;
+}
+
+.my-cards-category-count {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #6d4cff;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.my-cards-library {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.my-cards-category-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.my-cards-category-cover {
+    border: none;
+    padding: 0;
+    overflow: hidden;
+    text-align: left;
+    border-radius: 28px;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.my-cards-category-cover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 56px rgba(15, 23, 42, 0.12);
+}
+
+.my-cards-category-cover-image {
+    position: relative;
+    height: 170px;
+    background-size: cover;
+    background-position: center;
+}
+
+.my-cards-category-cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(15, 23, 42, 0.08),
+            rgba(15, 23, 42, 0.58));
+}
+
+.my-cards-category-cover-icon {
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    font-size: 28px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+}
+
+.my-cards-category-cover-icon.large {
+    position: static;
+    width: 64px;
+    height: 64px;
+    font-size: 32px;
+    flex: 0 0 auto;
+}
+
+.my-cards-category-cover-body {
+    padding: 18px;
+}
+
+.my-cards-category-cover-body h2 {
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-size: 1.25rem;
+}
+
+.my-cards-category-cover-body p {
+    margin: 0;
+    color: #64748b;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.my-cards-category-back {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: #ffffff;
+    color: #475569;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    margin-bottom: 16px;
+}
+
+.my-cards-category-hero {
+    position: relative;
+    min-height: 220px;
+    border-radius: 32px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+}
+
+.my-cards-category-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            rgba(15, 23, 42, 0.72),
+            rgba(15, 23, 42, 0.24));
+}
+
+.my-cards-category-hero-content {
+    position: relative;
+    z-index: 1;
+    min-height: 220px;
+    padding: 28px;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    color: #ffffff;
+}
+
+.my-cards-category-hero-content h2 {
+    margin: 0 0 6px;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1;
+}
+
+.my-cards-category-hero-content p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    opacity: 0.9;
+}
+
+.my-cards-upload-cover-btn {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: 0.2s;
+}
+
+.my-cards-upload-cover-btn:hover {
+    background: rgba(255, 255, 255, 0.24);
+}
+
+.writing-difficulty-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.38);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.writing-difficulty-modal {
+    width: min(520px, 100%);
+    border-radius: 28px;
+    background: #ffffff;
+    padding: 24px;
+    box-shadow: 0 30px 80px rgba(15, 23, 42, 0.22);
+}
+
+.writing-difficulty-modal h3 {
+    margin: 0 0 8px;
+    color: #0f172a;
+    font-size: 1.4rem;
+}
+
+.writing-difficulty-modal p {
+    margin: 0 0 18px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.writing-difficulty-options {
+    display: grid;
+    gap: 12px;
+}
+
+.writing-difficulty-options button {
+    width: 100%;
+    text-align: left;
+    border: 1px solid #e8edf5;
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 16px;
+    cursor: pointer;
+    transition: 0.18s ease;
+}
+
+.writing-difficulty-options button:hover {
+    transform: translateY(-2px);
+    background: #f5f3ff;
+    border-color: #ddd6fe;
+}
+
+.writing-difficulty-options strong {
+    display: block;
+    color: #0f172a;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.writing-difficulty-options span {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.writing-difficulty-cancel {
+    margin-top: 14px;
+    width: 100%;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #111827;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.my-cards-view-tabs {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    margin: 12px 0 18px;
+    border: 1px solid #e8edf5;
+    border-radius: 18px;
+    background: #ffffff;
+}
+
+.my-cards-view-tabs button {
+    border: 0;
+    background: transparent;
+    color: #64748b;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.18s ease;
+}
+
+.my-cards-view-tabs button:hover {
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+.my-cards-view-tabs button.active {
+    background: #f5f3ff;
+    color: #6d4cff;
+}
+
+.my-cards-vocabulary-list {
+    display: grid;
+    gap: 10px;
+}
+
+.my-cards-vocabulary-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 16px 18px;
+    border: 1px solid #e8edf5;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
+}
+
+.my-cards-vocabulary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.my-cards-vocabulary-content strong {
+    color: #0f172a;
+    font-size: 1.05rem;
+    font-weight: 900;
+}
+
+.my-cards-vocabulary-content span {
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.my-cards-vocabulary-help {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid #ddd6fe;
+    background: #f5f3ff;
+    color: #6d4cff;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.my-cards-vocabulary-translation {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 700;
+}
+
+.my-cards-vocabulary-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.my-cards-vocabulary-audio {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid #dbeafe;
+    background: #eff6ff;
+    color: #2563eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.my-cards-vocabulary-audio:hover {
+    background: #dbeafe;
+}
+
+.my-cards-audio-speed {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.my-cards-audio-speed button {
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.my-cards-audio-speed button.active {
+    background: #6d4cff;
+    color: white;
+    border-color: #6d4cff;
+}
+
+.my-card-phonetic {
+    margin-top: 6px;
+    color: #6d4cff;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.my-cards-vocabulary-content small {
+    color: #6d4cff;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.my-cards-alphabet-panel {
+    padding: 18px;
+    border: 1px solid #e8edf5;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
+}
+
+.my-cards-alphabet-header {
+    margin-bottom: 16px;
+}
+
+.my-cards-alphabet-header h2 {
+    margin: 0 0 4px;
+    color: #0f172a;
+    font-size: 1.35rem;
+    font-weight: 900;
+}
+
+.my-cards-alphabet-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.my-cards-kana-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(64px, 1fr));
+    gap: 10px;
+}
+
+.my-cards-kana-cell {
+    min-height: 84px;
+    border: 1px solid #e8edf5;
+    border-radius: 18px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: 0.18s ease;
+}
+
+.my-cards-kana-cell strong {
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic",
+        "Noto Sans JP", sans-serif;
+    display: block;
+    color: #0f172a;
+    font-size: 2.8rem;
+    font-weight: 900;
+}
+
+.my-cards-kana-cell span {
+    display: block;
+    margin-top: 4px;
+    color: #6d4cff;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.my-cards-kana-cell:hover {
+    transform: translateY(-3px) scale(1.03);
+    border-color: #c4b5fd;
+    background: #f5f3ff;
+}
+
+.alphabet-type-switch {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.alphabet-type-switch button {
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.alphabet-type-switch button:hover {
+    transform: translateY(-1px);
+    border-color: #c4b5fd;
+    background: #faf5ff;
+}
+
+.alphabet-type-switch button.active {
+    background: linear-gradient(135deg,
+            #7c3aed,
+            #6d4cff);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 8px 18px rgba(109, 76, 255, 0.25);
+}
+
+.my-cards-kana-cell.empty {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    pointer-events: none;
+}
+
+.my-cards-kana-cell.group-0 {
+    background: #fff1f2;
+    border-color: #fecdd3;
+}
+
+.my-cards-kana-cell.group-1 {
+    background: #fff7ed;
+    border-color: #fed7aa;
+}
+
+.my-cards-kana-cell.group-2 {
+    background: #fefce8;
+    border-color: #fde68a;
+}
+
+.my-cards-kana-cell.group-3 {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.my-cards-kana-cell.group-4 {
+    background: #ecfeff;
+    border-color: #a5f3fc;
+}
+
+.my-cards-kana-cell.group-5 {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.my-cards-kana-cell.group-6 {
+    background: #f5f3ff;
+    border-color: #ddd6fe;
+}
+
+.my-cards-kana-cell.group-7 {
+    background: #faf5ff;
+    border-color: #e9d5ff;
+}
+
+.my-cards-kana-cell.group-8 {
+    background: #fdf2f8;
+    border-color: #fbcfe8;
+}
+
+.my-cards-kana-cell.group-9 {
+    background: #fff1f2;
+    border-color: #fecdd3;
+}
+
+.my-cards-kana-cell.group-10 {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.my-cards-kana-cell.group-0 strong,
+.my-cards-kana-cell.group-0 span {
+    color: #e11d48;
+}
+
+.my-cards-kana-cell.group-1 strong,
+.my-cards-kana-cell.group-1 span {
+    color: #ea580c;
+}
+
+.my-cards-kana-cell.group-2 strong,
+.my-cards-kana-cell.group-2 span {
+    color: #ca8a04;
+}
+
+.my-cards-kana-cell.group-3 strong,
+.my-cards-kana-cell.group-3 span {
+    color: #16a34a;
+}
+
+.my-cards-kana-cell.group-4 strong,
+.my-cards-kana-cell.group-4 span {
+    color: #0891b2;
+}
+
+.my-cards-kana-cell.group-5 strong,
+.my-cards-kana-cell.group-5 span {
+    color: #2563eb;
+}
+
+.my-cards-kana-cell.group-6 strong,
+.my-cards-kana-cell.group-6 span {
+    color: #6d4cff;
+}
+
+.my-cards-kana-cell.group-7 strong,
+.my-cards-kana-cell.group-7 span {
+    color: #9333ea;
+}
+
+.my-cards-kana-cell.group-8 strong,
+.my-cards-kana-cell.group-8 span {
+    color: #db2777;
+}
+
+.my-cards-alphabet-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.my-cards-alphabet-review-btn {
+    border: 0;
+    border-radius: 999px;
+    padding: 9px 16px;
+    background: #6d4cff;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.my-cards-alphabet-review-picker {
+    margin-bottom: 24px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.my-cards-alphabet-review-picker h3 {
+    margin: 0 0 16px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.my-cards-alphabet-groups {
+    display: grid;
+    gap: 12px;
+}
+
+.my-cards-alphabet-group-btn {
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 16px;
+    padding: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.my-cards-alphabet-group-btn:hover {
+    border-color: #6d4cff;
+    background: #faf5ff;
+}
+
+.my-cards-alphabet-group-btn strong {
+    display: block;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+.my-cards-alphabet-group-btn span {
+    display: block;
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
 @media (max-width: 980px) {
     .my-cards-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .my-cards-category-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .my-cards-kana-grid {
+        grid-template-columns: repeat(5, minmax(48px, 1fr));
+        gap: 8px;
+    }
+
+    .my-cards-kana-cell {
+        min-height: 68px;
+        border-radius: 14px;
+    }
+
+    .my-cards-kana-cell strong {
+        font-size: 1.55rem;
     }
 }
 
@@ -576,18 +1316,94 @@
     }
 
     .my-cards-toolbar {
-        flex-direction: column;
-        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .my-cards-search-wrap {
+        flex: none;
+        width: 100%;
+        height: 46px;
+        min-height: 46px;
+        padding: 0 14px;
+        border-radius: 16px;
+    }
+
+    .my-cards-search-wrap input {
+        min-width: 0;
+        font-size: 14px;
     }
 
     .my-cards-toolbar-actions {
-        width: 100%;
-        flex-direction: column;
+        gap: 10px;
     }
 
     .my-cards-refresh-btn,
     .my-cards-review-btn,
     .my-cards-empty-btn {
+        width: 100%;
+    }
+
+    .my-cards-category-section {
+        padding: 14px;
+        border-radius: 22px;
+    }
+
+    .my-cards-category-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 15px;
+        font-size: 21px;
+    }
+
+    .my-cards-category-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .my-cards-category-cover-image {
+        height: 150px;
+    }
+
+    .my-cards-category-hero {
+        min-height: 180px;
+        border-radius: 24px;
+    }
+
+    .my-cards-category-hero-content {
+        min-height: 180px;
+        padding: 20px;
+    }
+
+    .alphabet-type-switch {
+        gap: 8px;
+    }
+
+    .alphabet-type-switch button {
+        flex: 1;
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .my-cards-toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .my-cards-search-wrap {
+        width: 100%;
+    }
+
+    .my-cards-toolbar-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .my-cards-toolbar-actions button {
         width: 100%;
     }
 }

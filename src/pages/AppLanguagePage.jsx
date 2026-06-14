@@ -7,6 +7,9 @@ import "../styles/AppLanguagePage.css";
 const APP_LANGUAGES = [
     { code: "en", label: "English", nativeLabel: "English", enabled: true },
     { code: "es", label: "Spanish", nativeLabel: "Español", enabled: true },
+    { code: "zh", label: "Chinese", nativeLabel: "中文", enabled: true },
+    { code: "ja", label: "Japanese", nativeLabel: "日本語", enabled: true },
+    { code: "ko", label: "Korean", nativeLabel: "한국어", enabled: true },
     { code: "fr", label: "French", nativeLabel: "Français", enabled: false },
     { code: "it", label: "Italian", nativeLabel: "Italiano", enabled: false },
     { code: "pt", label: "Portuguese", nativeLabel: "Português", enabled: false },
@@ -35,9 +38,6 @@ const APP_LANGUAGES = [
     { code: "id", label: "Indonesian", nativeLabel: "Bahasa Indonesia", enabled: false },
     { code: "ms", label: "Malay", nativeLabel: "Bahasa Melayu", enabled: false },
     { code: "tl", label: "Filipino", nativeLabel: "Filipino", enabled: false },
-    { code: "zh", label: "Chinese", nativeLabel: "中文", enabled: false },
-    { code: "ja", label: "Japanese", nativeLabel: "日本語", enabled: true },
-    { code: "ko", label: "Korean", nativeLabel: "한국어", enabled: true },
 ];
 
 export default function AppLanguagePage() {

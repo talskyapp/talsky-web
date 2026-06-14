@@ -65,7 +65,7 @@ export default function PrivacyPage() {
                     <p>
                         {t("privacyPolicy.contactText")}
                         <br />
-                        <strong>support@talsky.com</strong>
+                        <strong>talsky@gmail.com</strong>
                     </p>
                 </section>
             </div>

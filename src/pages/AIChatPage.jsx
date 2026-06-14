@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { API_URL } from "../lib/config";
 import { useTranslation } from "../hooks/useTranslation";
+import { WRITING_SYSTEMS_BY_LANGUAGE } from "../constants/writingSystems";
 import "../styles/AIChatPage.css";
 
 function getQueryParams(search) {
@@ -111,37 +112,52 @@ Always:
     `.trim();
 }
 
-function getWelcomeMessage({ mode, scenario, topic, language }) {
-    const targetLanguage = language || "your target language";
+function getWelcomeMessage({ mode, scenario, topic, language, t }) {
+    const targetLanguage = language || t("aiChat.defaultTargetLanguage");
 
     if (mode === "corrections") {
-        return `Hi! Send me any sentence and I’ll correct it, explain the mistakes simply, and show you a more natural version in ${targetLanguage}.`;
+        return t("aiChat.welcome.corrections", { targetLanguage });
     }
 
     if (mode === "roleplay") {
         if (scenario) {
-            return `Great — let’s do a ${scenario} roleplay. I’ll act like a real person in that situation. Start whenever you’re ready.`;
+            return t("aiChat.welcome.roleplayScenario", { scenario });
         }
-        return `Welcome to Roleplay mode. What situation do you want to practice today? Travel, restaurant, dating, work, or something custom?`;
+
+        return t("aiChat.welcome.roleplay");
     }
 
     if (mode === "vocab") {
         if (topic) {
-            return `Perfect. I can generate useful ${topic} vocabulary with examples and mini practice. Tell me your level or say "start".`;
+            return t("aiChat.welcome.vocabTopic", { topic });
         }
-        return `Welcome to Vocabulary Builder. Tell me a topic like travel, dating, work, shopping, or daily life, and I’ll generate useful words and phrases.`;
+
+        return t("aiChat.welcome.vocab");
     }
 
-    return `Hey! Let’s chat naturally in ${targetLanguage}. You can ask questions, practice conversation, or just talk about your day.`;
+    return t("aiChat.welcome.freeChat", { targetLanguage });
 }
 
-function buildStarterUserMessage({ mode, scenario, topic }) {
+function shouldAutoStartScenario({ mode, scenario, topic }) {
+    return (mode === "roleplay" && scenario) || (mode === "vocab" && topic);
+}
+
+function buildHiddenStarterMessage({
+    mode,
+    scenario,
+    topic,
+    t,
+}) {
     if (mode === "roleplay" && scenario) {
-        return `I want to practice a ${scenario} roleplay.`;
+        return t("aiChat.ai.roleplay.systemPrompt", {
+            scenario,
+        });
     }
 
     if (mode === "vocab" && topic) {
-        return `Give me useful ${topic} vocabulary.`;
+        return t("aiChat.ai.vocab.systemPrompt", {
+            topic,
+        });
     }
 
     return "";
@@ -194,6 +210,7 @@ export default function AIChatPage() {
     const navigate = useNavigate();
     const location = useLocation();
     const messagesEndRef = useRef(null);
+    const didMountRef = useRef(false);
     const { t } = useTranslation();
 
     const { mode, scenario, topic, level, language } = useMemo(
@@ -253,6 +270,24 @@ export default function AIChatPage() {
     const [savedWords, setSavedWords] = useState([]);
     const [savingWords, setSavingWords] = useState([]);
 
+    const [introTyping, setIntroTyping] = useState(false);
+    const [preparingScenario, setPreparingScenario] = useState(false);
+    const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+    const userTargetLanguage =
+        language ||
+        currentUser?.languageToLearn?.[0] ||
+        currentUser?.activeLearningLanguage ||
+        "";
+
+    const languageKey = userTargetLanguage.toLowerCase();
+
+    const [quickPromptsHidden, setQuickPromptsHidden] = useState(false);
+
+    const [pendingScenarioText, setPendingScenarioText] = useState("");
+    const [showWritingSystemPicker, setShowWritingSystemPicker] = useState(false);
+    const [writingSystem, setWritingSystem] = useState("");
+
     const systemPrompt = useMemo(
         () =>
             getSystemPromptByMode({
@@ -267,53 +302,98 @@ export default function AIChatPage() {
     );
 
     useEffect(() => {
-        const welcome = getWelcomeMessage({ mode, scenario, topic, language });
-        const starterUserText = buildStarterUserMessage({ mode, scenario, topic });
-
-        const initialMessages = [createMessage({ role: "assistant", content: welcome })];
-
-        if (starterUserText) {
-            initialMessages.push(
-                createMessage({ role: "user", content: starterUserText })
-            );
-        }
-
-        setMessages(initialMessages);
-        setSessionReady(true);
-        setSavedWords([]);
-        setSavingWords([]);
-    }, [mode, scenario, topic, language]);
-
-    useEffect(() => {
-        if (!sessionReady) return;
-
-        const starterUserText = buildStarterUserMessage({ mode, scenario, topic });
-        if (!starterUserText) return;
-
-        const reply = generateLocalAssistantReply({
+        const welcome = getWelcomeMessage({
             mode,
-            userText: starterUserText,
             scenario,
             topic,
+            language,
+            t,
         });
 
-        setMessages((prev) => {
-            const alreadyHasAutoReply = prev.some((msg) => msg.autoStarterReply);
-            if (alreadyHasAutoReply) return prev;
+        setMessages([]);
+        setSavedWords([]);
+        setSavingWords([]);
+        setSessionReady(false);
+        setQuickPromptsHidden(false);
+        setWritingSystem("");
+        setShowWritingSystemPicker(false);
+        setPendingScenarioText("");
 
-            return [
-                ...prev,
+        const autoStart = shouldAutoStartScenario({ mode, scenario, topic });
+
+        const availableWritingSystems = WRITING_SYSTEMS_BY_LANGUAGE[languageKey];
+
+        if (
+            mode === "roleplay" &&
+            scenario &&
+            availableWritingSystems?.length &&
+            !writingSystem
+        ) {
+            setPendingScenarioText(scenario);
+            setShowWritingSystemPicker(true);
+            setQuickPromptsHidden(true);
+            setIntroTyping(false);
+            return;
+        }
+
+        if (autoStart) {
+            setPreparingScenario(true);
+            setQuickPromptsHidden(true);
+
+            const hiddenStarter = buildHiddenStarterMessage({
+                mode,
+                scenario,
+                topic,
+                t
+            });
+
+            setTimeout(async () => {
+                const result = await sendMessageToBackend(hiddenStarter, []);
+
+                setMessages([
+                    createMessage({
+                        role: "assistant",
+                        content: result.reply,
+                        extra: {
+                            candidateVocabulary: result.candidateVocabulary || [],
+                            scenarioStarted: true,
+                        },
+                    }),
+                ]);
+
+                setPreparingScenario(false);
+                setSessionReady(true);
+            }, 1100);
+
+            return;
+        }
+
+        setIntroTyping(true);
+
+        setTimeout(() => {
+            setMessages([
                 createMessage({
                     role: "assistant",
-                    content: reply,
-                    extra: { autoStarterReply: true },
+                    content: welcome,
                 }),
-            ];
-        });
-    }, [sessionReady, mode, scenario, topic]);
+            ]);
+
+            setIntroTyping(false);
+            setSessionReady(true);
+        }, 900);
+    }, [mode, scenario, topic, language, t]);
+
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (!didMountRef.current) {
+            didMountRef.current = true;
+            return;
+        }
+
+        messagesEndRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+        });
     }, [messages, loading]);
 
     const sendMessageToBackend = async (userText, nextMessages) => {
@@ -332,7 +412,8 @@ export default function AIChatPage() {
                     scenario,
                     topic,
                     level,
-                    language,
+                    language: userTargetLanguage,
+                    writingSystem,
                     message: userText,
                     systemPrompt,
                     messages: nextMessages.map((msg) => ({
@@ -381,10 +462,27 @@ export default function AIChatPage() {
 
         if (!cleanText || loading) return;
 
+        setQuickPromptsHidden(true);
+
         const userMessage = createMessage({
             role: "user",
             content: cleanText,
         });
+
+        const availableWritingSystems = WRITING_SYSTEMS_BY_LANGUAGE[languageKey];
+
+        if (
+            mode === "roleplay" &&
+            !scenario &&
+            availableWritingSystems?.length &&
+            !writingSystem
+        ) {
+            setPendingScenarioText(cleanText);
+            setShowWritingSystemPicker(true);
+            setQuickPromptsHidden(true);
+            setInput("");
+            return;
+        }
 
         const nextMessages = [...messages, userMessage];
 
@@ -408,7 +506,158 @@ export default function AIChatPage() {
         setLoading(false);
     };
 
+    const startScenarioWithWritingSystem = async (selectedWritingSystem) => {
+        setWritingSystem(selectedWritingSystem);
+        setShowWritingSystemPicker(false);
+        setPreparingScenario(true);
+
+        const userMessage = createMessage({
+            role: "user",
+            content: pendingScenarioText,
+        });
+
+        const starter = `
+Create a roleplay scenario based on this user request:
+"${pendingScenarioText}"
+
+Target language:
+${userTargetLanguage}
+
+User native language:
+${nativeLanguage}
+
+Writing system preference:
+${selectedWritingSystem}
+
+Main rules:
+- The roleplay conversation must be in ${userTargetLanguage}.
+- Use ${nativeLanguage} only for short corrections, explanations, and translations.
+- Do not use Spanish unless ${nativeLanguage} is Spanish.
+- Stay in character.
+- Continue the scene naturally.
+- Do not give long grammar lessons.
+- Do not add cultural theory unless the user asks.
+- Never ask generic tutoring questions like "Do you have any questions?"
+
+Writing system:
+- Follow the selected writing system in the main conversation.
+- Do not mix writing systems in the main roleplay text.
+- The only exception is the learning format shown below.
+
+Correction format after the user replies:
+1. Start with exactly one label:
+✅ Correct
+⚠️ Understandable but unnatural
+❌ Incorrect
+
+2. Give one short correction note in ${nativeLanguage}.
+
+3. Show the better phrase using this format:
+Original phrase
+Romaji or pronunciation
+Translation in ${nativeLanguage}
+
+4. Continue the roleplay as the character.
+
+If using romaji:
+- Main conversation: romaji only.
+- Correction format:
+Romaji
+Translation in ${nativeLanguage}
+
+If using hiragana:
+- Main conversation: hiragana only.
+- Avoid katakana and kanji whenever possible.
+- Correction format:
+Hiragana
+Romaji
+Translation in ${nativeLanguage}
+
+If using katakana:
+- Main conversation: katakana only.
+- Avoid hiragana and kanji whenever possible.
+- Correction format:
+Katakana
+Romaji
+Translation in ${nativeLanguage}
+
+If using kanji:
+- Main conversation: natural Japanese.
+- Correction format:
+Japanese
+Romaji
+Translation in ${nativeLanguage}
+
+If using hangul:
+- Main conversation: Hangul.
+- Correction format:
+Hangul
+Romanization
+Translation in ${nativeLanguage}
+
+If using romanization:
+- Main conversation: romanization only.
+- Correction format:
+Romanization
+Translation in ${nativeLanguage}
+
+If using pinyin:
+- Main conversation: Pinyin.
+- Correction format:
+Pinyin
+Translation in ${nativeLanguage}
+
+If using simplified:
+- Main conversation: Simplified Chinese.
+- Correction format:
+Simplified Chinese
+Pinyin
+Translation in ${nativeLanguage}
+
+If using traditional:
+- Main conversation: Traditional Chinese.
+- Correction format:
+Traditional Chinese
+Pinyin
+Translation in ${nativeLanguage}
+
+Useful expressions:
+- Return 2 to 4 useful expressions from the current roleplay only.
+- Do not invent unrelated expressions.
+- Match the selected writing system.
+- Do not return target-language-only expressions.
+- Each useful expression must include:
+  Original phrase
+  Romaji or pronunciation
+  Translation in ${nativeLanguage}
+
+Roleplay behavior:
+- If the user orders food, confirm the order and ask naturally if they want anything else.
+- If the user chooses a destination, confirm it and continue the travel scene.
+- If the user answers casually, respond naturally and ask a related in-character question.
+- Always continue the roleplay after correcting.
+`.trim();
+
+        const result = await sendMessageToBackend(starter, [...messages, userMessage]);
+
+        setMessages([
+            createMessage({
+                role: "assistant",
+                content: result.reply,
+                extra: {
+                    candidateVocabulary: result.candidateVocabulary || [],
+                    scenarioStarted: true,
+                },
+            }),
+        ]);
+
+        setPreparingScenario(false);
+        setSessionReady(true);
+    };
+
     const handleQuickPrompt = (prompt) => {
+        setQuickPromptsHidden(true);
+
         if (mode === "roleplay") {
             navigate(
                 `/dashboard/ai-chat?mode=roleplay&scenario=${encodeURIComponent(
@@ -453,6 +702,7 @@ export default function AIChatPage() {
                     reading: candidate?.reading || "",
                     translation: candidate?.translation || "",
                     pronunciation: candidate?.pronunciation || "",
+                    phoneticHint: candidate?.phoneticHint || "",
                     language: candidate?.language || language || "",
                     formality: candidate?.formality || "",
                     usage: candidate?.usage || "",
@@ -462,10 +712,20 @@ export default function AIChatPage() {
 
             const data = await res.json().catch(() => null);
 
+
             if (!res.ok) {
                 throw new Error(
                     data?.msg || data?.error || "Failed to save vocabulary"
                 );
+            }
+
+            if (data.alreadyExists) {
+                setSavedVocabulary((prev) => ({
+                    ...prev,
+                    [text]: true,
+                }));
+
+                return;
             }
 
             setSavedWords((prev) => [...prev, phrase]);
@@ -518,7 +778,9 @@ export default function AIChatPage() {
                             {scenario ? (
                                 <div className="ai-chat-meta-pill">
                                     <Drama size={14} />
-                                    <span>{t("aiChat.scenario")}: {scenario}</span>
+                                    <span>
+                                        {t("aiChat.scenario")}: {scenario}
+                                    </span>
                                 </div>
                             ) : null}
 
@@ -580,8 +842,8 @@ export default function AIChatPage() {
                     <section className="ai-chat-main">
                         <div className="ai-chat-header">
                             <div className="ai-chat-header-left">
-                                <div className="ai-chat-bot-avatar">
-                                    <Bot size={20} />
+                                <div className="ai-chat-bot-avatar cloud">
+                                    <img src="/talsky-ai-logo.png" alt="TalSky AI" />
                                 </div>
                                 <div>
                                     <h1>{modeData.title}</h1>
@@ -591,69 +853,152 @@ export default function AIChatPage() {
                         </div>
 
                         <div className="ai-chat-messages">
-                            {messages.map((msg) => (
-                                <div
-                                    key={msg.id}
-                                    className={`ai-chat-message-row ${msg.role === "user" ? "user" : "assistant"}`}
-                                >
-                                    <div className={`ai-chat-bubble ${msg.role}`}>
-                                        <p>{msg.content}</p>
+                            {preparingScenario ? (
+                                <div className="ai-roleplay-preparing">
+                                    <div className="ai-roleplay-preparing-logo">
+                                        <img src="/talsky-ai-logo.png" alt="TalSky AI" />
+                                    </div>
 
-                                        {msg.role === "assistant" &&
-                                            msg.candidateVocabulary?.length > 0 ? (
-                                            <div className="ai-chat-suggestions">
-                                                <p className="ai-chat-suggestions-title">
-                                                    {t("aiChat.usefulExpressions")}
-                                                </p>
+                                    <p className="ai-chat-kicker">
+                                        {mode === "roleplay"
+                                            ? t("aiChat.ai.loading.preparingScenario")
+                                            : t("aiChat.ai.loading.preparingPractice")}
+                                    </p>
 
-                                                <div className="ai-chat-suggestions-list">
-                                                    {msg.candidateVocabulary.map((item, index) => {
-                                                        const phrase = item.text;
-                                                        const isSaved =
-                                                            savedWords.includes(phrase);
-                                                        const isSaving =
-                                                            savingWords.includes(phrase);
+                                    <h3>
+                                        {mode === "roleplay"
+                                            ? t("aiChat.ai.loading.preparingScenarioTitle")
+                                            : t("aiChat.ai.loading.preparingPracticeTitle")}
+                                    </h3>
 
-                                                        return (
-                                                            <div
-                                                                key={`${phrase}-${index}`}
-                                                                className="ai-chat-suggestion-item"
-                                                            >
-                                                                <div className="ai-chat-suggestion-text">
-                                                                    {phrase}
-                                                                </div>
+                                    <div className="ai-roleplay-context">
+                                        <span>
+                                            {scenario || topic}
+                                        </span>
+                                    </div>
 
-                                                                <button
-                                                                    type="button"
-                                                                    className={`ai-chat-save-btn ${isSaved ? "saved" : ""}`}
-                                                                    onClick={() =>
-                                                                        handleSaveCandidate(item)
-                                                                    }
-                                                                    disabled={isSaved || isSaving}
-                                                                >
-                                                                    {isSaved ? (
-                                                                        <>
-                                                                            <Check size={14} />
-                                                                            <span>{t("aiChat.saved")}</span>
-                                                                        </>
-                                                                    ) : isSaving ? (
-                                                                        <span>{t("aiChat.saving")}</span>
-                                                                    ) : (
-                                                                        <>
-                                                                            <Bookmark size={14} />
-                                                                            <span>{t("aiChat.saveToCards")}</span>
-                                                                        </>
-                                                                    )}
-                                                                </button>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </div>
-                                        ) : null}
+                                    <p>
+                                        {t("aiChat.ai.loading.preparingDescription")}
+                                    </p>
+
+                                    <div className="ai-roleplay-loading-dots">
+                                        <span />
+                                        <span />
+                                        <span />
                                     </div>
                                 </div>
-                            ))}
+                            ) : null}
+                            {introTyping ? (
+                                <div className="ai-chat-message-row assistant">
+                                    <div className="ai-chat-bubble assistant typing intro">
+                                        <span />
+                                        <span />
+                                        <span />
+                                    </div>
+                                </div>
+                            ) : null}
+
+                            {showWritingSystemPicker ? (
+                                <div className="ai-writing-picker">
+                                    <h3>{t("aiChat.writingSystems.title")}</h3>
+
+                                    <p>
+                                        {t("aiChat.writingSystems.description")}
+                                    </p>
+
+                                    <div className="ai-writing-options">
+                                        {WRITING_SYSTEMS_BY_LANGUAGE[languageKey]?.map((id) => (
+                                            <button
+                                                key={id}
+                                                type="button"
+                                                className="ai-writing-option"
+                                                onClick={() => startScenarioWithWritingSystem(id)}
+                                            >
+                                                <strong>{t(`aiChat.writingSystems.${id}.label`)}</strong>
+                                                <span>{t(`aiChat.writingSystems.${id}.description`)}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : null}
+
+                            {!showWritingSystemPicker &&
+                                !preparingScenario &&
+                                messages.map((msg) => (
+                                    <div
+                                        key={msg.id}
+                                        className={`ai-chat-message-row ${msg.role === "user" ? "user" : "assistant"}`}
+                                    >
+                                        <div className={`ai-chat-bubble ${msg.role}`}>
+                                            <p>{msg.content}</p>
+
+                                            {msg.role === "assistant" &&
+                                                msg.candidateVocabulary?.length > 0 ? (
+                                                <div className="ai-chat-suggestions">
+                                                    <p className="ai-chat-suggestions-title">
+                                                        {t("aiChat.usefulExpressions")}
+                                                    </p>
+
+                                                    <div className="ai-chat-suggestions-list">
+                                                        {msg.candidateVocabulary.map((item, index) => {
+                                                            const phrase = item.text;
+                                                            const isSaved =
+                                                                savedWords.includes(phrase);
+                                                            const isSaving =
+                                                                savingWords.includes(phrase);
+
+                                                            return (
+                                                                <div
+                                                                    key={`${phrase}-${index}`}
+                                                                    className="ai-chat-suggestion-item"
+                                                                >
+                                                                    <div className="ai-chat-suggestion-text">
+                                                                        <strong>{phrase}</strong>
+
+                                                                        {item.pronunciation && (
+                                                                            <div className="ai-chat-suggestion-pronunciation">
+                                                                                {item.pronunciation}
+                                                                            </div>
+                                                                        )}
+
+                                                                        {item.translation && (
+                                                                            <div className="ai-chat-suggestion-translation">
+                                                                                {item.translation}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+
+                                                                    <button
+                                                                        type="button"
+                                                                        className={`ai-chat-save-btn ${isSaved ? "saved" : ""}`}
+                                                                        onClick={() =>
+                                                                            handleSaveCandidate(item)
+                                                                        }
+                                                                        disabled={isSaved || isSaving}
+                                                                    >
+                                                                        {isSaved ? (
+                                                                            <>
+                                                                                <Check size={14} />
+                                                                                <span>{t("aiChat.saved")}</span>
+                                                                            </>
+                                                                        ) : isSaving ? (
+                                                                            <span>{t("aiChat.saving")}</span>
+                                                                        ) : (
+                                                                            <>
+                                                                                <Bookmark size={14} />
+                                                                                <span>{t("aiChat.saveToCards")}</span>
+                                                                            </>
+                                                                        )}
+                                                                    </button>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                ))}
 
                             {loading ? (
                                 <div className="ai-chat-message-row assistant">
@@ -668,40 +1013,44 @@ export default function AIChatPage() {
                             <div ref={messagesEndRef} />
                         </div>
 
-                        <div className="ai-chat-composer">
-                            <div className="ai-chat-composer-top">
-                                {modeData.quickPrompts.slice(0, 3).map((prompt) => (
+                        {!preparingScenario && (
+                            <div className="ai-chat-composer">
+                                {!quickPromptsHidden && !showWritingSystemPicker && (
+                                    <div className="ai-chat-composer-top">
+                                        {modeData.quickPrompts.slice(0, 3).map((prompt) => (
+                                            <button
+                                                key={prompt}
+                                                type="button"
+                                                className="ai-chat-mini-chip"
+                                                onClick={() => handleQuickPrompt(prompt)}
+                                            >
+                                                {prompt}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <div className="ai-chat-input-wrap">
+                                    <textarea
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                        placeholder={modeData.placeholder}
+                                        className="ai-chat-textarea"
+                                        rows={1}
+                                    />
+
                                     <button
-                                        key={prompt}
                                         type="button"
-                                        className="ai-chat-mini-chip"
-                                        onClick={() => handleQuickPrompt(prompt)}
+                                        className="ai-chat-send-btn"
+                                        onClick={() => handleSend()}
+                                        disabled={!input.trim() || loading}
                                     >
-                                        {prompt}
+                                        <Send size={18} />
                                     </button>
-                                ))}
+                                </div>
                             </div>
-
-                            <div className="ai-chat-input-wrap">
-                                <textarea
-                                    value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    onKeyDown={handleKeyDown}
-                                    placeholder={modeData.placeholder}
-                                    className="ai-chat-textarea"
-                                    rows={1}
-                                />
-
-                                <button
-                                    type="button"
-                                    className="ai-chat-send-btn"
-                                    onClick={() => handleSend()}
-                                    disabled={!input.trim() || loading}
-                                >
-                                    <Send size={18} />
-                                </button>
-                            </div>
-                        </div>
+                        )}
                     </section>
                 </div>
             </div>
