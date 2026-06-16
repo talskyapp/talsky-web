@@ -42,6 +42,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Landing from "./pages/Landing";
 import DashboardHome from "./pages/DashboardHome";
+import AppleCallback from "./pages/AppleCallback";
 
 /* COMPONENTS */
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -127,6 +128,7 @@ function App() {
 
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/auth/apple/callback" element={<AppleCallback />} />
                 <Route path="/verify-email" element={<VerifyEmail />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />

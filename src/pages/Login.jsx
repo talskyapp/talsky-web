@@ -139,7 +139,18 @@ export default function Login() {
     };
 
     const handleAppleLogin = () => {
-        setError(t("login.appleComingSoon"));
+        const clientId = "com.talsky.web";
+        const redirectUri = "https://talsky.app/auth/apple/callback";
+
+        const url =
+            "https://appleid.apple.com/auth/authorize" +
+            `?client_id=${encodeURIComponent(clientId)}` +
+            `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+            `&response_type=code` +
+            `&response_mode=query` +
+            `&scope=${encodeURIComponent("name email")}`;
+
+        window.location.href = url;
     };
 
     return (
