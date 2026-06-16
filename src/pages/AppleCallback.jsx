@@ -43,7 +43,7 @@ export default function AppleCallback() {
                 } else if (!data.user.profileCompleted) {
                     navigate("/dashboard/create-profile", { replace: true });
                 } else {
-                    navigate("/dashboard/home", { replace: true });
+                    navigate("/", { replace: true });
                 }
             } catch (err) {
                 console.error("APPLE CALLBACK ERROR:", err);
