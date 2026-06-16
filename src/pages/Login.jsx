@@ -147,8 +147,7 @@ export default function Login() {
             `?client_id=${encodeURIComponent(clientId)}` +
             `&redirect_uri=${encodeURIComponent(redirectUri)}` +
             `&response_type=code` +
-            `&response_mode=query` +
-            `&scope=${encodeURIComponent("name email")}`;
+            `&response_mode=query`;
 
         window.location.href = url;
     };
