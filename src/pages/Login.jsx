@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { FaApple } from "react-icons/fa";
 import { API_URL } from "../lib/config";
 import { initGoogleButton } from "../lib/googleAuth";
 import { useTranslation } from "../hooks/useTranslation";
@@ -223,7 +224,8 @@ export default function Login() {
                             onClick={handleAppleLogin}
                             disabled={loading || success}
                         >
-                            <span className="social-btn-icon"></span>
+                            <FaApple className="apple-login-icon" />
+
                             <span className="social-btn-text">
                                 {t("login.continueWithApple")}
                             </span>
