@@ -5,24 +5,24 @@ import OnboardingLayout from "../OnboardingLayout";
 import "../../styles/OnboardingLanguage.css";
 
 const nativeLanguages = [
-    { code: "af", name: "Afrikaans", flag: "🇿🇦" },
-    { code: "sq", name: "Albanian", flag: "🇦🇱" },
-    { code: "ar", name: "Arabic", flag: "🇸🇦" },
-    { code: "bn", name: "Bengali", flag: "🇧🇩" },
-    { code: "zh", name: "Chinese", flag: "🇨🇳" },
-    { code: "nl", name: "Dutch", flag: "🇳🇱" },
-    { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "fr", name: "French", flag: "🇫🇷" },
-    { code: "de", name: "German", flag: "🇩🇪" },
-    { code: "hi", name: "Hindi", flag: "🇮🇳" },
-    { code: "it", name: "Italian", flag: "🇮🇹" },
-    { code: "ja", name: "Japanese", flag: "🇯🇵" },
-    { code: "ko", name: "Korean", flag: "🇰🇷" },
-    { code: "pt", name: "Portuguese", flag: "🇵🇹" },
-    { code: "ru", name: "Russian", flag: "🇷🇺" },
-    { code: "es", name: "Spanish", flag: "🇪🇸" },
-    { code: "tr", name: "Turkish", flag: "🇹🇷" },
-    { code: "vi", name: "Vietnamese", flag: "🇻🇳" },
+    { code: "af", name: "Afrikaans", countryCode: "za" },
+    { code: "sq", name: "Albanian", countryCode: "al" },
+    { code: "ar", name: "Arabic", countryCode: "sa" },
+    { code: "bn", name: "Bengali", countryCode: "bd" },
+    { code: "zh", name: "Chinese", countryCode: "cn" },
+    { code: "nl", name: "Dutch", countryCode: "nl" },
+    { code: "en", name: "English", countryCode: "us" },
+    { code: "fr", name: "French", countryCode: "fr" },
+    { code: "de", name: "German", countryCode: "de" },
+    { code: "hi", name: "Hindi", countryCode: "in" },
+    { code: "it", name: "Italian", countryCode: "it" },
+    { code: "ja", name: "Japanese", countryCode: "jp" },
+    { code: "ko", name: "Korean", countryCode: "kr" },
+    { code: "pt", name: "Portuguese", countryCode: "pt" },
+    { code: "ru", name: "Russian", countryCode: "ru" },
+    { code: "es", name: "Spanish", countryCode: "es" },
+    { code: "tr", name: "Turkish", countryCode: "tr" },
+    { code: "vi", name: "Vietnamese", countryCode: "vn" },
 ];
 
 const StepNativeLanguage = () => {
@@ -78,7 +78,11 @@ const StepNativeLanguage = () => {
                             onClick={() => select(lang)}
                         >
                             <div className="onb-language-icon">
-                                {lang.flag}
+                                <img
+                                    src={`https://flagcdn.com/w80/${lang.countryCode}.png`}
+                                    alt={lang.name}
+                                    className="onb-language-flag"
+                                />
                             </div>
 
                             <div className="onb-language-info">

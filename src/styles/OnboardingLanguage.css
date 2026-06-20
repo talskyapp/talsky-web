@@ -135,6 +135,14 @@
     font-weight: 300;
 }
 
+.onb-language-flag {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    object-fit: cover;
+    display: block;
+}
+
 @media (max-width: 768px) {
     .onb-language-title {
         font-size: 38px;
