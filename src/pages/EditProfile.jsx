@@ -197,32 +197,39 @@ export default function Settings() {
 
     const interestOptions = useMemo(
         () => [
-            { icon: "🎵", label: t("profileSettings.interestOptions.music") },
-            { icon: "🎬", label: t("profileSettings.interestOptions.movies") },
-            { icon: "🎨", label: t("profileSettings.interestOptions.painting") },
-            { icon: "🍜", label: t("profileSettings.interestOptions.food") },
-            { icon: "🎮", label: t("profileSettings.interestOptions.gaming") },
-            { icon: "📚", label: t("profileSettings.interestOptions.reading") },
-            { icon: "🧳", label: t("profileSettings.interestOptions.travel") },
-            { icon: "🐶", label: t("profileSettings.interestOptions.pets") },
-            { icon: "🏋️", label: t("profileSettings.interestOptions.fitness") },
-            { icon: "📷", label: t("profileSettings.interestOptions.photography") },
-            { icon: "🎧", label: t("profileSettings.interestOptions.podcasts") },
-            { icon: "🧘", label: t("profileSettings.interestOptions.yoga") },
-            { icon: "🏞️", label: t("profileSettings.interestOptions.nature") },
-            { icon: "🎤", label: t("profileSettings.interestOptions.karaoke") },
-            { icon: "🕹️", label: t("profileSettings.interestOptions.arcade") },
-            { icon: "🍿", label: t("profileSettings.interestOptions.cinema") },
-            { icon: "🎭", label: t("profileSettings.interestOptions.theater") },
-            { icon: "🛍️", label: t("profileSettings.interestOptions.shopping") },
-            { icon: "🎌", label: t("profileSettings.interestOptions.anime") },
-            { icon: "⚽", label: t("profileSettings.interestOptions.sports") },
-            { icon: "🖥️", label: t("profileSettings.interestOptions.tech") },
-            { icon: "🎸", label: t("profileSettings.interestOptions.instruments") },
-            { icon: "🍳", label: t("profileSettings.interestOptions.cooking") },
+            { value: "music", icon: "🎵", label: t("profileSettings.interestOptions.music") },
+            { value: "movies", icon: "🎬", label: t("profileSettings.interestOptions.movies") },
+            { value: "painting", icon: "🎨", label: t("profileSettings.interestOptions.painting") },
+            { value: "food", icon: "🍜", label: t("profileSettings.interestOptions.food") },
+            { value: "gaming", icon: "🎮", label: t("profileSettings.interestOptions.gaming") },
+            { value: "reading", icon: "📚", label: t("profileSettings.interestOptions.reading") },
+            { value: "travel", icon: "🧳", label: t("profileSettings.interestOptions.travel") },
+            { value: "pets", icon: "🐶", label: t("profileSettings.interestOptions.pets") },
+            { value: "fitness", icon: "🏋️", label: t("profileSettings.interestOptions.fitness") },
+            { value: "photography", icon: "📷", label: t("profileSettings.interestOptions.photography") },
+            { value: "podcasts", icon: "🎧", label: t("profileSettings.interestOptions.podcasts") },
+            { value: "yoga", icon: "🧘", label: t("profileSettings.interestOptions.yoga") },
+            { value: "nature", icon: "🏞️", label: t("profileSettings.interestOptions.nature") },
+            { value: "karaoke", icon: "🎤", label: t("profileSettings.interestOptions.karaoke") },
+            { value: "arcade", icon: "🕹️", label: t("profileSettings.interestOptions.arcade") },
+            { value: "cinema", icon: "🍿", label: t("profileSettings.interestOptions.cinema") },
+            { value: "theater", icon: "🎭", label: t("profileSettings.interestOptions.theater") },
+            { value: "shopping", icon: "🛍️", label: t("profileSettings.interestOptions.shopping") },
+            { value: "anime", icon: "🎌", label: t("profileSettings.interestOptions.anime") },
+            { value: "sports", icon: "⚽", label: t("profileSettings.interestOptions.sports") },
+            { value: "tech", icon: "🖥️", label: t("profileSettings.interestOptions.tech") },
+            { value: "instruments", icon: "🎸", label: t("profileSettings.interestOptions.instruments") },
+            { value: "cooking", icon: "🍳", label: t("profileSettings.interestOptions.cooking") },
         ],
         [t]
     );
+
+    const getInterestLabel = (value) => {
+        const option = interestOptions.find((item) => item.value === value);
+        if (!option) return value;
+
+        return `${option.icon} ${option.label}`;
+    };
 
     const currentPhotoUrl = useMemo(() => {
         if (photoPreview) return photoPreview;
@@ -373,17 +380,17 @@ export default function Settings() {
             formData.append("bio", aboutMe);
             formData.append("profileCompleted", "true");
 
-            fluentLanguages.forEach((item) => {
-                formData.append("fluentLanguages", item.value);
-            });
+            formData.append(
+                "fluentLanguages",
+                JSON.stringify(fluentLanguages.map((item) => item.value))
+            );
 
-            languageToLearn.forEach((item) => {
-                formData.append("languageToLearn", item.value);
-            });
+            formData.append(
+                "languageToLearn",
+                JSON.stringify(languageToLearn.map((item) => item.value))
+            );
 
-            interests.forEach((item) => {
-                formData.append("interests", item);
-            });
+            formData.append("interests", JSON.stringify(interests));
 
             if (photoFile) {
                 formData.append("photo", photoFile);
@@ -705,7 +712,7 @@ export default function Settings() {
                                     <div className="chips">
                                         {interests.map((i, idx) => (
                                             <span key={idx} className="chip">
-                                                {i}
+                                                {getInterestLabel(i)}
                                             </span>
                                         ))}
                                     </div>
@@ -754,7 +761,7 @@ export default function Settings() {
 
                             <div className="interest-grid">
                                 {interestOptions.map((opt, idx) => {
-                                    const selected = tempInterests.includes(opt.label);
+                                    const selected = tempInterests.includes(opt.value);
 
                                     return (
                                         <button
@@ -764,10 +771,10 @@ export default function Settings() {
                                             onClick={() => {
                                                 if (selected) {
                                                     setTempInterests(
-                                                        tempInterests.filter((i) => i !== opt.label)
+                                                        tempInterests.filter((i) => i !== opt.value)
                                                     );
                                                 } else {
-                                                    setTempInterests([...tempInterests, opt.label]);
+                                                    setTempInterests([...tempInterests, opt.value]);
                                                 }
                                             }}
                                         >

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { FaApple } from "react-icons/fa";
 import { API_URL } from "../lib/config";
 import { initGoogleButton } from "../lib/googleAuth";
 import { useTranslation } from "../hooks/useTranslation";
@@ -53,7 +54,7 @@ export default function Register() {
 
         setTimeout(() => {
             if (data.user?.isAdmin) {
-                navigate("/admin/dashboard");
+                navigate("/admin");
                 return;
             }
 
@@ -158,7 +159,17 @@ export default function Register() {
     };
 
     const handleAppleRegister = () => {
-        setError(t("register.appleComingSoon"));
+        const clientId = "com.talsky.web";
+        const redirectUri = "https://talsky.app/auth/apple/callback";
+
+        const url =
+            "https://appleid.apple.com/auth/authorize" +
+            `?client_id=${encodeURIComponent(clientId)}` +
+            `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+            `&response_type=code` +
+            `&response_mode=query`;
+
+        window.location.href = url;
     };
 
     return (
@@ -296,7 +307,7 @@ export default function Register() {
                             onClick={handleAppleRegister}
                             disabled={loading || success}
                         >
-                            <span className="social-btn-icon"></span>
+                            <FaApple className="apple-login-icon" />
                             <span className="social-btn-text">
                                 {t("register.continueWithApple")}
                             </span>
