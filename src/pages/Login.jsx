@@ -34,7 +34,7 @@ export default function Login() {
 
         setTimeout(() => {
             if (data.user?.isAdmin) {
-                navigate("/admin/dashboard");
+                navigate("/admin");
                 return;
             }
 
