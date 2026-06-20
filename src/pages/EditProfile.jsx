@@ -115,6 +115,8 @@ export default function Settings() {
 
     const token = localStorage.getItem("token");
 
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+
     const languageOptions = useMemo(
         () => [
             { value: "Spanish", label: t("profileSettings.languages.spanish") },
@@ -407,7 +409,7 @@ export default function Settings() {
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setPhotoFile(null);
             setPhotoPreview("");
-            alert(t("profileSettings.alerts.profileUpdated"));
+            setShowSuccessModal(true);
         } catch (err) {
             console.error("SAVE ERROR:", err);
             setError(t("profileSettings.errors.saveProfile"));
@@ -799,6 +801,20 @@ export default function Settings() {
                                     {t("profileSettings.modal.saveInterests")}
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {showSuccessModal && (
+                    <div className="modal-overlay" onClick={() => setShowSuccessModal(false)}>
+                        <div className="success-modal" onClick={(e) => e.stopPropagation()}>
+                            <div className="success-modal-icon">✓</div>
+                            <h3>{t("profileSettings.alerts.profileUpdated")}</h3>
+                            <p>{t("profileSettings.alerts.profileUpdatedText")}</p>
+
+                            <button onClick={() => setShowSuccessModal(false)}>
+                                {t("profileSettings.modal.done")}
+                            </button>
                         </div>
                     </div>
                 )}

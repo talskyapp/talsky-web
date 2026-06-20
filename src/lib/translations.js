@@ -929,7 +929,8 @@ export const translations = {
                 kicker: "Profile Tags",
                 title: "Select Interests",
                 cancel: "Cancel",
-                saveInterests: "Save Interests"
+                saveInterests: "Save Interests",
+                done: "Done"
             },
 
             fields: {
@@ -952,7 +953,8 @@ export const translations = {
             },
 
             alerts: {
-                profileUpdated: "Profile updated!"
+                profileUpdated: "Profile updated!",
+                profileUpdatedText: "Your profile changes were saved successfully.",
             },
 
             errors: {
@@ -2112,7 +2114,8 @@ export const translations = {
                 kicker: "Etiquetas del perfil",
                 title: "Selecciona intereses",
                 cancel: "Cancelar",
-                saveInterests: "Guardar intereses"
+                saveInterests: "Guardar intereses",
+                done: "Listo"
             },
 
             fields: {
@@ -2135,7 +2138,8 @@ export const translations = {
             },
 
             alerts: {
-                profileUpdated: "¡Perfil actualizado!"
+                profileUpdated: "¡Perfil actualizado!",
+                profileUpdatedText: "Los cambios de tu perfil se guardaron correctamente.",
             },
 
             errors: {
@@ -3435,7 +3439,8 @@ export const translations = {
                 kicker: "资料标签",
                 title: "选择兴趣",
                 cancel: "取消",
-                saveInterests: "保存兴趣"
+                saveInterests: "保存兴趣",
+                done: "完成"
             },
 
             fields: {
@@ -3458,7 +3463,8 @@ export const translations = {
             },
 
             alerts: {
-                profileUpdated: "资料已更新！"
+                profileUpdated: "资料已更新！",
+                profileUpdatedText: "您的个人资料更改已成功保存。",
             },
 
             errors: {
@@ -4711,7 +4717,8 @@ export const translations = {
                 kicker: "プロフィールタグ",
                 title: "興味を選択",
                 cancel: "キャンセル",
-                saveInterests: "興味を保存"
+                saveInterests: "興味を保存",
+                done: "完了"
             },
 
             fields: {
@@ -4734,7 +4741,8 @@ export const translations = {
             },
 
             alerts: {
-                profileUpdated: "プロフィールが更新されました！"
+                profileUpdated: "プロフィールが更新されました！",
+                profileUpdatedText: "プロフィールの変更が正常に保存されました。",
             },
 
             errors: {
@@ -5987,7 +5995,8 @@ export const translations = {
                 kicker: "프로필 태그",
                 title: "관심사 선택",
                 cancel: "취소",
-                saveInterests: "관심사 저장"
+                saveInterests: "관심사 저장",
+                done: "완료"
             },
 
             fields: {
@@ -6010,7 +6019,8 @@ export const translations = {
             },
 
             alerts: {
-                profileUpdated: "프로필이 업데이트되었습니다!"
+                profileUpdated: "프로필이 업데이트되었습니다!",
+                profileUpdatedText: "프로필 변경 사항이 성공적으로 저장되었습니다.",
             },
 
             errors: {
