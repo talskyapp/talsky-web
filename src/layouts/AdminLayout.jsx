@@ -4,6 +4,7 @@ import {
     BarChart3,
     CreditCard,
     Flag,
+    LogOut,
     LayoutDashboard,
     Shield,
     ShieldCheck,
@@ -97,6 +98,17 @@ export default function AdminLayout() {
                             <span>admin@talsky.app</span>
                         </div>
                     </div>
+
+                    <button
+                        className="admin-logout-btn"
+                        onClick={() => {
+                            localStorage.removeItem("token");
+                            window.location.href = "/login";
+                        }}
+                    >
+                        <LogOut size={16} />
+                        <span>Logout</span>
+                    </button>
                 </div>
             </aside>
 
