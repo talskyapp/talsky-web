@@ -4,278 +4,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animación del Hiragana あ (A) - Paso a Paso</title>
+    <title>TalSky Premium</title>
     <style>
+        :root {
+            --bg-app: #0b0f19;
+            --surface: #171d2c;
+            --primary: #4f46e5;
+            --accent: #06b6d4;
+            --text-title: #ffffff;
+            --text-body: #94a3b8;
+            --grad-premium: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: var(--bg-app);
+            color: var(--text-title);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            padding: 24px 16px;
         }
 
-        .container {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 30px;
+        /* Indicador de barra superior típico de una hoja modal en Flutter (BottomSheet) */
+        .pill-indicator {
+            width: 40px;
+            height: 5px;
+            background-color: #334155;
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+
+        .header {
             text-align: center;
-            max-width: 500px;
-            width: 100%;
+            margin-bottom: 32px;
+            max-width: 320px;
         }
 
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 24px;
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
         }
 
-        p {
-            color: #7f8c8d;
-            margin-bottom: 25px;
-            font-size: 15px;
-        }
-
-        .canvas-container {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 0 auto 25px auto;
-            border: 2px dashed #bdc3c7;
-            border-radius: 8px;
-            background-color: #fafbfc;
-        }
-
-        /* Cuadrícula de guía */
-        .grid-line {
-            position: absolute;
-            background-color: #e2e8f0;
-        }
-
-        .grid-h {
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 1px;
-        }
-
-        .grid-v {
-            left: 50%;
-            top: 0;
-            width: 1px;
-            height: 100%;
-        }
-
-        svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .stroke {
-            fill: none;
-            stroke: #2c3e50;
-            stroke-width: 12;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* Guía en gris claro de fondo */
-        .stroke-bg {
-            fill: none;
-            stroke: #eaeded;
-            stroke-width: 12;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* Números indicadores de pasos */
-        .step-number {
-            font-size: 16px;
-            font-weight: bold;
-            fill: #e74c3c;
-            opacity: 0;
-            animation: fadeInNumber 0.5s forwards;
-        }
-
-        #step1-num {
-            animation-delay: 0s;
-        }
-
-        #step2-num {
-            animation-delay: 1.5s;
-        }
-
-        #step3-num {
-            animation-delay: 3.0s;
-        }
-
-        /* Animación de los trazos usando stroke-dashoffset */
-        .stroke1 {
-            stroke-dasharray: 200;
-            stroke-dashoffset: 200;
-            animation: drawStroke1 1.2s ease-in-out forwards;
-            animation-delay: 0.2s;
-        }
-
-        .stroke2 {
-            stroke-dasharray: 250;
-            stroke-dashoffset: 250;
-            animation: drawStroke2 1.2s ease-in-out forwards;
-            animation-delay: 1.6s;
-        }
-
-        .stroke3 {
-            stroke-dasharray: 600;
-            stroke-dashoffset: 600;
-            animation: drawStroke3 2.2s ease-in-out forwards;
-            animation-delay: 3.0s;
-        }
-
-        @keyframes drawStroke1 {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        @keyframes drawStroke2 {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        @keyframes drawStroke3 {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        @keyframes fadeInNumber {
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Controles y explicaciones del paso a paso */
-        .steps-guide {
-            text-align: left;
-            margin-bottom: 25px;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
-        }
-
-        .step-item {
-            margin: 8px 0;
+        .header p {
+            color: var(--text-body);
             font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .plans-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        /* Estilo base tipo Flutter Card */
+        .flutter-card {
+            background-color: var(--surface);
+            border-radius: 28px;
+            /* Bordes muy redondeados característicos */
+            padding: 20px 24px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
         }
 
-        .badge {
-            background-color: #e74c3c;
-            color: white;
+        /* Efecto de presión elástica (Bounce) al tocarlo en el móvil */
+        .flutter-card:active {
+            transform: scale(0.96);
+        }
+
+        /* Plan Destacado (Anual con Gradiente de Flutter) */
+        .flutter-card.featured {
+            background: var(--grad-premium);
+            border: none;
+            box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.4);
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .plan-badge {
+            align-self: flex-start;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .featured .plan-badge {
+            background-color: #ffffff;
+            color: var(--primary);
+        }
+
+        .plan-title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .plan-subtitle {
+            font-size: 12px;
+            color: var(--text-body);
+        }
+
+        .featured .plan-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card-price-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .price-wrapper {
+            text-align: right;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .period {
+            font-size: 12px;
+            color: var(--text-body);
+        }
+
+        .featured .period {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Botón estilo 'FloatingActionButton' o icono de acción minimalista */
+        .action-icon {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            display: inline-flex;
+            background-color: rgba(255, 255, 255, 0.08);
+            display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 10px;
-            font-size: 12px;
+            color: #ffffff;
             font-weight: bold;
+            font-size: 16px;
         }
 
-        .btn-restart {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 8px;
+        .featured .action-icon {
+            background-color: #ffffff;
+            color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .footer {
+            margin-top: 32px;
+            font-size: 12px;
+            color: var(--text-body);
+            text-align: center;
+            max-width: 260px;
+            text-decoration: underline;
             cursor: pointer;
-            transition: background-color 0.2s;
-            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
-        }
-
-        .btn-restart:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-restart:active {
-            transform: scale(0.98);
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Hiragana: あ (a)</h1>
-        <p>Aprende el orden de trazos correcto paso a paso</p>
+    <div class="pill-indicator"></div>
 
-        <div class="canvas-container" id="canvasBox">
-            <!-- Líneas guía -->
-            <div class="grid-line grid-h"></div>
-            <div class="grid-line grid-v"></div>
-
-            <!-- SVG para los trazos animados -->
-            <svg viewBox="0 0 200 200" id="hiraganaSvg">
-                <!-- Fondo guía estático -->
-                <path class="stroke-bg" d="M 45,75 C 90,70 110,68 155,65" />
-                <path class="stroke-bg" d="M 100,35 C 98,85 92,130 82,175" />
-                <path class="stroke-bg"
-                    d="M 135,85 C 105,115 70,140 70,158 C 70,182 102,185 125,172 C 152,155 162,118 142,98 C 122,78 95,85 82,105" />
-
-                <!-- Trazos animados -->
-                <!-- Trazo 1: Línea horizontal -->
-                <path class="stroke stroke1" d="M 45,75 C 90,70 110,68 155,65" />
-
-                <!-- Trazo 2: Línea vertical curva -->
-                <path class="stroke stroke2" d="M 100,35 C 98,85 92,130 82,175" />
-
-                <!-- Trazo 3: El lazo/bucle complejo -->
-                <path class="stroke stroke3"
-                    d="M 135,85 C 105,115 70,140 70,158 C 70,182 102,185 125,172 C 152,155 162,118 142,98 C 122,78 95,85 82,105" />
-
-                <!-- Indicadores de inicio de trazo -->
-                <text x="35" y="70" class="step-number" id="step1-num">1</text>
-                <text x="100" y="28" class="step-number" id="step2-num">2</text>
-                <text x="145" y="85" class="step-number" id="step3-num">3</text>
-            </svg>
-        </div>
-
-        <div class="steps-guide">
-            <div class="step-item"><span class="badge">1</span> Trazo corto de izquierda a derecha, ligeramente
-                inclinado hacia arriba.</div>
-            <div class="step-item"><span class="badge">2</span> Trazo de arriba a abajo que cruza el primero de forma
-                curvada hacia la izquierda.</div>
-            <div class="step-item"><span class="badge">3</span> Empieza arriba a la derecha, baja en diagonal, sube
-                formando un lazo ancho y cierra en óvalo abierto.</div>
-        </div>
-
-        <button class="btn-restart" onclick="restartAnimation()">Reiniciar Animación</button>
+    <div class="header">
+        <h1>Únete a TalSky</h1>
+        <p>Selecciona el plan que mejor se adapte a tu ritmo.</p>
     </div>
 
-    <script>
-        function restartAnimation() {
-            const box = document.getElementById('canvasBox');
-            const svg = document.getElementById('hiraganaSvg');
+    <div class="plans-list">
 
-            // Clonar el SVG para reiniciar todas las animaciones de CSS de forma limpia
-            const newSvg = svg.cloneNode(true);
-            svg.parentNode.replaceChild(newSvg, svg);
-        }
-    </script>
+        <div class="flutter-card">
+            <div class="card-info">
+                <div class="plan-title">Mensual</div>
+                <div class="plan-subtitle">Acceso total inmediato</div>
+            </div>
+            <div class="card-price-action">
+                <div class="price-wrapper">
+                    <span class="price">$4.99</span>
+                    <span class="period">/mes</span>
+                </div>
+                <div class="action-icon">→</div>
+            </div>
+        </div>
+
+        <div class="flutter-card featured">
+            <div class="card-info">
+                <div class="plan-badge">Popular</div>
+                <div class="plan-title">Plan Anual</div>
+                <div class="plan-subtitle">Ahorras un 40% al año</div>
+            </div>
+            <div class="card-price-action">
+                <div class="price-wrapper">
+                    <span class="price">$2.99</span>
+                    <span class="period">/mes</span>
+                </div>
+                <div class="action-icon">✓</div>
+            </div>
+        </div>
+
+        <div class="flutter-card">
+            <div class="card-info">
+                <div class="plan-title">6 Meses</div>
+                <div class="plan-subtitle">Pago semestral cómodo</div>
+            </div>
+            <div class="card-price-action">
+                <div class="price-wrapper">
+                    <span class="price">$3.99</span>
+                    <span class="period">/mes</span>
+                </div>
+                <div class="action-icon">→</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Restaurar compras anteriores
+    </div>
 
 </body>
 
