@@ -7,6 +7,7 @@ import {
     Bell,
     CreditCard,
     Flag,
+    Gift,
     ShieldCheck,
     UserSearch,
     Users,
@@ -86,6 +87,12 @@ export default function AdminDashboard() {
             description: "Manage Pro users, Stripe status, and refunds.",
             to: "/admin/subscriptions",
             icon: CreditCard,
+        },
+        {
+            title: "Offers",
+            description: "Create, activate, and manage app discounts and launch promos.",
+            to: "/admin/offers",
+            icon: Gift,
         },
         {
             title: "Reports",

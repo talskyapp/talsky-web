@@ -35,6 +35,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
 import AdminSubscriptionsPage from "./pages/admin/AdminSubscriptionsPage";
+import AdminOffers from "./pages/admin/AdminOffers";
 import AdminVerificationsPage from "./pages/admin/AdminVerificationsPage";
 import AdminReportsPage from "./pages/admin/AdminReportsPage";
 import AdminModerationLogsPage from "./pages/admin/AdminModerationLogsPage";
@@ -165,6 +166,9 @@ function App() {
                         path="subscriptions"
                         element={<AdminSubscriptionsPage />}
                     />
+
+                    <Route path="/admin/offers"
+                        element={<AdminOffers />} />
 
                     <Route
                         path="verifications"
