@@ -17,6 +17,8 @@ const emptyForm = {
     onlyNewUsers: false,
     delayAfterSignupHours: 0,
     priority: 100,
+    startsAt: "",
+    endsAt: "",
     platform: "android",
     countries: "",
     buttonText: "Claim Offer",
@@ -97,6 +99,8 @@ export default function AdminOffers() {
                 ...form,
                 priority: Number(form.priority || 0),
                 delayAfterSignupHours: Number(form.delayAfterSignupHours || 0),
+                startsAt: form.startsAt ? new Date(form.startsAt).toISOString() : null,
+                endsAt: form.endsAt ? new Date(form.endsAt).toISOString() : null,
                 countries: form.countries
                     ? form.countries
                         .split(",")
@@ -259,6 +263,24 @@ export default function AdminOffers() {
                                 type="number"
                                 value={form.priority}
                                 onChange={(e) => updateField("priority", e.target.value)}
+                            />
+                        </label>
+
+                        <label>
+                            Starts At
+                            <input
+                                type="datetime-local"
+                                value={form.startsAt || ""}
+                                onChange={(e) => updateField("startsAt", e.target.value)}
+                            />
+                        </label>
+
+                        <label>
+                            Ends At
+                            <input
+                                type="datetime-local"
+                                value={form.endsAt || ""}
+                                onChange={(e) => updateField("endsAt", e.target.value)}
                             />
                         </label>
 
