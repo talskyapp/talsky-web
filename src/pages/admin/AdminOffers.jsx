@@ -283,15 +283,6 @@ export default function AdminOffers() {
                             />
                         </label>
 
-                        <p>
-                            {offer.subtitle || "No subtitle"} · {offer.platform} · Priority {offer.priority}
-                        </p>
-
-                        <div className="admin-offers-tags">
-                            <span>{offer.type}</span>
-                            <span>{offer.campaign}</span>
-                        </div>
-
                         <label>
                             Type
                             <select
@@ -540,6 +531,10 @@ export default function AdminOffers() {
                                         {offer.subtitle || "No subtitle"} · {offer.platform} · Priority{" "}
                                         {offer.priority || 0}
                                     </p>
+                                    <div className="admin-offers-tags">
+                                        <span>{offer.type}</span>
+                                        <span>{offer.campaign}</span>
+                                    </div>
 
                                     <div className="admin-offers-meta-grid">
                                         <span>
