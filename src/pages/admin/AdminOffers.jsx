@@ -165,6 +165,73 @@ export default function AdminOffers() {
         }
     }
 
+    function getOfferStatus(offer) {
+        const now = new Date();
+
+        if (!offer.active) {
+            return {
+                label: "Disabled",
+                className: "disabled",
+            };
+        }
+
+        if (offer.startsAt && new Date(offer.startsAt) > now) {
+            return {
+                label: "Scheduled",
+                className: "scheduled",
+            };
+        }
+
+        if (offer.endsAt && new Date(offer.endsAt) < now) {
+            return {
+                label: "Expired",
+                className: "expired",
+            };
+        }
+
+        return {
+            label: "Active",
+            className: "active",
+        };
+    }
+
+    function formatDate(value) {
+        if (!value) return "Immediately";
+
+        return new Date(value).toLocaleString([], {
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+
+    function getTimeDistance(value, mode = "ends") {
+        if (!value) return mode === "starts" ? "Starts now" : "No expiration";
+
+        const target = new Date(value).getTime();
+        const now = Date.now();
+        const diff = target - now;
+        const abs = Math.abs(diff);
+
+        const days = Math.floor(abs / 86400000);
+        const hours = Math.floor((abs / 3600000) % 24);
+        const minutes = Math.floor((abs / 60000) % 60);
+
+        const text =
+            days > 0
+                ? `${days}d ${hours}h`
+                : hours > 0
+                    ? `${hours}h ${minutes}m`
+                    : `${minutes}m`;
+
+        if (diff < 0) {
+            return mode === "starts" ? `Started ${text} ago` : `Expired ${text} ago`;
+        }
+
+        return mode === "starts" ? `Starts in ${text}` : `Ends in ${text}`;
+    }
+
     return (
         <div className="admin-offers-page">
             <div className="admin-offers-hero">
@@ -215,6 +282,15 @@ export default function AdminOffers() {
                                 onChange={(e) => updateField("subtitle", e.target.value)}
                             />
                         </label>
+
+                        <p>
+                            {offer.subtitle || "No subtitle"} · {offer.platform} · Priority {offer.priority}
+                        </p>
+
+                        <div className="admin-offers-tags">
+                            <span>{offer.type}</span>
+                            <span>{offer.campaign}</span>
+                        </div>
 
                         <label>
                             Type
@@ -446,35 +522,70 @@ export default function AdminOffers() {
                 {loading ? <p className="admin-offers-muted">Loading offers...</p> : null}
 
                 <div className="admin-offers-list">
-                    {offers.map((offer) => (
-                        <div className="admin-offers-row" key={offer._id}>
-                            <div>
-                                <strong>{offer.title}</strong>
-                                <p>
-                                    {offer.subtitle || "No subtitle"} · {offer.platform} ·{" "}
-                                    {offer.revenueCatOfferingId || "No RevenueCat offering"}
-                                </p>
+                    {offers.map((offer) => {
+                        const status = getOfferStatus(offer);
+
+                        return (
+                            <div className="admin-offers-row" key={offer._id}>
+                                <div className="admin-offers-row-main">
+                                    <div className="admin-offers-row-title">
+                                        <strong>{offer.title}</strong>
+
+                                        <span className={`admin-offers-status-chip ${status.className}`}>
+                                            {status.label}
+                                        </span>
+                                    </div>
+
+                                    <p>
+                                        {offer.subtitle || "No subtitle"} · {offer.platform} · Priority{" "}
+                                        {offer.priority || 0}
+                                    </p>
+
+                                    <div className="admin-offers-meta-grid">
+                                        <span>
+                                            <b>Starts</b>
+                                            {formatDate(offer.startsAt)}
+                                        </span>
+
+                                        <span>
+                                            <b>Ends</b>
+                                            {offer.endsAt ? formatDate(offer.endsAt) : "No expiration"}
+                                        </span>
+
+                                        <span>
+                                            <b>Timing</b>
+                                            {status.className === "scheduled"
+                                                ? getTimeDistance(offer.startsAt, "starts")
+                                                : getTimeDistance(offer.endsAt, "ends")}
+                                        </span>
+
+                                        <span>
+                                            <b>RevenueCat</b>
+                                            {offer.revenueCatOfferingId || "None"}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="admin-offers-row-actions">
+                                    <button
+                                        className={offer.active ? "active" : "disabled"}
+                                        onClick={() => toggleActive(offer)}
+                                    >
+                                        {offer.active ? "Disable" : "Enable"}
+                                    </button>
+
+                                    <button onClick={() => editOffer(offer)}>Edit</button>
+
+                                    <button
+                                        className="danger"
+                                        onClick={() => deleteOffer(offer._id)}
+                                    >
+                                        <Trash2 size={15} />
+                                    </button>
+                                </div>
                             </div>
-
-                            <div className="admin-offers-row-actions">
-                                <button
-                                    className={offer.active ? "active" : ""}
-                                    onClick={() => toggleActive(offer)}
-                                >
-                                    {offer.active ? "Active" : "Disabled"}
-                                </button>
-
-                                <button onClick={() => editOffer(offer)}>Edit</button>
-
-                                <button
-                                    className="danger"
-                                    onClick={() => deleteOffer(offer._id)}
-                                >
-                                    <Trash2 size={15} />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
 
                     {!loading && offers.length === 0 ? (
                         <p className="admin-offers-muted">No offers yet.</p>

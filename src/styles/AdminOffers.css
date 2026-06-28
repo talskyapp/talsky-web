@@ -238,6 +238,119 @@
     font-weight: 700;
 }
 
+.admin-offers-row-actions button.scheduled {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.admin-offers-row-actions button.expired {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.admin-offers-row-actions button.disabled {
+    background: #f1f5f9;
+    color: #64748b;
+    border-color: #e2e8f0;
+}
+
+.admin-offers-row-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-offers-row-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.admin-offers-status-chip {
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.admin-offers-status-chip.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.admin-offers-status-chip.scheduled {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.admin-offers-status-chip.expired {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.admin-offers-status-chip.disabled {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.admin-offers-meta-grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.admin-offers-meta-grid span {
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 10px;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.admin-offers-meta-grid b {
+    display: block;
+    margin-bottom: 4px;
+    color: #0f172a;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.45px;
+}
+
+.admin-offers-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-offers-tags span {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+@media (max-width: 900px) {
+    .admin-offers-meta-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .admin-offers-meta-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 760px) {
     .admin-offers-page {
         padding: 18px;
