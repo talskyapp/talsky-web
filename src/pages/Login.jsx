@@ -27,6 +27,12 @@ export default function Login() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
 
+        if (data.user?.isAdmin) {
+            localStorage.setItem("admin", JSON.stringify(data.user));
+        } else {
+            localStorage.removeItem("admin");
+        }
+
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
         setSuccess(true);

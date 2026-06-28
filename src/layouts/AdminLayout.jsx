@@ -51,6 +51,12 @@ const navItems = [
 ];
 
 export default function AdminLayout() {
+    let admin = {};
+
+    try {
+        admin = JSON.parse(localStorage.getItem("admin") || "{}");
+    } catch { }
+
     return (
         <div className="admin-layout">
             <aside className="admin-sidebar">
@@ -90,12 +96,12 @@ export default function AdminLayout() {
                 <div className="admin-sidebar-footer">
                     <div className="admin-admin-card">
                         <div className="admin-admin-avatar">
-                            A
+                            {(admin?.name || "A").charAt(0).toUpperCase()}
                         </div>
 
                         <div>
-                            <strong>Admin</strong>
-                            <span>admin@talsky.app</span>
+                            <strong>{admin?.name || "Admin"}</strong>
+                            <span>{admin?.email || "admin@talsky.app"}</span>
                         </div>
                     </div>
 
@@ -103,6 +109,9 @@ export default function AdminLayout() {
                         className="admin-logout-btn"
                         onClick={() => {
                             localStorage.removeItem("token");
+                            localStorage.removeItem("admin");
+                            localStorage.removeItem("user");
+
                             window.location.href = "/login";
                         }}
                     >
