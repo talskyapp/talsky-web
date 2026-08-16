@@ -19,12 +19,16 @@ const emptyForm = {
     priority: 100,
     startsAt: "",
     endsAt: "",
-    platform: "android",
+    platform: "web",
+    appliesTo: "monthly",
+    discountValue: 0,
+    trialDays: 7,
     countries: "",
     buttonText: "Claim Offer",
     badgeText: "Limited Time",
-    revenueCatOfferingId: "launch_offer",
+    revenueCatOfferingId: "default",
     revenueCatPackageId: "$rc_monthly",
+    applePromotionalOfferId: "",
     bannerStyle: "gradient",
     gradientStart: "#2563EB",
     gradientEnd: "#7C3AED",
@@ -101,6 +105,8 @@ export default function AdminOffers() {
                 delayAfterSignupHours: Number(form.delayAfterSignupHours || 0),
                 startsAt: form.startsAt ? new Date(form.startsAt).toISOString() : null,
                 endsAt: form.endsAt ? new Date(form.endsAt).toISOString() : null,
+                discountValue: Number(form.discountValue || 0),
+                trialDays: Number(form.trialDays || 7),
                 countries: form.countries
                     ? form.countries
                         .split(",")
@@ -254,7 +260,7 @@ export default function AdminOffers() {
                 <div className="admin-offers-section-header">
                     <div>
                         <h2>{editingId ? "Edit Offer" : "Create Offer"}</h2>
-                        <p>Control what appears in the native app.</p>
+                        <p>Control what appears across web and mobile.</p>
                     </div>
 
                     {editingId ? (
@@ -319,9 +325,43 @@ export default function AdminOffers() {
                                 onChange={(e) => updateField("platform", e.target.value)}
                             >
                                 <option value="all">All</option>
+                                <option value="web">Web</option>
                                 <option value="android">Android</option>
                                 <option value="ios">iOS</option>
                             </select>
+                        </label>
+
+                        <label>
+                            Applies To
+                            <select
+                                value={form.appliesTo}
+                                onChange={(e) =>
+                                    setForm({ ...form, appliesTo: e.target.value })
+                                }
+                            >
+                                <option value="all">All Plans</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="6months">6 Months</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Launch Discount ($)
+                            <input
+                                type="number"
+                                value={form.discountValue}
+                                onChange={(e) => updateField("discountValue", e.target.value)}
+                            />
+                        </label>
+
+                        <label>
+                            Trial Days
+                            <input
+                                type="number"
+                                value={form.trialDays}
+                                onChange={(e) => updateField("trialDays", e.target.value)}
+                            />
                         </label>
 
                         <label>
@@ -368,6 +408,20 @@ export default function AdminOffers() {
                                 onChange={(e) =>
                                     updateField("revenueCatPackageId", e.target.value)
                                 }
+                            />
+                        </label>
+
+                        <label>
+                            Apple Promotional Offer ID
+                            <input
+                                value={form.applePromotionalOfferId || ""}
+                                onChange={(e) =>
+                                    updateField(
+                                        "applePromotionalOfferId",
+                                        e.target.value
+                                    )
+                                }
+                                placeholder="talsky_ai_launch_099"
                             />
                         </label>
 
