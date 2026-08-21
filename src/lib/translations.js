@@ -1223,36 +1223,84 @@ export const translations = {
             terms: "Terms of Service",
         },
         privacyPolicy: {
+            kicker: "PRIVACY POLICY",
             title: "Privacy Policy",
-            lastUpdated: "Last updated:",
+            updated: "Last updated July 2026",
 
             sections: {
-                collect: { title: "1. Information we collect" },
-                use: { title: "2. How we use your information" },
-                location: { title: "3. Location data" },
-                sharing: { title: "4. Data sharing" },
-                security: { title: "5. Data security" },
-                rights: { title: "6. Your rights" },
-                contact: { title: "7. Contact" },
+                collect: {
+                    title: "1. Information we collect",
+                },
+
+                use: {
+                    title: "2. How we use your information",
+                },
+
+                location: {
+                    title: "3. Location information",
+                },
+
+                sharing: {
+                    title: "4. How we share information",
+                },
+
+                security: {
+                    title: "5. Data security",
+                },
+
+                dataretention: {
+                    title: "6. Data retention",
+                },
+
+                internationaltransfers: {
+                    title: "7. International data transfers",
+                },
+
+                rights: {
+                    title: "8. Your rights and choices",
+                },
+
+                contact: {
+                    title: "9. Contact us",
+                },
             },
 
             contactText: "If you have questions, contact us at:",
         },
         terms: {
+            kicker: "TERMS OF SERVICE",
             title: "Terms of Service",
-            lastUpdated: "Last updated:",
+            updated: "Last updated July 2026",
 
             sections: {
-                acceptance: { title: "1. Acceptance of terms" },
-                accounts: { title: "2. User accounts" },
-                behavior: { title: "3. User behavior" },
-                subscriptions: { title: "4. Subscriptions" },
-                termination: { title: "5. Termination" },
-                liability: { title: "6. Limitation of liability" },
-                contact: { title: "7. Contact" },
-            },
+                acceptance: {
+                    title: "1. Acceptance of terms",
+                },
 
-            contactText: "Questions? Contact:",
+                accounts: {
+                    title: "2. Accounts and responsibilities",
+                },
+
+                behavior: {
+                    title: "3. Acceptable use",
+                },
+
+                subscriptions: {
+                    title: "4. Subscriptions and payments",
+                },
+
+                termination: {
+                    title: "5. Suspension and termination",
+                },
+
+                liability: {
+                    title: "6. Disclaimer and limitation of liability",
+                },
+
+                contact: {
+                    title: "7. Contact us",
+                },
+            },
         },
         forgotPassword: {
             title: "Forgot password?",

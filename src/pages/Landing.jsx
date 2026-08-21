@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import PublicFooter from "../components/PublicFooter";
 import "../styles/Landing.css";
+
 
 export default function Landing() {
     return (
@@ -40,7 +42,7 @@ export default function Landing() {
                 <div className="landing-phone-card">
                     <div className="landing-phone">
                         <div className="landing-phone-top" />
-                        <div className="landing-chat-bubble left">Hi! I’m learning Japanese 👋</div>
+                        <div className="landing-chat-bubble left">Hi! I’m learning English 👋</div>
                         <div className="landing-chat-bubble right">Nice! I can help you practice.</div>
                         <div className="landing-chat-bubble left">Let’s exchange cultures too 🌎</div>
                         <div className="landing-typing">
@@ -90,6 +92,7 @@ export default function Landing() {
                     <button disabled>Google Play</button>
                 </div>
             </section>
+            <PublicFooter />
         </main>
     );
 }

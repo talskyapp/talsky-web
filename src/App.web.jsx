@@ -17,6 +17,7 @@ import Pricing from "./pages/Pricing";
 import PricingSuccess from "./pages/PricingSuccess";
 import AITutorPage from "./pages/AITutorPage";
 import AIChatPage from "./pages/AIChatPage";
+import AIVoicePage from "./pages/AIVoicePage";
 import MyCardsPage from "./pages/MyCardsPage";
 import CardsReviewPage from "./pages/CardsReviewPage";
 import CreateProfile from "./pages/CreateProfile";
@@ -42,6 +43,7 @@ import AdminModerationLogsPage from "./pages/admin/AdminModerationLogsPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Landing from "./pages/Landing";
+import Support from "./pages/Support";
 import DashboardHome from "./pages/DashboardHome";
 import AppleCallback from "./pages/AppleCallback";
 
@@ -135,6 +137,7 @@ function App() {
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
 
                 {/* rutas legales públicas */}
+                <Route path="/support" element={<Support />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/terms" element={<TermsPage />} />
 
@@ -207,6 +210,7 @@ function App() {
                     <Route path="pricing/success" element={<PricingSuccess />} />
                     <Route path="ai-tutor" element={<AITutorPage />} />
                     <Route path="ai-chat" element={<AIChatPage />} />
+                    <Route path="ai-voice" element={<AIVoicePage />} />
                     <Route path="cards" element={<MyCardsPage />} />
                     <Route path="cards/review" element={<CardsReviewPage />} />
                     <Route path="create-profile" element={<CreateProfile />} />
