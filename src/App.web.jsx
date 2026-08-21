@@ -1,11 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getSocket } from "./socket";
 import { API_URL } from "./lib/config";
 
 const socket = getSocket();
-window.socket = socket;
 
 /* PAGES */
 import Onboarding from "./pages/Onboarding";
@@ -55,7 +54,6 @@ import DashboardLayout from "./layouts/DashboardLayout";
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem("token"));
-    const [socketReady, setSocketReady] = useState(false);
 
     useEffect(() => {
         const syncToken = () => {
@@ -95,10 +93,7 @@ function App() {
     }, [token]);
 
     useEffect(() => {
-        if (!token) {
-            setSocketReady(false);
-            return;
-        }
+        if (!token) return;
 
         try {
             const payload = JSON.parse(atob(token.split(".")[1]));
@@ -107,20 +102,10 @@ function App() {
             if (!myId) return;
 
             socket.emit("register_user", myId);
-
-            const handleRegistered = () => {
-                console.log("✔ Socket registered");
-                setSocketReady(true);
-            };
-
-            socket.on("registered", handleRegistered);
-
-            return () => {
-                socket.off("registered", handleRegistered);
-            };
-        } catch (err) {
-            console.error("Invalid token payload:", err);
-            setSocketReady(false);
+        } catch (error) {
+            if (import.meta.env.DEV) {
+                console.error("Invalid token payload:", error);
+            }
         }
     }, [token]);
 
@@ -170,8 +155,10 @@ function App() {
                         element={<AdminSubscriptionsPage />}
                     />
 
-                    <Route path="/admin/offers"
-                        element={<AdminOffers />} />
+                    <Route
+                        path="offers"
+                        element={<AdminOffers />}
+                    />
 
                     <Route
                         path="verifications"

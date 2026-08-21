@@ -8,16 +8,26 @@ export const OnboardingProvider = ({ children }) => {
         languageToLearn: "",
         nativeLanguage: "",
         goal: "",
-        level: ""
+        level: "",
     });
 
     const updateData = (key, value) => {
-        setData(prev => ({ ...prev, [key]: value }));
+        setData((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
     };
-console.log("🔥 OnboardingProvider RENDER");
+
     return (
-        <OnboardingContext.Provider value={{ step, setStep, data, updateData }}>
+        <OnboardingContext.Provider
+            value={{
+                step,
+                setStep,
+                data,
+                updateData,
+            }}
+        >
             {children}
         </OnboardingContext.Provider>
     );
-};
+}; 
