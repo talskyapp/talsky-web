@@ -277,6 +277,97 @@
     white-space: nowrap;
 }
 
+.pricing-offer-card {
+    max-width: 760px;
+    margin: 0 auto 28px;
+    padding: 28px;
+    border-radius: 30px;
+    text-align: center;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.22), transparent 32%),
+        linear-gradient(135deg, #6d4cff, #2563eb);
+    box-shadow: 0 24px 60px rgba(37, 99, 235, 0.24);
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-offer-badge {
+    display: inline-flex;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.pricing-offer-card h2 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 900;
+}
+
+.pricing-offer-card p {
+    margin: 12px auto 0;
+    max-width: 520px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 700;
+}
+
+.pricing-offer-timer {
+    margin: 18px auto 0;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pricing-offer-timer span {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.pricing-offer-timer strong {
+    color: #ffd66b;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.pricing-offer-btn {
+    margin-top: 22px;
+    height: 52px;
+    min-width: 220px;
+    border: 0;
+    border-radius: 999px;
+    background: #ffd66b;
+    color: #3b2500;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+}
+
+.pricing-offer-btn:hover {
+    transform: translateY(-1px);
+}
+
+@media (max-width: 720px) {
+    .pricing-offer-card {
+        margin-inline: 18px;
+        padding: 24px 18px;
+    }
+
+    .pricing-offer-card h2 {
+        font-size: 28px;
+    }
+}
 
 @media (max-width: 920px) {
     .pricing-grid {

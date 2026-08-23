@@ -28,6 +28,8 @@ export default function DashboardLayout() {
     const [lastMyReadMessageId, setLastMyReadMessageId] = useState(null);
     const [chatId, setChatId] = useState(null);
 
+    const [socket, setSocket] = useState(null);
+
     const [chatToast, setChatToast] = useState(null);
     const toastTimeoutRef = useRef(null);
     const socketReadyRef = useRef(false);
@@ -122,6 +124,8 @@ export default function DashboardLayout() {
         }
 
         const socket = window.socket;
+
+        setSocket(socket);
 
         const handleConnect = () => {
             socketReadyRef.current = true;
@@ -405,6 +409,7 @@ export default function DashboardLayout() {
                     isMobile={isMobile}
                     isChatPage={isChatPage}
                     chatId={chatId}
+                    socket={socket}
                 />
             )}
 

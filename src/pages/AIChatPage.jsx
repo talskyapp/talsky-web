@@ -92,8 +92,12 @@ Generate useful words and phrases${topic ? ` about ${topic}` : ""}.
 
 Always:
 - group vocabulary clearly
-- include meaning or translation when helpful
+- include the meaning in ${nativeLang}
 - include 1-2 short examples
+- after every example written in a non-Latin writing system, include its complete romanization
+- label the romanization as "Romaji" for Japanese, "Romanization" for Korean, and "Pinyin" for Chinese
+- include the example translation in ${nativeLang}
+- never omit romanization for Japanese examples
 - keep it practical for real conversation
 - adapt to ${targetLanguage}
         `.trim();
@@ -265,7 +269,6 @@ export default function AIChatPage() {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
-    const [voiceEnabled, setVoiceEnabled] = useState(false);
     const [sessionReady, setSessionReady] = useState(false);
     const [savedWords, setSavedWords] = useState([]);
     const [savingWords, setSavingWords] = useState([]);
@@ -720,10 +723,9 @@ Roleplay behavior:
             }
 
             if (data.alreadyExists) {
-                setSavedVocabulary((prev) => ({
-                    ...prev,
-                    [text]: true,
-                }));
+                setSavedWords((prev) =>
+                    prev.includes(phrase) ? prev : [...prev, phrase]
+                );
 
                 return;
             }
@@ -820,11 +822,17 @@ Roleplay behavior:
 
                             <button
                                 type="button"
-                                className={`ai-chat-tool-btn ${voiceEnabled ? "active" : ""}`}
-                                onClick={() => setVoiceEnabled((prev) => !prev)}
+                                className="ai-chat-tool-btn"
+                                onClick={() =>
+                                    navigate(
+                                        `/dashboard/ai-voice?language=${encodeURIComponent(
+                                            userTargetLanguage
+                                        )}&level=${encodeURIComponent(level || "Beginner")}`
+                                    )
+                                }
                             >
                                 <Mic size={16} />
-                                <span>{voiceEnabled ? t("aiChat.voiceOn") : t("aiChat.voiceOff")}</span>
+                                <span>Speak with AI</span>
                             </button>
 
                             <button type="button" className="ai-chat-tool-btn">

@@ -40,10 +40,10 @@ export default function Support() {
                         </p>
 
                         <a
-                            href="mailto:talskyapp@gmail.com"
+                            href="mailto:support@talsky.app"
                             className="public-primary-link"
                         >
-                            talskyapp@gmail.com
+                            support@talsky.app
                         </a>
 
                         <small>
@@ -118,12 +118,12 @@ export default function Support() {
                                 Terms of Service
                             </Link>
 
-                            {/*<Link
-                                to="/account-deletion"
+                            <Link
+                                to="/delete-account"
                                 className="public-text-link"
                             >
-                                Account deletion
-                            </Link>*/}
+                                Delete account
+                            </Link>
                         </div>
                     </div>
                 </article>

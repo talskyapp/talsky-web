@@ -146,10 +146,27 @@ export default function PrivacyPage() {
                         <p>
                             We retain personal information only for as long as
                             necessary to provide TalSky, comply with legal
-                            obligations, resolve disputes, enforce our
-                            agreements, and protect the safety of our users.
-                            Information may be deleted or anonymized when it is
-                            no longer required.
+                            obligations, resolve disputes, enforce our agreements,
+                            prevent fraud, and protect the safety of our users.
+                        </p>
+
+                        <p>
+                            When an account is deleted, profile information,
+                            account credentials, uploaded media, message content,
+                            learning data, connections, and other associated
+                            personal data are deleted or anonymized. Limited
+                            security records may be retained for up to 90 days,
+                            while safety reports and moderation records may be
+                            retained for up to 2 years when necessary for safety,
+                            fraud prevention, dispute resolution, or legal
+                            compliance.
+                        </p>
+
+                        <p>
+                            Payment and transaction records may also be retained
+                            by Apple, Google Play, Stripe, RevenueCat, or other
+                            payment providers for periods required by applicable
+                            laws and their own retention policies.
                         </p>
                     </section>
 
@@ -183,6 +200,14 @@ export default function PrivacyPage() {
                         </p>
 
                         <p>
+                            To learn how to delete your TalSky account or submit
+                            a deletion request without using the app, visit our{" "}
+                            <Link to="/delete-account">
+                                Account Deletion page
+                            </Link>.
+                        </p>
+
+                        <p>
                             You may also manage permissions such as location,
                             photos, camera, microphone, and notifications
                             through your device settings.
@@ -197,8 +222,8 @@ export default function PrivacyPage() {
                         <p>
                             If you have questions about this Privacy Policy or
                             want to submit a privacy request, contact us at{" "}
-                            <a href="mailto:talskyapp@gmail.com">
-                                talskyapp@gmail.com
+                            <a href="mailto:support@talsky.app">
+                                support@talsky.app
                             </a>
                         </p>
 

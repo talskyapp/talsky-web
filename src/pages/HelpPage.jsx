@@ -1,4 +1,9 @@
-import { LifeBuoy, Mail, ShieldCheck, FileText } from "lucide-react";
+import {
+    LifeBuoy,
+    Mail,
+    ShieldCheck,
+    FileText,
+} from "lucide-react";
 import { useTranslation } from "../hooks/useTranslation";
 import "../styles/HelpPage.css";
 
@@ -31,7 +36,9 @@ export default function HelpPage() {
                     </div>
 
                     <a
-                        href="mailto:alsky@gmail.com"
+                        href="https://mail.google.com/mail/?view=cm&fs=1&to=support@talsky.app&su=TalSky%20Support%20Request"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="help-btn"
                     >
                         {t("help.contactButton")}
@@ -60,6 +67,7 @@ export default function HelpPage() {
                             <FileText size={16} />
                             <span>{t("help.terms")}</span>
                         </a>
+
                     </div>
                 </div>
             </div>

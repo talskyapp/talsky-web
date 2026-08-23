@@ -12,7 +12,7 @@ function getLanguageFlagUrl(language) {
     return `https://flagcdn.com/w40/${language.countryCode}.png`;
 }
 
-export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
+export default function UserNavbar({ user, isMobile, isChatPage, chatId, socket }) {
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useTranslation();
@@ -27,6 +27,8 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
     const [openProfileMenu, setOpenProfileMenu] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [isStreakPulsing, setIsStreakPulsing] = useState(false);
+
+    const [unreadCount, setUnreadCount] = useState(0);
 
     const token = localStorage.getItem("token");
     const myId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
@@ -104,7 +106,7 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
     }, [token, myId]);
 
     useEffect(() => {
-        if (!myId || !token) return;
+        if (!socket || !myId || !token) return;
 
 
         const syncUnreadCount = () => {
@@ -141,7 +143,7 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId }) {
             socket.off("sidebar_chat_updated", syncUnreadCount);
             socket.off("messages_read", syncUnreadCount);
         };
-    }, [myId, token]);
+    }, [socket, myId, token]);
 
     const mobileHandle =
         user?.username

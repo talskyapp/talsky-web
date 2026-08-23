@@ -1,0 +1,129 @@
+.pricing-success-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background:
+        radial-gradient(circle at top, #8b5cf620, transparent 45%),
+        linear-gradient(180deg, #fafaff, #f3f6ff);
+}
+
+.pricing-success-card {
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border-radius: 30px;
+    padding: 48px;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(17, 24, 39, .12);
+    border: 1px solid #ececf5;
+    opacity: 0;
+    transform: translateY(30px) scale(.96);
+    transition: .45s ease;
+}
+
+.pricing-success-card.show {
+    opacity: 1;
+    transform: none;
+}
+
+.pricing-success-icon {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: auto;
+}
+
+.pricing-success-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    animation: pulse 2s infinite;
+}
+
+.pricing-success-inner {
+    position: absolute;
+    inset: 12px;
+    border-radius: 999px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #16a34a;
+}
+
+.pricing-success-pro {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 26px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: #f3e8ff;
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+.pricing-success-card h1 {
+    margin-top: 24px;
+    font-size: 34px;
+    font-weight: 900;
+}
+
+.pricing-success-card p {
+    margin-top: 14px;
+    color: #64748b;
+    line-height: 1.7;
+}
+
+.pricing-success-loading {
+    margin-top: 30px;
+    height: 8px;
+    background: #eef2ff;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.pricing-success-bar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #7c3aed, #2563eb);
+    transform-origin: left;
+    animation: loadingBar 3s linear forwards;
+}
+
+.pricing-success-small {
+    display: block;
+    margin-top: 16px;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: .7;
+    }
+
+    70% {
+        transform: scale(1.15);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes loadingBar {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}

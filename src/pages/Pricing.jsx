@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams, useOutletContext } from "react-router-dom";
 import { API_URL } from "../lib/config";
 import { useTranslation } from "../hooks/useTranslation";
@@ -13,6 +13,8 @@ export default function Pricing() {
     const [loadingPlan, setLoadingPlan] = useState("");
     const [portalLoading, setPortalLoading] = useState(false);
     const [error, setError] = useState("");
+    const [activeOffer, setActiveOffer] = useState(null);
+    const [timeLeft, setTimeLeft] = useState("");
 
     const canceled = searchParams.get("canceled") === "true";
 
@@ -88,7 +90,67 @@ export default function Pricing() {
         [t]
     );
 
-    const handleUpgrade = async (plan) => {
+    useEffect(() => {
+        const loadActiveOffer = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
+
+                const res = await fetch(
+                    `${API_URL}/api/offers/active?placement=pricing&platform=web`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                const data = await res.json();
+                console.log("WEB PRICING OFFER:", data);
+
+                if (!res.ok) return;
+
+                setActiveOffer(data.offer || null);
+            } catch (error) {
+                console.error("LOAD WEB OFFER ERROR:", error);
+                setActiveOffer(null);
+            }
+        };
+
+        loadActiveOffer();
+    }, []);
+
+    useEffect(() => {
+        if (!activeOffer?.endsAt) {
+            setTimeLeft("");
+            return;
+        }
+
+        const updateTimer = () => {
+            const end = new Date(activeOffer.endsAt).getTime();
+            const diff = end - Date.now();
+
+            if (diff <= 0) {
+                setTimeLeft("Expired");
+                setActiveOffer(null);
+                return;
+            }
+
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor((diff / 3600000) % 24);
+            const minutes = Math.floor((diff / 60000) % 60);
+
+            setTimeLeft(`${days}d ${hours}h ${minutes}m`);
+        };
+
+        updateTimer();
+
+        const timer = setInterval(updateTimer, 60000);
+
+        return () => clearInterval(timer);
+    }, [activeOffer?.endsAt]);
+
+    const handleUpgrade = async (plan, offerId = null) => {
         try {
             setError("");
             setLoadingPlan(plan);
@@ -105,7 +167,10 @@ export default function Pricing() {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ plan }),
+                body: JSON.stringify({
+                    plan,
+                    offerId,
+                }),
             });
 
             const data = await res.json();
@@ -182,6 +247,37 @@ export default function Pricing() {
 
                 {error && <div className="pricing-notice error">{error}</div>}
             </div>
+
+            {activeOffer && !isPro && (
+                <section className="pricing-offer-card">
+                    <div className="pricing-offer-badge">
+                        {activeOffer.badgeText || "LIMITED TIME"}
+                    </div>
+
+                    <h2>{activeOffer.title || "🚀 Launch Offer"}</h2>
+
+                    <p>{activeOffer.subtitle || "First month only $0.99"}</p>
+
+                    {timeLeft && (
+                        <div className="pricing-offer-timer">
+                            <span>Expires in</span>
+                            <strong>{timeLeft}</strong>
+                        </div>
+                    )}
+
+                    <button
+                        className="pricing-offer-btn"
+                        onClick={() =>
+                            handleUpgrade(
+                                activeOffer.appliesTo || "monthly",
+                                activeOffer._id
+                            )
+                        }
+                    >
+                        {activeOffer.buttonText || "Claim Offer"}
+                    </button>
+                </section>
+            )}
 
             <div className="pricing-grid">
                 {plans.map((plan) => {

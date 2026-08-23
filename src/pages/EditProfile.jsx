@@ -50,13 +50,6 @@ const customSelectStyles = {
             color: "#4c1d95",
         },
     }),
-    menu: (base) => ({
-        ...base,
-        borderRadius: 16,
-        overflow: "hidden",
-        boxShadow: "0 20px 40px rgba(15, 23, 42, 0.12)",
-        border: "1px solid #e8edf5",
-    }),
     option: (base, state) => ({
         ...base,
         backgroundColor: state.isSelected
@@ -75,7 +68,6 @@ const customSelectStyles = {
 
     menu: (base) => ({
         ...base,
-        zIndex: 9999,
         borderRadius: 16,
         overflow: "hidden",
         boxShadow: "0 20px 40px rgba(15, 23, 42, 0.12)",

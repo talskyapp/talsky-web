@@ -101,8 +101,12 @@ export default function TermsPage() {
 
                         <p>
                             Questions? Contact us at{" "}
-                            <a href="mailto:talskyapp@gmail.com">
-                                talskyapp@gmail.com
+                            <a
+                                href="https://mail.google.com/mail/?view=cm&fs=1&to=support@talsky.app&su=TalSky%20Support%20Request"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                support@talsky.app
                             </a>
                         </p>
                     </section>

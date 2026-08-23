@@ -45,6 +45,7 @@ import Landing from "./pages/Landing";
 import Support from "./pages/Support";
 import DashboardHome from "./pages/DashboardHome";
 import AppleCallback from "./pages/AppleCallback";
+import DeleteAccountInfoPage from "./pages/DeleteAccountInfoPage";
 
 /* COMPONENTS */
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -125,6 +126,10 @@ function App() {
                 <Route path="/support" element={<Support />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/terms" element={<TermsPage />} />
+                <Route
+                    path="/delete-account"
+                    element={<DeleteAccountInfoPage />}
+                />
 
                 <Route
                     path="/onboarding"
