@@ -43,6 +43,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Landing from "./pages/Landing";
 import Support from "./pages/Support";
+import ChildSafetyPage from "./pages/ChildSafetyPage";
 import DashboardHome from "./pages/DashboardHome";
 import AppleCallback from "./pages/AppleCallback";
 import DeleteAccountInfoPage from "./pages/DeleteAccountInfoPage";
@@ -124,6 +125,7 @@ function App() {
 
                 {/* rutas legales públicas */}
                 <Route path="/support" element={<Support />} />
+                <Route path="/child-safety" element={<ChildSafetyPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/terms" element={<TermsPage />} />
                 <Route

@@ -127,6 +127,31 @@ export default function Support() {
                         </div>
                     </div>
                 </article>
+                <article className="public-info-card">
+                    <span className="public-info-icon">🛡️</span>
+
+                    <div>
+                        <h2>Child safety</h2>
+
+                        <p>
+                            Review TalSky’s standards for preventing child sexual
+                            abuse and exploitation and learn how to report safety
+                            concerns.
+                        </p>
+
+                        <Link
+                            to="/child-safety"
+                            className="public-primary-link"
+                        >
+                            View Child Safety Standards
+                        </Link>
+
+                        <small>
+                            Safety concerns may also be reported to
+                            support@talsky.app.
+                        </small>
+                    </div>
+                </article>
             </section>
 
             <PublicFooter />
