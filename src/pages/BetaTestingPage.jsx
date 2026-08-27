@@ -26,7 +26,7 @@ const BETA_LINKS = {
 
     googlePlay: "https://play.google.com/apps/testing/com.talsky.app",
 
-    testFlight: "",
+    testFlight: "https://testflight.apple.com/join/BRm4Jmdm",
 };
 
 const androidReady = Boolean(BETA_LINKS.googlePlay);
