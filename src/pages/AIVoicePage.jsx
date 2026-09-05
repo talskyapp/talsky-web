@@ -47,6 +47,16 @@ export default function AIVoicePage() {
         currentUser?.activeLearningLanguage ||
         "Japanese";
 
+    const targetLanguageCode =
+        searchParams.get("languageCode") ||
+        currentUser?.languageToLearnCode ||
+        "";
+
+    const targetLanguageVariant =
+        searchParams.get("languageVariant") ||
+        currentUser?.languageVariant ||
+        "";
+
     const userLevel =
         searchParams.get("level") ||
         currentUser?.activeLevel ||
@@ -275,6 +285,8 @@ export default function AIVoicePage() {
 
             const query = new URLSearchParams({
                 language: targetLanguage,
+                languageCode: targetLanguageCode,
+                languageVariant: targetLanguageVariant,
                 supportLanguage,
                 level: userLevel,
             });

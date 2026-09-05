@@ -8,7 +8,6 @@ const socket = getSocket();
 
 /* PAGES */
 import Onboarding from "./pages/Onboarding";
-import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -51,6 +50,7 @@ import BetaTestingPage from "./pages/BetaTestingPage";
 
 /* COMPONENTS */
 import ProtectedRoute from "./components/ProtectedRoute";
+import RequireAiTutorAccess from "./components/RequireAiTutorAccess";
 
 /* LAYOUTS */
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -185,15 +185,6 @@ function App() {
                 </Route>
 
                 <Route
-                    path="/home"
-                    element={
-                        <ProtectedRoute>
-                            <Home />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
                     path="/dashboard"
                     element={
                         <ProtectedRoute>
@@ -204,11 +195,13 @@ function App() {
                     <Route path="pricing" element={<Pricing />} />
                     <Route path="home" element={<DashboardHome />} />
                     <Route path="pricing/success" element={<PricingSuccess />} />
-                    <Route path="ai-tutor" element={<AITutorPage />} />
-                    <Route path="ai-chat" element={<AIChatPage />} />
-                    <Route path="ai-voice" element={<AIVoicePage />} />
-                    <Route path="cards" element={<MyCardsPage />} />
-                    <Route path="cards/review" element={<CardsReviewPage />} />
+                    <Route element={<RequireAiTutorAccess />}>
+                        <Route path="ai-tutor" element={<AITutorPage />} />
+                        <Route path="ai-chat" element={<AIChatPage />} />
+                        <Route path="ai-voice" element={<AIVoicePage />} />
+                        <Route path="cards" element={<MyCardsPage />} />
+                        <Route path="cards/review" element={<CardsReviewPage />} />
+                    </Route>
                     <Route path="create-profile" element={<CreateProfile />} />
                     <Route path="profile/edit" element={<EditProfile />} />
                     <Route path="settings" element={<SettingsPage />} />

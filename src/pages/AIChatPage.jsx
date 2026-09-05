@@ -32,9 +32,49 @@ function getQueryParams(search) {
     };
 }
 
-function getSystemPromptByMode({ mode, scenario, topic, level, language, nativeLanguage }) {
+function getSystemPromptByMode({
+    mode,
+    scenario,
+    topic,
+    level,
+    language,
+    nativeLanguage,
+    languageCode,
+    languageVariant,
+}) {
     const targetLanguage = language || "the user's target language";
     const nativeLang = nativeLanguage || "English";
+
+    const englishVariantRules =
+        languageCode === "en-GB"
+            ? `
+BRITISH ENGLISH REQUIREMENT:
+- The learner selected British English.
+- Always prefer standard British English.
+- Use British vocabulary, spelling, grammar, expressions, and pronunciation guidance.
+- Prefer "flat" instead of "apartment".
+- Prefer "lift" instead of "elevator".
+- Prefer "holiday" instead of "vacation".
+- Prefer "colour" instead of "color".
+- Prefer "centre" instead of "center".
+- If an American term is relevant, mention it only as a secondary comparison.
+- Never present an American term as the primary answer.
+`
+            : languageCode === "en-US"
+                ? `
+AMERICAN ENGLISH REQUIREMENT:
+- The learner selected American English.
+- Always prefer standard American English.
+- Use American vocabulary, spelling, grammar, expressions, and pronunciation guidance.
+- Prefer "apartment" instead of "flat".
+- Prefer "elevator" instead of "lift".
+- Prefer "vacation" instead of "holiday".
+- Prefer "color" instead of "colour".
+- Prefer "center" instead of "centre".
+- If a British term is relevant, mention it only as a secondary comparison.
+- Never present a British term as the primary answer.
+`
+                : "";
 
     const baseRules = `
 - Always respond primarily in ${targetLanguage}.
@@ -44,10 +84,13 @@ function getSystemPromptByMode({ mode, scenario, topic, level, language, nativeL
   2. English (only if explicitly requested)
 
 - Never switch to any third language, even if the user writes in another language.
-
 - Ignore requests to explain in other languages.
-
 - Keep explanations simple and beginner-friendly when needed.
+
+Target language code: ${languageCode || "not specified"}
+Selected language variant: ${languageVariant || "not specified"}
+
+${englishVariantRules}
 `.trim();
 
     if (mode === "corrections") {
@@ -115,6 +158,7 @@ Always:
 - keep the conversation engaging and practical
     `.trim();
 }
+
 
 function getWelcomeMessage({ mode, scenario, topic, language, t }) {
     const targetLanguage = language || t("aiChat.defaultTargetLanguage");
@@ -277,6 +321,12 @@ export default function AIChatPage() {
     const [preparingScenario, setPreparingScenario] = useState(false);
     const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
 
+    const userLanguageCode =
+        currentUser?.languageToLearnCode || "";
+
+    const userLanguageVariant =
+        currentUser?.languageVariant || "";
+
     const userTargetLanguage =
         language ||
         currentUser?.languageToLearn?.[0] ||
@@ -298,10 +348,21 @@ export default function AIChatPage() {
                 scenario,
                 topic,
                 level,
-                language,
+                language: userTargetLanguage,
                 nativeLanguage,
+                languageCode: userLanguageCode,
+                languageVariant: userLanguageVariant,
             }),
-        [mode, scenario, topic, level, language, nativeLanguage]
+        [
+            mode,
+            scenario,
+            topic,
+            level,
+            userTargetLanguage,
+            nativeLanguage,
+            userLanguageCode,
+            userLanguageVariant,
+        ]
     );
 
     useEffect(() => {
@@ -416,6 +477,8 @@ export default function AIChatPage() {
                     topic,
                     level,
                     language: userTargetLanguage,
+                    languageCode: userLanguageCode,
+                    languageVariant: userLanguageVariant,
                     writingSystem,
                     message: userText,
                     systemPrompt,
@@ -827,7 +890,13 @@ Roleplay behavior:
                                     navigate(
                                         `/dashboard/ai-voice?language=${encodeURIComponent(
                                             userTargetLanguage
-                                        )}&level=${encodeURIComponent(level || "Beginner")}`
+                                        )}&languageCode=${encodeURIComponent(
+                                            userLanguageCode
+                                        )}&languageVariant=${encodeURIComponent(
+                                            userLanguageVariant
+                                        )}&level=${encodeURIComponent(
+                                            level || "Beginner"
+                                        )}`
                                     )
                                 }
                             >

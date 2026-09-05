@@ -2,15 +2,14 @@ import { useNavigate } from "react-router-dom";
 import {
     User,
     Globe,
-    Bell,
     Shield,
     CreditCard,
     CircleHelp,
     LogOut,
-    Trash2,
     ChevronRight,
     Crown,
     Lock,
+    Sparkles,
 } from "lucide-react";
 import { API_URL } from "../lib/config";
 import { useTranslation } from "../hooks/useTranslation";
@@ -21,9 +20,35 @@ export default function SettingsPage({ user: userProp }) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [photoError, setPhotoError] = useState(false);
 
     const storedUser = JSON.parse(localStorage.getItem("user") || "null");
     const user = userProp || storedUser;
+
+    const avatarName =
+        user?.name ||
+        user?.username ||
+        user?.email ||
+        "TalSky";
+
+    const avatarInitial = avatarName
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
+    const hasProfilePhoto =
+        Boolean(user?.photo?.trim()) && !photoError;
+
+    const testerExpiresAt = user?.testerAccess?.expiresAt;
+
+    const testerHasNotExpired =
+        !testerExpiresAt ||
+        new Date(testerExpiresAt).getTime() > Date.now();
+
+    const isAiTester =
+        user?.testerAccess?.enabled === true &&
+        user?.testerAccess?.aiTutor === true &&
+        testerHasNotExpired;
 
     const resolvePhoto = (photo) => {
         if (!photo) return "/default-avatar.jpg";
@@ -145,17 +170,54 @@ export default function SettingsPage({ user: userProp }) {
                     <p>{t("settings.subtitle")}</p>
                 </div>
 
-                <div className="settings-profile-summary">
-                    <img
-                        src={resolvePhoto(user?.photo)}
-                        alt="Profile"
-                        className="settings-profile-avatar"
-                        onError={(e) => {
-                            e.currentTarget.src = "/default-avatar.jpg";
-                        }}
-                    />
-                    <div>
-                        <strong>{user?.name || "Your profile"}</strong>
+                <div
+                    className={`settings-profile-summary ${isAiTester ? "is-tester" : ""
+                        }`}
+                >
+                    <div className="settings-profile-avatar-wrap">
+                        {hasProfilePhoto ? (
+                            <img
+                                src={resolvePhoto(user.photo)}
+                                alt={user?.name || "Profile"}
+                                className="settings-profile-avatar"
+                                onError={() => setPhotoError(true)}
+                            />
+                        ) : (
+                            <div
+                                className="settings-profile-avatar settings-profile-initial"
+                                role="img"
+                                aria-label={user?.name || "Profile"}
+                            >
+                                {avatarInitial}
+                            </div>
+                        )}
+
+                        {isAiTester && (
+                            <span
+                                className="settings-tester-avatar-mark"
+                                title="TalSky AI Beta Tester"
+                            >
+                                <img
+                                    src="/talsky-ai-logo.png"
+                                    alt=""
+                                    aria-hidden="true"
+                                />
+                            </span>
+                        )}
+                    </div>
+
+                    <div className="settings-profile-identity">
+                        <div className="settings-profile-name-row">
+                            <strong>{user?.name || "Your profile"}</strong>
+
+                            {isAiTester && (
+                                <span className="settings-tester-badge">
+                                    <Sparkles size={12} />
+                                    AI Tester
+                                </span>
+                            )}
+                        </div>
+
                         <span>@{user?.username || "username"}</span>
                     </div>
                 </div>

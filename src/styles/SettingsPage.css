@@ -59,6 +59,21 @@
     border: 1px solid #ebe7ff;
 }
 
+.settings-profile-initial {
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(135deg,
+            #7c5cff,
+            #4f6df5);
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    user-select: none;
+}
+
 .settings-profile-avatar {
     width: 58px;
     height: 58px;
@@ -343,5 +358,118 @@
     .settings-item {
         padding: 14px;
         border-radius: 18px;
+    }
+}
+
+/* =========================================
+   TALSKY AI TESTER BADGE
+========================================= */
+
+.settings-profile-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+}
+
+.settings-profile-summary.is-tester {
+    position: relative;
+    border: 1px solid rgba(109, 76, 255, 0.2);
+    background:
+        linear-gradient(135deg,
+            rgba(109, 76, 255, 0.09),
+            rgba(66, 99, 235, 0.04)),
+        #ffffff;
+    box-shadow: 0 12px 30px rgba(109, 76, 255, 0.1);
+}
+
+.settings-profile-summary.is-tester .settings-profile-avatar-wrap {
+    padding: 3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,
+            #8b5cf6,
+            #4f6df5,
+            #a855f7);
+    box-shadow:
+        0 0 0 4px rgba(109, 76, 255, 0.09),
+        0 8px 18px rgba(109, 76, 255, 0.18);
+}
+
+.settings-profile-summary.is-tester .settings-profile-avatar {
+    border: 2px solid #ffffff;
+}
+
+.settings-profile-summary.is-tester .settings-profile-initial {
+    display: grid;
+    place-items: center;
+}
+
+.settings-tester-avatar-mark {
+    position: absolute;
+    right: -7px;
+    bottom: -5px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 4px;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    background: #ffffff;
+    line-height: 1;
+    box-shadow:
+        0 6px 14px rgba(76, 29, 149, 0.2),
+        0 0 0 1px rgba(109, 76, 255, 0.12);
+}
+
+.settings-tester-avatar-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.settings-profile-identity {
+    min-width: 0;
+}
+
+.settings-profile-name-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.settings-tester-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border: 1px solid rgba(109, 76, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(109, 76, 255, 0.1);
+    color: #6842e8;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.settings-tester-badge svg {
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .settings-profile-name-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .settings-tester-badge {
+        padding: 4px 8px;
+        font-size: 0.62rem;
     }
 }

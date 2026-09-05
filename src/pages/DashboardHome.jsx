@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import {
@@ -5,13 +6,74 @@ import {
     BookOpen,
     Layers3,
     Brain,
-    Smartphone,
     ArrowRight,
+    ArrowLeft,
     MessageCircle,
     Globe2,
+    Volume2,
+    Check,
 } from "lucide-react";
 import "../styles/DashboardHome.css";
 import { useTranslation } from "../hooks/useTranslation";
+
+/**
+ * Phone-mockup content for the "how it works" carousel.
+ * Pure CSS/SVG — no external image assets to load or break.
+ */
+function ChatMockup() {
+    return (
+        <div className="dm-phone-screen dm-phone-chat">
+            <div className="dm-bubble dm-bubble-them">
+                <span className="dm-flag">🇪🇸</span> ¿Cómo se dice "excited" en español?
+            </div>
+            <div className="dm-bubble dm-bubble-me">
+                Se dice <strong>"emocionado"</strong> — ¡fácil!
+                <span className="dm-flag">🇬🇧</span>
+            </div>
+            <div className="dm-typing">
+                <span /><span /><span />
+            </div>
+        </div>
+    );
+}
+
+function CardMockup() {
+    return (
+        <div className="dm-phone-screen dm-phone-cards">
+            <div className="dm-vocab-card front">
+                <span className="dm-vocab-label">word</span>
+                <strong>emocionado</strong>
+                <span className="dm-vocab-sub">excited</span>
+            </div>
+            <div className="dm-vocab-card back">
+                <span className="dm-vocab-label">usage</span>
+                <p>"Estoy emocionado por el viaje."</p>
+            </div>
+        </div>
+    );
+}
+
+function ReviewMockup() {
+    return (
+        <div className="dm-phone-screen dm-phone-review">
+            <div className="dm-review-row done">
+                <span>emocionado</span>
+                <Check size={14} />
+            </div>
+            <div className="dm-review-row dim">
+                <span>agradecido</span>
+                <Check size={14} />
+            </div>
+            <div className="dm-review-row active">
+                <span>desafiante</span>
+                <div className="dm-review-dot" />
+            </div>
+            <div className="dm-review-progress">
+                <div className="dm-review-progress-fill" />
+            </div>
+        </div>
+    );
+}
 
 export default function DashboardHome() {
     const { user } = useOutletContext();
@@ -19,26 +81,149 @@ export default function DashboardHome() {
 
     const name = user?.name?.split(" ")?.[0] || t("dashboardHome.fallbackName");
     const learning = user?.languageToLearn?.[0] || t("dashboardHome.fallbackLanguage");
+
+    const aiTutorBetaOnly =
+        import.meta.env.VITE_AI_TUTOR_BETA_ONLY !== "false";
+
+    const testerExpiresAt =
+        user?.testerAccess?.expiresAt
+            ? new Date(user.testerAccess.expiresAt)
+            : null;
+
+    const testerAccessExpired =
+        testerExpiresAt &&
+        !Number.isNaN(testerExpiresAt.getTime()) &&
+        testerExpiresAt <= new Date();
+
+    const hasAiTutorAccess =
+        !aiTutorBetaOnly ||
+        user?.isAdmin === true ||
+        (
+            user?.testerAccess?.enabled === true &&
+            user?.testerAccess?.aiTutor === true &&
+            !testerAccessExpired
+        );
+
     const steps = [
         {
             number: "01",
             icon: <MessageCircle size={22} />,
             title: t("dashboardHome.steps.practiceTitle"),
             text: t("dashboardHome.steps.practiceText"),
+            mockup: <ChatMockup />,
         },
         {
             number: "02",
             icon: <Layers3 size={22} />,
             title: t("dashboardHome.steps.saveTitle"),
             text: t("dashboardHome.steps.saveText"),
+            mockup: <CardMockup />,
         },
         {
             number: "03",
             icon: <Brain size={22} />,
             title: t("dashboardHome.steps.reviewTitle"),
             text: t("dashboardHome.steps.reviewText"),
+            mockup: <ReviewMockup />,
         },
     ];
+
+    // --- "How it works" carousel state ---
+    const [activeStep, setActiveStep] = useState(0);
+    const resumeTimeoutRef = useRef(null);
+    const pausedRef = useRef(false);
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            if (pausedRef.current) return;
+            setActiveStep((prev) => (prev + 1) % steps.length);
+        }, 4500);
+        return () => clearInterval(id);
+    }, [steps.length]);
+
+    const goToStep = (index) => {
+        pausedRef.current = true;
+        setActiveStep((index + steps.length) % steps.length);
+        window.clearTimeout(resumeTimeoutRef.current);
+        resumeTimeoutRef.current = window.setTimeout(() => {
+            pausedRef.current = false;
+        }, 6000);
+    };
+
+    if (!hasAiTutorAccess) {
+        return (
+            <div className="dash-home">
+                <section className="dash-beta-locked">
+                    <div className="dash-beta-copy">
+                        <span className="dash-home-pill">
+                            <Sparkles size={15} />
+                            TalSky AI Private Beta
+                        </span>
+
+                        <h1>
+                            TalSky AI is getting ready.
+                        </h1>
+
+                        <p>
+                            We’re currently testing guided conversations,
+                            vocabulary tools, voice practice, and personalised
+                            feedback with a small group of testers.
+                        </p>
+
+                        <div className="dash-beta-status">
+                            <div className="dash-beta-status-icon">
+                                <Brain size={22} />
+                            </div>
+
+                            <div>
+                                <strong>Limited tester access</strong>
+                                <span>
+                                    TalSky AI will become available after
+                                    testing is complete.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="dash-beta-preview">
+                        <div className="dash-preview-glow" />
+
+                        <div className="dash-beta-preview-card">
+                            <div className="dash-ai-icon">
+                                <Sparkles size={26} />
+                            </div>
+
+                            <span>COMING SOON</span>
+                            <h2>Practice naturally with TalSky AI</h2>
+
+                            <p>
+                                Real conversations, pronunciation practice,
+                                useful vocabulary and personalised learning
+                                support.
+                            </p>
+
+                            <div className="dash-beta-features">
+                                <span>
+                                    <MessageCircle size={16} />
+                                    AI conversations
+                                </span>
+
+                                <span>
+                                    <Volume2 size={16} />
+                                    Voice practice
+                                </span>
+
+                                <span>
+                                    <Layers3 size={16} />
+                                    Vocabulary cards
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        );
+    }
 
     return (
         <div className="dash-home">
@@ -91,6 +276,7 @@ export default function DashboardHome() {
                 </div>
             </section>
 
+            {/* HOW IT WORKS — now an interactive carousel with phone mockups */}
             <section className="dash-flow-section">
                 <div className="dash-section-head">
                     <span>{t("dashboardHome.howItWorks")}</span>
@@ -98,23 +284,65 @@ export default function DashboardHome() {
                     <p>{t("dashboardHome.flowText")}</p>
                 </div>
 
-                <div className="dash-flow-grid">
-                    {steps.map((step, index) => (
-                        <div className="dash-flow-card" key={step.title}>
-                            <div className="dash-flow-top">
-                                <span>{step.number}</span>
-                                <div className="dash-flow-icon">{step.icon}</div>
-                            </div>
+                <div
+                    className="dm-carousel"
+                    onMouseEnter={() => (pausedRef.current = true)}
+                    onMouseLeave={() => (pausedRef.current = false)}
+                >
+                    <button
+                        type="button"
+                        className="dash-flow-arrow dm-carousel-arrow left"
+                        aria-label="Previous step"
+                        onClick={() => goToStep(activeStep - 1)}
+                    >
+                        <ArrowLeft size={16} />
+                    </button>
 
-                            <h3>{step.title}</h3>
-                            <p>{step.text}</p>
+                    <div className="dm-carousel-viewport">
+                        <div
+                            className="dm-carousel-track"
+                            style={{ transform: `translateX(-${activeStep * 100}%)` }}
+                        >
+                            {steps.map((step) => (
+                                <div className="dash-flow-card dm-slide" key={step.title}>
+                                    <div className="dm-slide-phone">
+                                        <div className="dm-phone-notch" />
+                                        {step.mockup}
+                                    </div>
 
-                            {index < steps.length - 1 && (
-                                <div className="dash-flow-arrow">
-                                    <ArrowRight size={18} />
+                                    <div className="dm-slide-copy">
+                                        <div className="dash-flow-top">
+                                            <span>{step.number}</span>
+                                            <div className="dash-flow-icon">{step.icon}</div>
+                                        </div>
+
+                                        <h3>{step.title}</h3>
+                                        <p>{step.text}</p>
+                                    </div>
                                 </div>
-                            )}
+                            ))}
                         </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="dash-flow-arrow dm-carousel-arrow right"
+                        aria-label="Next step"
+                        onClick={() => goToStep(activeStep + 1)}
+                    >
+                        <ArrowRight size={16} />
+                    </button>
+                </div>
+
+                <div className="dm-carousel-dots">
+                    {steps.map((step, index) => (
+                        <button
+                            type="button"
+                            key={step.number}
+                            className={`dm-dot ${index === activeStep ? "active" : ""}`}
+                            aria-label={`Go to step ${index + 1}`}
+                            onClick={() => goToStep(index)}
+                        />
                     ))}
                 </div>
             </section>

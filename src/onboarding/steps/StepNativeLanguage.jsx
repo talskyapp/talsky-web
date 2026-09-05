@@ -11,7 +11,24 @@ const nativeLanguages = [
     { code: "bn", name: "Bengali", countryCode: "bd" },
     { code: "zh", name: "Chinese", countryCode: "cn" },
     { code: "nl", name: "Dutch", countryCode: "nl" },
-    { code: "en", name: "English", countryCode: "us" },
+
+    {
+        code: "en-US",
+        name: "English",
+        displayName: "English (US)",
+        variant: "American English",
+        countryCode: "us",
+        baseCode: "en",
+    },
+    {
+        code: "en-GB",
+        name: "English",
+        displayName: "English (UK)",
+        variant: "British English",
+        countryCode: "gb",
+        baseCode: "en",
+    },
+
     { code: "fr", name: "French", countryCode: "fr" },
     { code: "de", name: "German", countryCode: "de" },
     { code: "hi", name: "Hindi", countryCode: "in" },
@@ -25,23 +42,65 @@ const nativeLanguages = [
     { code: "vi", name: "Vietnamese", countryCode: "vn" },
 ];
 
+
 const StepNativeLanguage = () => {
-    const { updateData, setStep } = useContext(OnboardingContext);
+    const { data, updateData, setStep } = useContext(OnboardingContext);
     const [query, setQuery] = useState("");
 
     const filteredLanguages = useMemo(() => {
         const q = query.trim().toLowerCase();
-        if (!q) return nativeLanguages;
 
-        return nativeLanguages.filter(
-            (lang) =>
-                lang.name.toLowerCase().includes(q) ||
-                lang.code.toLowerCase().includes(q)
-        );
-    }, [query]);
+        const learningLanguage =
+            data?.languageToLearn?.trim().toLowerCase() || "";
+
+        const learningCode =
+            data?.languageToLearnCode?.trim().toLowerCase() || "";
+
+        const learningBaseCode = learningCode
+            ? learningCode.split("-")[0]
+            : "";
+
+        return nativeLanguages.filter((lang) => {
+            const languageName = lang.name.toLowerCase();
+            const displayName = (
+                lang.displayName || lang.name
+            ).toLowerCase();
+
+            const languageCode = lang.code.toLowerCase();
+
+            const languageBaseCode = (
+                lang.baseCode || lang.code
+            ).toLowerCase();
+
+            const matchesLearningCode =
+                Boolean(learningBaseCode) &&
+                languageBaseCode === learningBaseCode;
+
+            const matchesLearningName =
+                languageName === learningLanguage;
+
+            const isLearningLanguage =
+                matchesLearningCode || matchesLearningName;
+
+            const matchesSearch =
+                !q ||
+                languageName.includes(q) ||
+                displayName.includes(q) ||
+                languageCode.includes(q) ||
+                lang.variant?.toLowerCase().includes(q);
+
+            return !isLearningLanguage && matchesSearch;
+        });
+    }, [
+        query,
+        data?.languageToLearn,
+        data?.languageToLearnCode,
+    ]);
 
     const select = (lang) => {
         updateData("nativeLanguage", lang.name);
+        updateData("nativeLanguageCode", lang.code);
+        updateData("nativeLanguageVariant", lang.variant || null);
         setStep(3);
     };
 
@@ -61,6 +120,7 @@ const StepNativeLanguage = () => {
 
                     <div className="onb-language-search">
                         <Search size={20} />
+
                         <input
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
@@ -80,14 +140,25 @@ const StepNativeLanguage = () => {
                             <div className="onb-language-icon">
                                 <img
                                     src={`https://flagcdn.com/w80/${lang.countryCode}.png`}
-                                    alt={lang.name}
+                                    alt={lang.displayName || lang.name}
                                     className="onb-language-flag"
                                 />
                             </div>
 
                             <div className="onb-language-info">
-                                <span className="onb-language-name">{lang.name}</span>
-                                <span className="onb-language-action">Select language</span>
+                                <span className="onb-language-name">
+                                    {lang.displayName || lang.name}
+                                </span>
+
+                                {lang.variant && (
+                                    <span className="onb-language-variant">
+                                        {lang.variant}
+                                    </span>
+                                )}
+
+                                <span className="onb-language-action">
+                                    Select language
+                                </span>
                             </div>
 
                             <span className="onb-language-chevron">›</span>

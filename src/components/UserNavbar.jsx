@@ -17,9 +17,33 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId, socket 
     const location = useLocation();
     const { t } = useTranslation();
 
-    // 🔒 feature flags temporales
+    // 🔒 Feature flags
     const showLearnNav = false;
-    const showAITutorNav = true;
+
+    const aiTutorBetaOnly =
+        import.meta.env.VITE_AI_TUTOR_BETA_ONLY !== "false";
+
+    const testerExpiresAt =
+        user?.testerAccess?.expiresAt
+            ? new Date(user.testerAccess.expiresAt)
+            : null;
+
+    const testerAccessExpired =
+        testerExpiresAt &&
+        !Number.isNaN(testerExpiresAt.getTime()) &&
+        testerExpiresAt <= new Date();
+
+    const hasAiTutorTesterAccess =
+        user?.isAdmin === true ||
+        (
+            user?.testerAccess?.enabled === true &&
+            user?.testerAccess?.aiTutor === true &&
+            !testerAccessExpired
+        );
+
+    const showAITutorNav =
+        !aiTutorBetaOnly ||
+        hasAiTutorTesterAccess;
 
     const hideNavbarRoutes = ["/dashboard/create-profile"];
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
@@ -160,23 +184,38 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId, socket 
     };
 
     function getLearningLanguageMeta(user) {
-        const value =
+        const selectedCode =
+            user?.activeLearningLanguageCode ||
+            user?.languageToLearnCode ||
+            "";
+
+        const selectedLanguage =
             user?.activeLearningLanguage ||
             user?.languageToLearn?.[0] ||
             "";
 
-        const normalized = String(value).toLowerCase();
+        const normalizedCode = String(selectedCode).toLowerCase();
+        const normalizedLanguage = String(selectedLanguage).toLowerCase();
 
-        const language = LANGUAGES.find(
+        const languageByCode = LANGUAGES.find(
             (lang) =>
-                lang.code.toLowerCase() === normalized ||
-                lang.name.toLowerCase() === normalized
+                lang.code?.toLowerCase() === normalizedCode
+        );
+
+        if (languageByCode) {
+            return languageByCode;
+        }
+
+        const languageByName = LANGUAGES.find(
+            (lang) =>
+                lang.name?.toLowerCase() === normalizedLanguage
         );
 
         return (
-            language || {
+            languageByName || {
                 code: "unknown",
-                name: value || "Language",
+                name: selectedLanguage || "Language",
+                countryCode: "",
                 flag: "🌍",
             }
         );
@@ -345,14 +384,18 @@ export default function UserNavbar({ user, isMobile, isChatPage, chatId, socket 
                         <House size={22} />
                     </button>
 
-                    <button
-                        type="button"
-                        className={isAITutor ? "active" : ""}
-                        onClick={() => navigate("/dashboard/ai-tutor")}
-                        aria-label={t("navbar.aiTutor")}
-                    >
-                        <BookOpen size={22} />
-                    </button>
+                    {showAITutorNav && (
+                        <button
+                            type="button"
+                            className={isAITutor ? "active" : ""}
+                            onClick={() =>
+                                navigate("/dashboard/ai-tutor")
+                            }
+                            aria-label={t("navbar.aiTutor")}
+                        >
+                            <BookOpen size={22} />
+                        </button>
+                    )}
 
                     {showLearnNav && (
                         <button

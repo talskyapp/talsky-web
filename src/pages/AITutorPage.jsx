@@ -8,6 +8,7 @@ import {
     Languages,
     Brain,
     CheckCircle2,
+    ArrowRight,
 } from "lucide-react";
 import { useTranslation } from "../hooks/useTranslation";
 import "../styles/AITutorPage.css";
@@ -83,6 +84,7 @@ export default function AITutorPage() {
                     </div>
 
                     <div className="ai-hero-logo-panel">
+                        <div className="ai-hero-glow" />
 
                         <div className="ai-cloud-brand">
                             <img
@@ -159,6 +161,10 @@ export default function AITutorPage() {
                                         {mode.subtitle}
                                     </span>
                                 </div>
+
+                                <div className="ai-mode-go">
+                                    <ArrowRight size={16} />
+                                </div>
                             </button>
                         ))}
                     </div>
@@ -167,6 +173,7 @@ export default function AITutorPage() {
                 <section className="ai-card ai-side-pro simple">
                     <div>
                         <div className="ai-side-pro-badge">
+                            <Sparkles size={12} />
                             PRO
                         </div>
 
@@ -184,6 +191,7 @@ export default function AITutorPage() {
                         className="ai-pro-btn"
                     >
                         {t("aiTutor.pro.button")}
+                        <ArrowRight size={16} />
                     </button>
                 </section>
 

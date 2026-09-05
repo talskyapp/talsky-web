@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import { API_URL } from "../lib/config";
@@ -77,6 +78,7 @@ const customSelectStyles = {
 
 export default function Settings() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState("personal");
 
@@ -109,10 +111,27 @@ export default function Settings() {
 
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+    const [languageLimitModal, setLanguageLimitModal] = useState({
+        open: false,
+        type: "",
+        message: "",
+    });
+
     const languageOptions = useMemo(
         () => [
             { value: "Spanish", label: t("profileSettings.languages.spanish") },
-            { value: "English", label: t("profileSettings.languages.english") },
+            {
+                value: "English",
+                code: "en-US",
+                variant: "American English",
+                label: `${t("profileSettings.languages.english")} (US)`,
+            },
+            {
+                value: "English",
+                code: "en-GB",
+                variant: "British English",
+                label: `${t("profileSettings.languages.english")} (UK)`,
+            },
             { value: "Japanese", label: t("profileSettings.languages.japanese") },
             { value: "Italian", label: t("profileSettings.languages.italian") },
             { value: "French", label: t("profileSettings.languages.french") },
@@ -123,6 +142,34 @@ export default function Settings() {
         ],
         [t]
     );
+
+    const fluentLanguageOptions = useMemo(() => {
+        const nativeValue = nativeLanguage?.value;
+
+        const learningValues = new Set(
+            languageToLearn.map((language) => language.value)
+        );
+
+        return languageOptions.filter(
+            (language) =>
+                language.value !== nativeValue &&
+                !learningValues.has(language.value)
+        );
+    }, [languageOptions, nativeLanguage, languageToLearn]);
+
+    const languageToLearnOptions = useMemo(() => {
+        const nativeValue = nativeLanguage?.value;
+
+        const fluentValues = new Set(
+            fluentLanguages.map((language) => language.value)
+        );
+
+        return languageOptions.filter(
+            (language) =>
+                language.value !== nativeValue &&
+                !fluentValues.has(language.value)
+        );
+    }, [languageOptions, nativeLanguage, fluentLanguages]);
 
     const countryOptions = useMemo(
         () => [
@@ -263,7 +310,16 @@ export default function Settings() {
                 setCountry(countryOptions.find((c) => c.value === u.country) || null);
 
                 setNativeLanguage(
-                    languageOptions.find((l) => l.value === u.nativeLanguage) || null
+                    languageOptions.find(
+                        (language) =>
+                            u.nativeLanguageCode &&
+                            language.code === u.nativeLanguageCode
+                    ) ||
+                    languageOptions.find(
+                        (language) =>
+                            language.value === u.nativeLanguage
+                    ) ||
+                    null
                 );
 
                 let fluent = u.fluentLanguages;
@@ -288,7 +344,22 @@ export default function Settings() {
 
                 setLanguageToLearn(
                     learn
-                        .map((l) => languageOptions.find((opt) => opt.value === l))
+                        .map((language, index) => {
+                            const savedCode =
+                                index === 0 ? u.languageToLearnCode : "";
+
+                            return (
+                                languageOptions.find(
+                                    (option) =>
+                                        savedCode &&
+                                        option.code === savedCode
+                                ) ||
+                                languageOptions.find(
+                                    (option) =>
+                                        option.value === language
+                                )
+                            );
+                        })
                         .filter(Boolean)
                 );
 
@@ -349,7 +420,36 @@ export default function Settings() {
         setPhotoPreview("");
     };
 
+    const handleNativeLanguageChange = (selectedLanguage) => {
+        setNativeLanguage(selectedLanguage);
+
+        if (!selectedLanguage) return;
+
+        setFluentLanguages((currentLanguages) =>
+            currentLanguages.filter(
+                (language) =>
+                    language.value !== selectedLanguage.value
+            )
+        );
+
+        setLanguageToLearn((currentLanguages) =>
+            currentLanguages.filter(
+                (language) =>
+                    language.value !== selectedLanguage.value
+            )
+        );
+    };
+
+    const handleFluentLanguagesChange = (selectedLanguages) => {
+        setFluentLanguages(selectedLanguages || []);
+    };
+
+    const handleLanguageToLearnChange = (selectedLanguages) => {
+        setLanguageToLearn(selectedLanguages || []);
+    };
+
     const handleSave = async () => {
+        if (saving) return;
         try {
             setSaving(true);
             setError("");
@@ -369,10 +469,32 @@ export default function Settings() {
             formData.append("gender", gender);
             formData.append("country", country?.value || "");
             formData.append("nativeLanguage", nativeLanguage?.value || "");
+            formData.append(
+                "nativeLanguageCode",
+                nativeLanguage?.code || ""
+            );
+
+            formData.append(
+                "nativeLanguageVariant",
+                nativeLanguage?.variant || ""
+            );
             formData.append("goals", goals);
             formData.append("idealPartner", idealPartner);
             formData.append("bio", aboutMe);
             formData.append("profileCompleted", "true");
+
+            const primaryLearningLanguage = languageToLearn[0];
+
+            formData.append(
+                "languageToLearnCode",
+                primaryLearningLanguage?.code || ""
+            );
+
+            formData.append(
+                "languageVariant",
+                primaryLearningLanguage?.variant || ""
+            );
+
 
             formData.append(
                 "fluentLanguages",
@@ -401,11 +523,55 @@ export default function Settings() {
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setPhotoFile(null);
             setPhotoPreview("");
-            setShowSuccessModal(true);
+
+            navigate("/dashboard/settings", {
+                replace: true,
+                state: {
+                    profileUpdated: true,
+                },
+            });
         } catch (err) {
-            console.error("SAVE ERROR:", err);
-            setError(t("profileSettings.errors.saveProfile"));
-            alert(t("profileSettings.errors.saveProfile"));
+            const status = err.response?.status;
+            const code = err.response?.data?.code;
+            const backendMessage =
+                err.response?.data?.message ||
+                err.response?.data?.msg ||
+                err.response?.data?.error ||
+                "";
+
+            const isLanguageLimit =
+                status === 429 &&
+                (
+                    code === "LEARNING_LANGUAGE_CHANGE_LIMIT" ||
+                    code === "NATIVE_LANGUAGE_CHANGE_LIMIT"
+                );
+
+            if (isLanguageLimit) {
+                setError("");
+
+                setLanguageLimitModal({
+                    open: true,
+                    type:
+                        code === "NATIVE_LANGUAGE_CHANGE_LIMIT"
+                            ? "native"
+                            : "learning",
+                    message: backendMessage,
+                });
+
+                return;
+            }
+
+            const serverMessage =
+                backendMessage ||
+                t("profileSettings.errors.saveProfile");
+
+            console.error("SAVE ERROR:", {
+                status,
+                code,
+                data: err.response?.data,
+            });
+
+            setError(serverMessage);
         } finally {
             setSaving(false);
         }
@@ -610,7 +776,8 @@ export default function Settings() {
                                         <Select
                                             options={languageOptions}
                                             value={nativeLanguage}
-                                            onChange={setNativeLanguage}
+                                            onChange={handleNativeLanguageChange}
+                                            getOptionValue={(option) => option.code || option.value}
                                             isSearchable
                                             styles={customSelectStyles}
                                             menuPortalTarget={document.body}
@@ -626,9 +793,10 @@ export default function Settings() {
                                             {t("profileSettings.fields.fluentLanguages")}
                                         </label>
                                         <Select
-                                            options={languageOptions}
+                                            options={fluentLanguageOptions}
                                             value={fluentLanguages}
-                                            onChange={setFluentLanguages}
+                                            onChange={handleFluentLanguagesChange}
+                                            getOptionValue={(option) => option.code || option.value}
                                             isMulti
                                             isSearchable
                                             styles={customSelectStyles}
@@ -645,9 +813,10 @@ export default function Settings() {
                                             {t("profileSettings.fields.languagesToLearn")}
                                         </label>
                                         <Select
-                                            options={languageOptions}
+                                            options={languageToLearnOptions}
                                             value={languageToLearn}
-                                            onChange={setLanguageToLearn}
+                                            onChange={handleLanguageToLearnChange}
+                                            getOptionValue={(option) => option.code || option.value}
                                             isMulti
                                             isSearchable
                                             styles={customSelectStyles}
@@ -806,6 +975,59 @@ export default function Settings() {
 
                             <button onClick={() => setShowSuccessModal(false)}>
                                 {t("profileSettings.modal.done")}
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {languageLimitModal.open && (
+                    <div
+                        className="modal-overlay"
+                        onClick={() =>
+                            setLanguageLimitModal({
+                                open: false,
+                                type: "",
+                                message: "",
+                            })
+                        }
+                    >
+                        <div
+                            className="language-limit-card"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="language-limit-title"
+                            onClick={(event) => event.stopPropagation()}
+                        >
+                            <div className="language-limit-icon">
+                                🕒
+                            </div>
+
+                            <h3 id="language-limit-title">
+                                Language change limit
+                            </h3>
+
+                            <p className="language-limit-description">
+                                {languageLimitModal.type === "native"
+                                    ? "Your native language can only be changed once every 24 hours."
+                                    : "Your learning language can only be changed once every 24 hours."}
+                            </p>
+
+                            <p className="language-limit-note">
+                                Please try again after the 24-hour period has ended.
+                            </p>
+
+                            <button
+                                type="button"
+                                className="language-limit-button"
+                                onClick={() =>
+                                    setLanguageLimitModal({
+                                        open: false,
+                                        type: "",
+                                        message: "",
+                                    })
+                                }
+                            >
+                                Got it
                             </button>
                         </div>
                     </div>

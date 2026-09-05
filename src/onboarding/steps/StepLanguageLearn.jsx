@@ -11,7 +11,22 @@ const languages = [
     { code: "bn", name: "Bengali", countryCode: "bd" },
     { code: "zh", name: "Chinese", countryCode: "cn" },
     { code: "nl", name: "Dutch", countryCode: "nl" },
-    { code: "en", name: "English", countryCode: "us" },
+    {
+        code: "en-US",
+        name: "English",
+        displayName: "English (US)",
+        variant: "American English",
+        countryCode: "us",
+        baseCode: "en",
+    },
+    {
+        code: "en-GB",
+        name: "English",
+        displayName: "English (UK)",
+        variant: "British English",
+        countryCode: "gb",
+        baseCode: "en",
+    },
     { code: "fr", name: "French", countryCode: "fr" },
     { code: "de", name: "German", countryCode: "de" },
     { code: "hi", name: "Hindi", countryCode: "in" },
@@ -31,17 +46,24 @@ const StepLanguageLearn = () => {
 
     const filteredLanguages = useMemo(() => {
         const q = query.trim().toLowerCase();
+
         if (!q) return languages;
 
-        return languages.filter(
-            (lang) =>
-                lang.name.toLowerCase().includes(q) ||
-                lang.code.toLowerCase().includes(q)
+        return languages.filter((lang) =>
+            [
+                lang.name,
+                lang.displayName,
+                lang.variant,
+                lang.code,
+                lang.baseCode,
+            ].some((value) => value?.toLowerCase().includes(q))
         );
     }, [query]);
 
     const select = (lang) => {
         updateData("languageToLearn", lang.name);
+        updateData("languageToLearnCode", lang.code);
+        updateData("languageVariant", lang.variant || null);
         setStep(2);
     };
 
@@ -86,8 +108,19 @@ const StepLanguageLearn = () => {
                             </div>
 
                             <div className="onb-language-info">
-                                <span className="onb-language-name">{lang.name}</span>
-                                <span className="onb-language-action">Select language</span>
+                                <span className="onb-language-name">
+                                    {lang.displayName || lang.name}
+                                </span>
+
+                                {lang.variant && (
+                                    <span className="onb-language-variant">
+                                        {lang.variant}
+                                    </span>
+                                )}
+
+                                <span className="onb-language-action">
+                                    Select language
+                                </span>
                             </div>
 
                             <span className="onb-language-chevron">›</span>

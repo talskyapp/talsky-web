@@ -6,10 +6,11 @@ import "../styles/AppLanguagePage.css";
 
 const APP_LANGUAGES = [
     { code: "en", label: "English", nativeLabel: "English", enabled: true },
-    { code: "es", label: "Spanish", nativeLabel: "Español", enabled: true },
-    { code: "zh", label: "Chinese", nativeLabel: "中文", enabled: true },
-    { code: "ja", label: "Japanese", nativeLabel: "日本語", enabled: true },
-    { code: "ko", label: "Korean", nativeLabel: "한국어", enabled: true },
+    /*
+    { code: "es", label: "Spanish", nativeLabel: "Español", enabled: false },
+    { code: "zh", label: "Chinese", nativeLabel: "中文", enabled: false },
+    { code: "ja", label: "Japanese", nativeLabel: "日本語", enabled: false },
+    { code: "ko", label: "Korean", nativeLabel: "한국어", enabled: false },
     { code: "fr", label: "French", nativeLabel: "Français", enabled: false },
     { code: "it", label: "Italian", nativeLabel: "Italiano", enabled: false },
     { code: "pt", label: "Portuguese", nativeLabel: "Português", enabled: false },
@@ -37,7 +38,7 @@ const APP_LANGUAGES = [
     { code: "vi", label: "Vietnamese", nativeLabel: "Tiếng Việt", enabled: false },
     { code: "id", label: "Indonesian", nativeLabel: "Bahasa Indonesia", enabled: false },
     { code: "ms", label: "Malay", nativeLabel: "Bahasa Melayu", enabled: false },
-    { code: "tl", label: "Filipino", nativeLabel: "Filipino", enabled: false },
+    { code: "tl", label: "Filipino", nativeLabel: "Filipino", enabled: false },*/
 ];
 
 export default function AppLanguagePage() {
@@ -45,8 +46,17 @@ export default function AppLanguagePage() {
     const storedUser = JSON.parse(localStorage.getItem("user") || "null");
     const token = localStorage.getItem("token");
 
-    const initialLanguage =
-        storedUser?.appLanguage || localStorage.getItem("appLanguage") || "en";
+    const savedLanguage =
+        storedUser?.appLanguage ||
+        localStorage.getItem("appLanguage");
+
+    const initialLanguage = APP_LANGUAGES.some(
+        (language) =>
+            language.code === savedLanguage &&
+            language.enabled
+    )
+        ? savedLanguage
+        : "en";
 
     const [selectedLanguage, setSelectedLanguage] = useState(initialLanguage);
     const [saving, setSaving] = useState(false);
@@ -55,8 +65,8 @@ export default function AppLanguagePage() {
     const [search, setSearch] = useState("");
 
     useEffect(() => {
-        localStorage.setItem("appLanguage", selectedLanguage);
-    }, [selectedLanguage]);
+        localStorage.setItem("appLanguage", initialLanguage);
+    }, [initialLanguage]);
 
     const filteredLanguages = useMemo(() => {
         const query = search.trim().toLowerCase();
@@ -71,6 +81,12 @@ export default function AppLanguagePage() {
             );
         });
     }, [search]);
+
+    const enabledLanguagesCount = APP_LANGUAGES.filter(
+        (language) => language.enabled
+    ).length;
+
+    const showSaveButton = enabledLanguagesCount > 1;
 
     const handleSelect = (language) => {
         if (!language.enabled) return;
@@ -182,14 +198,18 @@ export default function AppLanguagePage() {
                 {error && <div className="app-language-error">{error}</div>}
                 {success && <div className="app-language-success">{success}</div>}
 
-                <button
-                    type="button"
-                    className="app-language-save-btn"
-                    onClick={handleSave}
-                    disabled={saving}
-                >
-                    {saving ? t("appLanguage.saving") : t("appLanguage.saveButton")}
-                </button>
+                {showSaveButton && (
+                    <button
+                        type="button"
+                        className="app-language-save-btn"
+                        onClick={handleSave}
+                        disabled={saving}
+                    >
+                        {saving
+                            ? t("appLanguage.saving")
+                            : t("appLanguage.saveButton")}
+                    </button>
+                )}
             </div>
         </div>
     );

@@ -9,6 +9,7 @@ import {
     Shield,
     ShieldCheck,
     Users,
+    Gift,
 } from "lucide-react";
 import "../styles/AdminLayout.css";
 
@@ -27,6 +28,11 @@ const navItems = [
         label: "Subscriptions",
         to: "/admin/subscriptions",
         icon: CreditCard,
+    },
+    {
+        label: "Offers",
+        to: "/admin/offers",
+        icon: Gift,
     },
     {
         label: "Verifications",
